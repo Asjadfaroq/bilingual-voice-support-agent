@@ -2,7 +2,7 @@ from livekit.agents import AgentServer, AgentSession, JobContext, JobProcess
 from psycopg_pool import AsyncConnectionPool
 
 from voice_agent.config import get_settings
-from voice_agent.conversation.support_agent import SupportAgent
+from voice_agent.conversation.support_agent import LanguageSettings, SupportAgent
 from voice_agent.conversation.tools import CallResources
 from voice_agent.knowledge.ingest import build_sentence_embedder
 from voice_agent.knowledge.search import build_cross_encoder_reranker
@@ -57,10 +57,11 @@ async def run_support_call(ctx: JobContext) -> None:
 
     ctx.add_shutdown_callback(close_knowledge_pool)
 
+    reply_tts = build_tts(settings)
     session = AgentSession[CallResources](
         stt=build_stt(settings),
         llm=build_llm(settings),
-        tts=build_tts(settings),
+        tts=reply_tts,
         vad=ctx.proc.userdata["vad"],
         turn_handling=build_turn_handling(settings),
         userdata=CallResources(
@@ -72,4 +73,12 @@ async def run_support_call(ctx: JobContext) -> None:
         ),
     )
     log_latency_for_each_turn(session, settings.latency_budget_seconds)
-    await session.start(agent=SupportAgent(), room=ctx.room)
+    agent = SupportAgent(
+        LanguageSettings(
+            default_voice_id=settings.tts_voice_id,
+            voice_id_by_language=settings.tts_voice_id_by_language,
+            script_dominance_threshold=settings.script_dominance_threshold,
+        ),
+        reply_tts=reply_tts,
+    )
+    await session.start(agent=agent, room=ctx.room)

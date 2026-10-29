@@ -20,8 +20,15 @@ class Settings(BaseSettings):
     tts_model: str = "eleven_flash_v2_5"
     # "Sarah": a calm premade voice that ElevenLabs verifies for both Arabic and English.
     tts_voice_id: str = "EXAVITQu4vr4xnSDxMaL"
+    # Per-language voice overrides, e.g. {"ar": "<voice id>"}; unset languages use tts_voice_id.
+    tts_voice_id_by_language: dict[str, str] = {}
 
-    stt_language: str = "en"
+    # Unset means ElevenLabs detects the language of every committed transcript.
+    stt_language: str | None = None
+    stt_secondary_languages: list[str] = []
+    # Share of a transcript's letters that must be in one script for the script to decide
+    # the caller's language; mixed transcripts fall back to the STT's detected language.
+    script_dominance_threshold: float = 0.8
 
     anthropic_api_key: SecretStr
     llm_model: str = "claude-haiku-5-5"
@@ -46,6 +53,10 @@ class Settings(BaseSettings):
     hubspot_base_url: str = "https://api-eu1.hubapi.com"
 
     provider_timeout_seconds: float = 10.0
+
+    test_audio_directory: Path = Path("evals/audio")
+    # "Brian": a different voice from the agent's, also verified for Arabic and English.
+    test_caller_voice_id: str = "nPczCjzI2devNBz1zQrb"
 
     database_url: str = "postgresql://voice_agent:voice_agent@localhost:5434/voice_agent"
     db_pool_min_size: int = 1
