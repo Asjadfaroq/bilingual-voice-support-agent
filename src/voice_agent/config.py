@@ -51,6 +51,16 @@ class Settings(BaseSettings):
 
     hubspot_access_token: SecretStr
     hubspot_base_url: str = "https://api-eu1.hubapi.com"
+    # Kept short so a failing CRM costs the caller seconds of acknowledgement, not dead air.
+    hubspot_timeout_seconds: float = 4.0
+    hubspot_max_attempts: int = 2
+    hubspot_retry_backoff_seconds: float = 0.5
+    hubspot_ticket_pipeline_id: str = "0"
+    hubspot_new_ticket_stage_id: str = "1"
+    ticket_status_limit: int = 3
+    default_country_calling_code: str = "966"
+    caller_phone_metadata_key: str = "caller_phone"
+    call_summary_max_tokens: int = 200
 
     provider_timeout_seconds: float = 10.0
 

@@ -36,6 +36,12 @@ def test_every_llm_request_carries_the_configured_thinking_and_effort(
     }
 
 
+def test_tools_are_called_one_at_a_time_because_crm_steps_depend_on_each_other(
+    test_settings: Settings,
+) -> None:
+    assert build_llm(test_settings)._opts.parallel_tool_calls is False
+
+
 def test_per_call_options_are_kept_alongside_the_reasoning_options(
     test_settings: Settings, monkeypatch: pytest.MonkeyPatch
 ) -> None:

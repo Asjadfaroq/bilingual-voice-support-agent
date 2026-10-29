@@ -1,12 +1,19 @@
 import math
 import re
-from collections.abc import AsyncIterator
+from collections.abc import AsyncIterator, Iterator
+from typing import cast
 
+import httpx
 import pytest
+import respx
+from livekit.agents.llm import ChatContext
 from pgvector.psycopg import register_vector_async
 from psycopg import AsyncConnection
+from psycopg_pool import AsyncConnectionPool
 
 from voice_agent.config import Settings
+from voice_agent.conversation.tools import CallResources, CallState
+from voice_agent.crm.hubspot_client import HubSpotClient
 from voice_agent.knowledge.ingest import TextEmbedder, create_knowledge_table
 
 FAKE_VOCABULARY = ("plan", "price", "payment", "apple", "office", "hours", "ticket", "export")
@@ -52,3 +59,59 @@ async def knowledge_connection(test_settings: Settings) -> AsyncIterator[AsyncCo
         await register_vector_async(connection)
         yield connection
         await connection.rollback()
+
+
+HUBSPOT_TEST_URL = "https://api-eu1.hubapi.test"
+
+
+@pytest.fixture
+async def hubspot_client() -> AsyncIterator[HubSpotClient]:
+    http = httpx.AsyncClient(base_url=HUBSPOT_TEST_URL)
+    yield HubSpotClient(http, max_attempts=2, retry_backoff_seconds=0)
+    await http.aclose()
+
+
+@pytest.fixture
+def hubspot_api() -> Iterator[respx.MockRouter]:
+    with respx.mock(base_url=HUBSPOT_TEST_URL, assert_all_called=False) as router:
+        yield router
+
+
+def make_call_resources(crm: HubSpotClient, embed: TextEmbedder) -> CallResources:
+    return CallResources(
+        knowledge_pool=cast(AsyncConnectionPool, None),
+        embed=embed,
+        reranker=None,
+        kb_top_k=3,
+        kb_min_similarity=0.5,
+        crm=crm,
+        ticket_pipeline_id="0",
+        new_ticket_stage_id="1",
+        ticket_status_limit=3,
+        default_country_calling_code="966",
+        call=CallState(),
+    )
+
+
+class FakeSession:
+    def __init__(self) -> None:
+        self.history = ChatContext.empty()
+
+
+class FakeRunContext:
+    """The parts of LiveKit's RunContext the tools use: per-call resources and history."""
+
+    def __init__(self, resources: CallResources) -> None:
+        self.userdata = resources
+        self.session = FakeSession()
+
+    def caller_says(self, text: str) -> None:
+        self.session.history.add_message(role="user", content=text)
+
+    def agent_says(self, text: str) -> None:
+        self.session.history.add_message(role="assistant", content=text)
+
+
+@pytest.fixture
+def call_context(hubspot_client: HubSpotClient, keyword_embedder: TextEmbedder) -> FakeRunContext:
+    return FakeRunContext(make_call_resources(hubspot_client, keyword_embedder))

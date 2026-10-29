@@ -89,6 +89,10 @@ def build_llm(settings: Settings) -> ReasoningControlledLLM:
         },
         api_key=settings.anthropic_api_key.get_secret_value(),
         model=settings.llm_model,
+        # The CRM tools depend on each other (a ticket needs the contact saved first); run in
+        # parallel, a ticket was proposed before its contact existed and the caller was told
+        # it had failed.
+        parallel_tool_calls=False,
     )
 
 

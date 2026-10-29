@@ -8,12 +8,12 @@ import pytest
 from psycopg import AsyncConnection
 from psycopg_pool import AsyncConnectionPool
 
-from voice_agent.conversation.tools import (
+from voice_agent.conversation.instructions import (
     KNOWLEDGE_BASE_UNAVAILABLE,
     NO_KNOWLEDGE_BASE_MATCH,
-    CallResources,
-    look_up_knowledge,
 )
+from voice_agent.conversation.tools import CallResources, look_up_knowledge
+from voice_agent.crm.hubspot_client import HubSpotClient
 from voice_agent.knowledge.ingest import KnowledgeChunk, TextEmbedder, replace_knowledge_chunks
 
 PLANS = KnowledgeChunk("faq#plans", "FAQ", "Plans", "Each plan has a monthly price.")
@@ -44,6 +44,11 @@ def call_resources(pool: object, embed: TextEmbedder, min_similarity: float) -> 
         reranker=None,
         kb_top_k=3,
         kb_min_similarity=min_similarity,
+        crm=cast(HubSpotClient, None),
+        ticket_pipeline_id="0",
+        new_ticket_stage_id="1",
+        ticket_status_limit=3,
+        default_country_calling_code="966",
     )
 
 

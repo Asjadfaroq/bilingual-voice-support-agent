@@ -2,6 +2,7 @@ from collections.abc import AsyncGenerator
 from dataclasses import dataclass
 
 from livekit.agents import Agent, FlushSentinel, ModelSettings, UserInputTranscribedEvent
+from livekit.agents.beta.tools import EndCallTool
 from livekit.agents.llm import ChatChunk, ChatContext, ChatMessage, Tool
 from livekit.plugins import elevenlabs
 
@@ -10,7 +11,16 @@ from voice_agent.conversation.instructions import (
     REPLY_LANGUAGE_NOTES,
     SUPPORT_INSTRUCTIONS,
 )
-from voice_agent.conversation.tools import search_knowledge_base
+from voice_agent.conversation.ticket_tools import (
+    create_ticket,
+    get_ticket_status,
+    request_human_callback,
+)
+from voice_agent.conversation.tools import (
+    find_or_create_contact,
+    save_confirmed_request,
+    search_knowledge_base,
+)
 from voice_agent.pipeline.language import (
     CallerLanguage,
     choose_reply_voice,
@@ -36,13 +46,30 @@ class SupportAgent(Agent):
     def __init__(
         self, language_settings: LanguageSettings, reply_tts: elevenlabs.TTS | None
     ) -> None:
-        super().__init__(instructions=SUPPORT_INSTRUCTIONS, tools=[search_knowledge_base])
+        super().__init__(
+            instructions=SUPPORT_INSTRUCTIONS,
+            tools=[
+                search_knowledge_base,
+                find_or_create_contact,
+                create_ticket,
+                get_ticket_status,
+                request_human_callback,
+                save_confirmed_request,
+                # The agent says goodbye before calling end_call, so the tool asks for no reply.
+                EndCallTool(end_instructions=None, ignore_on_enter=True),
+            ],
+        )
         self._language_settings = language_settings
         # None in text mode, where there is no voice to switch.
         self._reply_tts = reply_tts
         self._caller_language: CallerLanguage | None = None
+        self._caller_languages: list[CallerLanguage] = []
         self._latest_final_transcript = ""
         self._latest_final_stt_language: str | None = None
+
+    @property
+    def caller_languages(self) -> list[CallerLanguage]:
+        return list(self._caller_languages)
 
     async def on_enter(self) -> None:
         self.session.on("user_input_transcribed", self._remember_stt_language)
@@ -68,6 +95,8 @@ class SupportAgent(Agent):
         if language == self._caller_language:
             return
         self._caller_language = language
+        if language not in self._caller_languages:
+            self._caller_languages.append(language)
         if self._reply_tts is None:
             return
         voice = choose_reply_voice(
