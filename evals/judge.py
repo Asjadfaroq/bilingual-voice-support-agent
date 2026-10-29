@@ -2,9 +2,11 @@ import json
 from dataclasses import dataclass
 
 import anthropic
+from checks import expected_reply_language
 from simulated_call import CallOutcome
 
 from voice_agent.config import Settings
+from voice_agent.pipeline.spoken_text import to_spoken_text
 
 RUBRIC = """\
 You grade one support call handled by a voice agent for Larkspur Systems (product: Ledgerly).
@@ -22,10 +24,15 @@ spoken_style: Would this sound natural when spoken by a phone agent: short sente
 one question per turn, no lists or symbols, numbers and prices said as words, the caller's
 language? 5 = natural; 3 = noticeably awkward; 1 = unusable as speech.
 
+How this agent saves things: find_or_create_contact (for a new contact), create_ticket and
+request_human_callback never save anything. They say a read-back to the caller themselves and
+return nothing; only record_caller_answer saves, and only after the caller's clear yes.
+
 Expected behaviour for this scenario:
 {judge_notes}
 
-Transcript (tool calls and their outputs are shown in brackets):
+Transcript (tool calls and their outputs are shown in brackets; each Agent line is exactly
+the text the voice was given to speak, after numbers were turned into words):
 {transcript}
 """
 
@@ -55,17 +62,21 @@ class JudgeVerdict:
         return min(self.correctness, self.grounding, self.spoken_style) >= pass_score
 
 
-def format_transcript(outcome: CallOutcome) -> str:
+def format_transcript(outcome: CallOutcome, min_letters: int) -> str:
     lines = []
     for turn, caller_line in enumerate(outcome.caller_lines):
         lines.append(f"Caller: {caller_line}")
         lines += [
-            f"[tool {tool.name}({json.dumps(tool.arguments, ensure_ascii=False)}) -> {tool.output}]"
+            f"[tool {tool.name}({json.dumps(tool.arguments, ensure_ascii=False)}) -> "
+            f"{tool.output or '(returned nothing)'}]"
             for tool in outcome.tool_calls
             if tool.caller_turn == turn
         ]
+        language = expected_reply_language(outcome, turn, min_letters)
         lines += [
-            f"Agent: {text}" for agent_turn, text in outcome.agent_lines if agent_turn == turn
+            f"Agent: {to_spoken_text(text, language)}"
+            for agent_turn, text in outcome.agent_lines
+            if agent_turn == turn
         ]
     return "\n".join(lines)
 
@@ -74,7 +85,8 @@ async def judge_call(
     client: anthropic.AsyncAnthropic, settings: Settings, outcome: CallOutcome
 ) -> JudgeVerdict:
     prompt = RUBRIC.format(
-        judge_notes=outcome.scenario.judge_notes, transcript=format_transcript(outcome)
+        judge_notes=outcome.scenario.judge_notes,
+        transcript=format_transcript(outcome, settings.reply_language_min_letters),
     )
     response = await client.messages.create(
         model=settings.judge_model,

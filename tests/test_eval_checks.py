@@ -3,14 +3,16 @@ from typing import Any
 from checks import (
     check_no_write_without_yes,
     check_numbers_as_words,
+    check_one_question_per_turn,
     check_reply_language,
-    check_scenario_specifics,
     check_spoken_format,
-    check_tools,
-    check_writes,
 )
 from fake_hubspot import FakeHubSpot, RecordedWrite
-from simulated_call import CallOutcome, Scenario, ToolCall
+from scenario_checks import check_scenario_specifics, check_tools, check_writes
+from simulated_call import CallOutcome, ToolCall
+from simulated_caller import Scenario
+
+MIN_LETTERS = 6
 
 
 def outcome_with(
@@ -58,17 +60,19 @@ def test_reply_must_be_in_the_language_of_the_caller_turn_it_answers() -> None:
         [(0, "Growth is one hundred forty-nine riyals."), (1, "Starter is forty-nine riyals.")],
     )
 
-    check = check_reply_language(switched)
+    check = check_reply_language(switched, MIN_LETTERS)
 
     assert not check.passed and "turn 1: expected ar, got en" in check.reason
 
 
 def test_arabic_reply_with_a_spelled_email_is_still_arabic() -> None:
     outcome = outcome_with(
-        ["سجلني"], [(0, "سأسجلك بالبريد k h a l e d at e x a m p l e dot c o m، هل هذا صحيح؟")]
+        ["سجلني"],
+        [(0, "سأسجلك بالبريد k h a l e d at e x a m p l e dot c o m، هل هذا صحيح؟")],
+        language="ar",
     )
 
-    assert check_reply_language(outcome).passed
+    assert check_reply_language(outcome, MIN_LETTERS).passed
 
 
 def test_markdown_and_web_addresses_are_not_speakable() -> None:
@@ -77,14 +81,12 @@ def test_markdown_and_web_addresses_are_not_speakable() -> None:
     assert not check_spoken_format(outcome).passed
 
 
-def test_arabic_digits_and_english_prices_in_digits_fail_but_identifiers_pass() -> None:
+def test_numbers_are_checked_on_the_spoken_text_the_voice_receives() -> None:
     arabic = outcome_with(["كم السعر؟"], [(0, "السعر 49 ريالًا")], language="ar")
-    english_price = outcome_with(["price?"], [(0, "It costs 149 riyals a month.")])
-    english_invoice = outcome_with(["ticket"], [(0, "I'll note invoice 4412.")])
+    english = outcome_with(["price?"], [(0, "It costs 149 SAR a month, ticket 4412.")])
 
-    assert not check_numbers_as_words(arabic).passed
-    assert not check_numbers_as_words(english_price).passed
-    assert check_numbers_as_words(english_invoice).passed
+    assert check_numbers_as_words(arabic, MIN_LETTERS).passed
+    assert check_numbers_as_words(english, MIN_LETTERS).passed
 
 
 def test_expected_tool_arguments_accept_any_listed_value() -> None:
@@ -129,3 +131,21 @@ def test_fake_hubspot_records_writes_with_the_caller_turn() -> None:
     hubspot._create_contact(None, {"properties": {"email": "a@b.c"}})  # type: ignore[arg-type]
 
     assert hubspot.writes == [RecordedWrite("contact", 2, {"email": "a@b.c"})]
+
+
+def test_an_email_in_an_arabic_caller_line_does_not_make_the_line_english() -> None:
+    outcome = outcome_with(
+        ["أنا نورة سعد، noura.saad@example.com."],
+        [(0, "شكرًا يا نورة، لحظة أتحقق من تذكرتك.")],
+        language="ar",
+    )
+
+    assert check_reply_language(outcome, MIN_LETTERS).passed
+
+
+def test_more_than_one_question_in_a_turn_fails() -> None:
+    two = outcome_with(["slow"], [(0, "Which page is slow?"), (0, "And how long does it take?")])
+    one = outcome_with(["slow"], [(0, "Let me check."), (0, "Which page is slow?")])
+
+    assert not check_one_question_per_turn(two).passed
+    assert check_one_question_per_turn(one).passed
