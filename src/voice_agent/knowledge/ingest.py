@@ -2,12 +2,12 @@ import asyncio
 import re
 from collections.abc import Callable
 from dataclasses import dataclass
+from importlib.util import find_spec
 from pathlib import Path
 
 import yaml
 from pgvector.psycopg import register_vector_async
 from psycopg import AsyncConnection
-from sentence_transformers import SentenceTransformer
 
 TextEmbedder = Callable[[list[str]], list[list[float]]]
 
@@ -104,7 +104,18 @@ def load_knowledge_chunks(kb_directory: Path, max_characters: int) -> list[Knowl
     ]
 
 
+def sentence_transformers_installed() -> bool:
+    # pyproject leaves sentence-transformers and torch out on Intel Macs, which run ONNX instead.
+    return find_spec("sentence_transformers") is not None
+
+
 def build_sentence_embedder(model_name: str) -> TextEmbedder:
+    if not sentence_transformers_installed():
+        from voice_agent.knowledge.onnx_models import build_onnx_sentence_embedder
+
+        return build_onnx_sentence_embedder(model_name)
+    from sentence_transformers import SentenceTransformer
+
     model = SentenceTransformer(model_name)
     return lambda texts: model.encode(texts, normalize_embeddings=True).tolist()
 

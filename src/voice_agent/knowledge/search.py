@@ -3,9 +3,8 @@ from collections.abc import Callable
 from dataclasses import dataclass
 
 from psycopg import AsyncConnection
-from sentence_transformers import CrossEncoder
 
-from voice_agent.knowledge.ingest import TextEmbedder
+from voice_agent.knowledge.ingest import TextEmbedder, sentence_transformers_installed
 
 PassageScorer = Callable[[str, list[str]], list[float]]
 
@@ -26,14 +25,21 @@ class KnowledgeMatch:
     similarity: float
 
 
-def build_cross_encoder_reranker(model_name: str, candidate_count: int) -> Reranker:
+def build_cross_encoder_scorer(model_name: str) -> PassageScorer:
+    if not sentence_transformers_installed():
+        from voice_agent.knowledge.onnx_models import build_onnx_passage_scorer
+
+        return build_onnx_passage_scorer(model_name)
+    from sentence_transformers import CrossEncoder
+
     model = CrossEncoder(model_name)
-    return Reranker(
-        score_passages=lambda question, passages: model.predict(
-            [(question, passage) for passage in passages]
-        ).tolist(),
-        candidate_count=candidate_count,
-    )
+    return lambda question, passages: model.predict(
+        [(question, passage) for passage in passages]
+    ).tolist()
+
+
+def build_cross_encoder_reranker(model_name: str, candidate_count: int) -> Reranker:
+    return Reranker(build_cross_encoder_scorer(model_name), candidate_count)
 
 
 async def find_similar_chunks(
