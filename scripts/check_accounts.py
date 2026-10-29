@@ -2,6 +2,7 @@ import asyncio
 import sys
 from collections.abc import Awaitable, Callable
 from dataclasses import dataclass
+from urllib.parse import urlparse
 
 import aiohttp
 import anthropic
@@ -12,6 +13,7 @@ from voice_agent.config import Settings, get_settings
 
 TTS_CHECK_PHRASE = "مرحبا"
 ERROR_BODY_PREVIEW_CHARACTERS = 200
+KEY_PREFIX_CHARACTERS = 4
 
 
 @dataclass(frozen=True)
@@ -30,6 +32,10 @@ def describe_http_failure(response: httpx.Response) -> CheckOutcome:
 
 
 async def check_livekit(settings: Settings) -> CheckOutcome:
+    credential_label = (
+        f"{urlparse(settings.livekit_url).netloc} with key "
+        f"{settings.livekit_api_key.get_secret_value()[:KEY_PREFIX_CHARACTERS]}…"
+    )
     async with livekit_api.LiveKitAPI(
         settings.livekit_url,
         settings.livekit_api_key.get_secret_value(),
@@ -38,10 +44,16 @@ async def check_livekit(settings: Settings) -> CheckOutcome:
         try:
             rooms = await livekit.room.list_rooms(livekit_api.ListRoomsRequest())
         except livekit_api.TwirpError as error:
+            if error.status == httpx.codes.UNAUTHORIZED:
+                return CheckOutcome(
+                    False,
+                    f"HTTP 401 from {credential_label}: the server parsed the token but rejected"
+                    " this API key and secret pair",
+                )
             return CheckOutcome(
                 False, f"HTTP {error.status} {error.code}: {error.message or 'no message'}"
             )
-    return CheckOutcome(True, f"listed rooms ({len(rooms.rooms)} active)")
+    return CheckOutcome(True, f"listed rooms ({len(rooms.rooms)} active) on {credential_label}")
 
 
 async def check_elevenlabs_stt(settings: Settings) -> CheckOutcome:
