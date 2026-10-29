@@ -19,9 +19,19 @@ def scripted(*replies: str) -> tuple[list[ChatContext], object]:
     return contexts, start_reply
 
 
-async def spoken(start_reply: object, language: str) -> str:
-    stream = guarded_reply(start_reply, ChatContext.empty(), language, RETRY_NOTE, 6)  # type: ignore[arg-type]
+async def spoken(start_reply: object, language: str, holds: list[float] | None = None) -> str:
+    report_hold = (holds if holds is not None else []).append
+    stream = guarded_reply(start_reply, ChatContext.empty(), language, RETRY_NOTE, 6, report_hold)  # type: ignore[arg-type]
     return "".join([chunk async for chunk in stream]).strip()  # type: ignore[misc]
+
+
+async def test_the_filter_hold_is_reported_once_when_the_first_sentence_is_let_through() -> None:
+    _, start_reply = scripted("The caller wants prices. Growth is 149 SAR. It is billed monthly.")
+    holds: list[float] = []
+
+    await spoken(start_reply, "en", holds)
+
+    assert len(holds) == 1 and holds[0] >= 0
 
 
 async def test_the_model_thinking_aloud_about_the_caller_is_never_spoken() -> None:

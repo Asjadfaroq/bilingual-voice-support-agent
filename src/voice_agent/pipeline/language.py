@@ -9,6 +9,15 @@ from voice_agent.privacy.pii import EMAIL_PATTERN, SPELLED_VALUE_PATTERN
 CallerLanguage = Literal["en", "ar"]
 SUPPORTED_LANGUAGES: dict[str, CallerLanguage] = {"en": "en", "ar": "ar"}
 
+
+@dataclass(frozen=True)
+class LanguageSettings:
+    default_voice_id: str
+    voice_id_by_language: dict[str, str]
+    script_dominance_threshold: float
+    reply_language_min_letters: int
+
+
 # Product names, emails, spelled values and numbers look the same in both languages, so they
 # are removed before a line's language is judged from its script.
 NAMES_IN_ANY_LANGUAGE = re.compile(
@@ -65,3 +74,7 @@ def choose_reply_voice(
     return ReplyVoice(
         language=language, voice_id=voice_id_by_language.get(language, default_voice_id)
     )
+
+
+def reply_voice_for(language: CallerLanguage, settings: LanguageSettings) -> ReplyVoice:
+    return choose_reply_voice(language, settings.default_voice_id, settings.voice_id_by_language)

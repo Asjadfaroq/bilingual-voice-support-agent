@@ -11,14 +11,14 @@ from voice_agent.conversation.call_state import (
     CallState,
     caller_phone_from_metadata,
 )
-from voice_agent.conversation.support_agent import LanguageSettings, SupportAgent
+from voice_agent.conversation.support_agent import SupportAgent
 from voice_agent.conversation.tools import identify_caller_by_line
 from voice_agent.crm.call_log import CallRecord, build_call_summariser, log_call
 from voice_agent.crm.hubspot_client import HubSpotClient, HubSpotError
 from voice_agent.knowledge.ingest import build_sentence_embedder
 from voice_agent.knowledge.search import build_cross_encoder_reranker
 from voice_agent.metrics.tracing import CallTraceContext, start_call_tracing
-from voice_agent.metrics.turn_latency import log_latency_for_each_turn
+from voice_agent.metrics.turn_latency import log_latency_for_each_turn, reply_filter_hold_reporter
 from voice_agent.pipeline.components import (
     build_llm,
     build_stt,
@@ -26,6 +26,7 @@ from voice_agent.pipeline.components import (
     build_turn_handling,
     build_vad,
 )
+from voice_agent.pipeline.language import LanguageSettings
 from voice_agent.privacy.pii import PiiMaskingFilter
 
 logger = logging.getLogger(__name__)
@@ -64,7 +65,7 @@ server = AgentServer(
 )
 
 
-@server.rtc_session()
+@server.rtc_session(agent_name=settings.agent_name)
 async def run_support_call(ctx: JobContext) -> None:
     # Not opened with wait=True: if the database is down the call still starts and the
     # knowledge tool apologises instead of the caller hearing nothing.
@@ -95,6 +96,8 @@ async def run_support_call(ctx: JobContext) -> None:
         ),
         reply_tts=reply_tts,
         call=call_state,
+        kb_search_mode=settings.kb_search_mode,
+        report_reply_filter_hold=reply_filter_hold_reporter(settings.turn_latency_topic),
     )
     trace_provider = start_call_tracing(
         settings,
@@ -103,7 +106,7 @@ async def run_support_call(ctx: JobContext) -> None:
             caller_key=lambda: (
                 call_state.caller_phone or (call_state.contact.id if call_state.contact else None)
             ),
-            languages=lambda: list(agent.caller_languages),
+            languages=lambda: list(call_state.languages),
         ),
     )
     session = AgentSession[CallResources](
@@ -126,7 +129,7 @@ async def run_support_call(ctx: JobContext) -> None:
             call=call_state,
         ),
     )
-    log_latency_for_each_turn(session, settings.latency_budget_seconds)
+    log_latency_for_each_turn(session, settings.latency_budget_seconds, settings.turn_latency_topic)
     started_at = datetime.now(UTC)
 
     # One callback, because LiveKit runs shutdown callbacks concurrently and the call must be
@@ -135,7 +138,7 @@ async def run_support_call(ctx: JobContext) -> None:
         record = CallRecord(
             started_at=started_at,
             ended_at=datetime.now(UTC),
-            languages=agent.caller_languages,
+            languages=call_state.languages,
             contact_id=call_state.contact.id if call_state.contact else None,
             ticket_ids=call_state.ticket_ids,
         )

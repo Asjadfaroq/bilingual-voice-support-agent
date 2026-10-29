@@ -67,12 +67,11 @@ def test_barge_in_is_enabled_with_the_configured_mode_and_minimum_speech(
     assert turn_handling["endpointing"]["min_delay"] == test_settings.endpointing_min_delay_seconds
 
 
-def test_stt_detects_the_language_of_every_turn_instead_of_pinning_one(
-    test_settings: Settings,
-) -> None:
+def test_stt_listens_for_arabic_and_english_only(test_settings: Settings) -> None:
     stt = build_stt(test_settings)
 
-    assert stt._opts.language_code is None
+    assert stt._opts.language_code == "ar"
+    assert stt._opts.secondary_languages == ["en"]
     assert stt._opts.include_language_detection is True
 
 

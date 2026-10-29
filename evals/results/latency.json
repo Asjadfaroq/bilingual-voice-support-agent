@@ -1,0 +1,2864 @@
+{
+  "machine": {
+    "model": "MacBookPro16,1",
+    "os": "Darwin 26.5.2",
+    "machine": "x86_64",
+    "cpu": "Intel(R) Core(TM) i9-9980HK CPU @ 2.40GHz",
+    "python": "3.12.15",
+    "memory_gb": 32,
+    "measured_on": "2026-10-30"
+  },
+  "text_mode": {
+    "tool": {
+      "languages": {
+        "en": {
+          "turns": 20,
+          "first_text": {
+            "p50": 1.221,
+            "p90": 1.586,
+            "n": 20
+          },
+          "answer_text": {
+            "p50": 2.166,
+            "p90": 3.049,
+            "n": 20
+          },
+          "llm_time_to_first_token": {
+            "p50": 1.044,
+            "p90": 1.428,
+            "n": 20
+          },
+          "reply_filter_hold": {
+            "p50": 0.143,
+            "p90": 0.334,
+            "n": 20
+          }
+        },
+        "ar": {
+          "turns": 20,
+          "first_text": {
+            "p50": 1.112,
+            "p90": 1.579,
+            "n": 20
+          },
+          "answer_text": {
+            "p50": 2.032,
+            "p90": 3.156,
+            "n": 20
+          },
+          "llm_time_to_first_token": {
+            "p50": 0.913,
+            "p90": 1.49,
+            "n": 20
+          },
+          "reply_filter_hold": {
+            "p50": 0.156,
+            "p90": 0.392,
+            "n": 20
+          }
+        }
+      },
+      "turns": {
+        "en": [
+          {
+            "first_text": 1.469231850000142,
+            "answer_text": 2.7133974920016044,
+            "llm_time_to_first_token": 1.2229128920007497,
+            "reply_filter_hold": 0.23218761700081814
+          },
+          {
+            "first_text": 1.2177916180007742,
+            "answer_text": 2.3506948169997486,
+            "llm_time_to_first_token": 1.105345785001191,
+            "reply_filter_hold": 0.09961657700114301
+          },
+          {
+            "first_text": 0.9600019339995924,
+            "answer_text": 0.9600019339995924,
+            "llm_time_to_first_token": 0.9345560830006434,
+            "reply_filter_hold": 0.014434496000831132
+          },
+          {
+            "first_text": 1.6303875579997111,
+            "answer_text": 1.6303875579997111,
+            "llm_time_to_first_token": 1.5477225579998048,
+            "reply_filter_hold": 0.07164431499950297
+          },
+          {
+            "first_text": 1.191086863000237,
+            "answer_text": 1.191086863000237,
+            "llm_time_to_first_token": 1.0995836860001873,
+            "reply_filter_hold": 0.07975181599977077
+          },
+          {
+            "first_text": 1.4529379879986664,
+            "answer_text": 2.750525044999449,
+            "llm_time_to_first_token": 1.2358948969995254,
+            "reply_filter_hold": 0.20079268900008174
+          },
+          {
+            "first_text": 1.0253505839991703,
+            "answer_text": 2.1944855059991824,
+            "llm_time_to_first_token": 0.6923344200004067,
+            "reply_filter_hold": 0.32028154999898106
+          },
+          {
+            "first_text": 0.9495016330001818,
+            "answer_text": 0.9495016330001818,
+            "llm_time_to_first_token": 0.7371370079999906,
+            "reply_filter_hold": 0.20252928699846962
+          },
+          {
+            "first_text": 0.8574813110008108,
+            "answer_text": 0.8574813110008108,
+            "llm_time_to_first_token": 0.7775840319991403,
+            "reply_filter_hold": 0.0684446109989949
+          },
+          {
+            "first_text": 1.4938025859992194,
+            "answer_text": 3.1174939230004384,
+            "llm_time_to_first_token": 0.7668812310002977,
+            "reply_filter_hold": 0.7106873859993357
+          },
+          {
+            "first_text": 1.2530187390002538,
+            "answer_text": 1.2530187390002538,
+            "llm_time_to_first_token": 1.1886321199999657,
+            "reply_filter_hold": 0.05368631499914045
+          },
+          {
+            "first_text": 0.9976752829988982,
+            "answer_text": 3.0755531760005397,
+            "llm_time_to_first_token": 0.8314445550004166,
+            "reply_filter_hold": 0.1555326409998088
+          },
+          {
+            "first_text": 1.1550349169992842,
+            "answer_text": 1.1550349169992842,
+            "llm_time_to_first_token": 1.0112843930000963,
+            "reply_filter_hold": 0.13240702399889415
+          },
+          {
+            "first_text": 1.5421616000003269,
+            "answer_text": 2.9585091240005568,
+            "llm_time_to_first_token": 1.0732584800007317,
+            "reply_filter_hold": 0.4565701160008757
+          },
+          {
+            "first_text": 1.5850196890005464,
+            "answer_text": 2.684968531000777,
+            "llm_time_to_first_token": 1.4723604099999648,
+            "reply_filter_hold": 0.10111754500030656
+          },
+          {
+            "first_text": 1.4561929880001117,
+            "answer_text": 1.4561929880001117,
+            "llm_time_to_first_token": 1.2285727460002818,
+            "reply_filter_hold": 0.21616460699988238
+          },
+          {
+            "first_text": 0.8949753840006451,
+            "answer_text": 2.138465501999235,
+            "llm_time_to_first_token": 0.7997032720013522,
+            "reply_filter_hold": 0.08668380199924286
+          },
+          {
+            "first_text": 1.2241234760003863,
+            "answer_text": 1.2241234760003863,
+            "llm_time_to_first_token": 1.014416361000258,
+            "reply_filter_hold": 0.1989519519993337
+          },
+          {
+            "first_text": 1.0245197059994098,
+            "answer_text": 2.5650088630009122,
+            "llm_time_to_first_token": 1.012818230999983,
+            "reply_filter_hold": 0.0010326809988328023
+          },
+          {
+            "first_text": 1.590590763000364,
+            "answer_text": 3.0455632810007955,
+            "llm_time_to_first_token": 1.4233004809993872,
+            "reply_filter_hold": 0.15437277799901494
+          }
+        ],
+        "ar": [
+          {
+            "first_text": 1.4973671930001728,
+            "answer_text": 3.134940738998921,
+            "llm_time_to_first_token": 1.4591014079996967,
+            "reply_filter_hold": 0.02818218100037484
+          },
+          {
+            "first_text": 1.4587719959999959,
+            "answer_text": 3.346844601999692,
+            "llm_time_to_first_token": 1.2708830529991246,
+            "reply_filter_hold": 0.17813326999930723
+          },
+          {
+            "first_text": 1.3010530390001804,
+            "answer_text": 2.442484957000488,
+            "llm_time_to_first_token": 1.0881301570007054,
+            "reply_filter_hold": 0.20430808300079661
+          },
+          {
+            "first_text": 1.0428351789996668,
+            "answer_text": 2.8460427449990675,
+            "llm_time_to_first_token": 0.9354883070009237,
+            "reply_filter_hold": 0.0964905099990574
+          },
+          {
+            "first_text": 1.1379368220004835,
+            "answer_text": 1.1379368220004835,
+            "llm_time_to_first_token": 1.0823927630008257,
+            "reply_filter_hold": 0.04485524400115537
+          },
+          {
+            "first_text": 2.354621688999032,
+            "answer_text": 4.1188367109989485,
+            "llm_time_to_first_token": 2.1104862289994344,
+            "reply_filter_hold": 0.23301642200021888
+          },
+          {
+            "first_text": 1.3293224859990005,
+            "answer_text": 2.7767976529994485,
+            "llm_time_to_first_token": 1.0452520569997432,
+            "reply_filter_hold": 0.2706382489996031
+          },
+          {
+            "first_text": 0.962134359000629,
+            "answer_text": 2.04343561099995,
+            "llm_time_to_first_token": 0.857570095000483,
+            "reply_filter_hold": 0.09226662599940028
+          },
+          {
+            "first_text": 1.0359332429998176,
+            "answer_text": 1.0359332429998176,
+            "llm_time_to_first_token": 0.9189896930001851,
+            "reply_filter_hold": 0.10575521499958995
+          },
+          {
+            "first_text": 1.0278989000016736,
+            "answer_text": 1.0278989000016736,
+            "llm_time_to_first_token": 0.8818190860001778,
+            "reply_filter_hold": 0.1339098650005326
+          },
+          {
+            "first_text": 1.1112032000000909,
+            "answer_text": 1.1112032000000909,
+            "llm_time_to_first_token": 0.929496573000506,
+            "reply_filter_hold": 0.17041220699866244
+          },
+          {
+            "first_text": 1.2553165610006545,
+            "answer_text": 2.7010223729994323,
+            "llm_time_to_first_token": 0.8622786830001132,
+            "reply_filter_hold": 0.38245247200029553
+          },
+          {
+            "first_text": 1.1128665849992103,
+            "answer_text": 1.1128665849992103,
+            "llm_time_to_first_token": 0.9070800530007546,
+            "reply_filter_hold": 0.19402606000039668
+          },
+          {
+            "first_text": 0.8673751249989436,
+            "answer_text": 0.8673751249989436,
+            "llm_time_to_first_token": 0.7156153920004726,
+            "reply_filter_hold": 0.13962870399882377
+          },
+          {
+            "first_text": 0.9547762809997948,
+            "answer_text": 2.0208731339989754,
+            "llm_time_to_first_token": 0.8024064239998552,
+            "reply_filter_hold": 0.1409118169995054
+          },
+          {
+            "first_text": 0.9507836009997845,
+            "answer_text": 0.9507836009997845,
+            "llm_time_to_first_token": 0.8333464450006431,
+            "reply_filter_hold": 0.09990599899902008
+          },
+          {
+            "first_text": 0.9594056580008328,
+            "answer_text": 0.9594056580008328,
+            "llm_time_to_first_token": 0.8517085670009692,
+            "reply_filter_hold": 0.09661361599864904
+          },
+          {
+            "first_text": 2.3107780819991603,
+            "answer_text": 2.3107780819991603,
+            "llm_time_to_first_token": 1.7640880340004514,
+            "reply_filter_hold": 0.534807231000741
+          },
+          {
+            "first_text": 1.3275385320011992,
+            "answer_text": 1.3275385320011992,
+            "llm_time_to_first_token": 0.8398509810012911,
+            "reply_filter_hold": 0.47611796999990474
+          },
+          {
+            "first_text": 0.9978202149995923,
+            "answer_text": 2.1321321460000036,
+            "llm_time_to_first_token": 0.7987255429998186,
+            "reply_filter_hold": 0.187255136001113
+          }
+        ]
+      }
+    },
+    "every_turn": {
+      "languages": {
+        "en": {
+          "turns": 20,
+          "first_text": {
+            "p50": 0.871,
+            "p90": 1.082,
+            "n": 20
+          },
+          "answer_text": {
+            "p50": 0.871,
+            "p90": 1.082,
+            "n": 20
+          },
+          "llm_time_to_first_token": {
+            "p50": 0.775,
+            "p90": 1.05,
+            "n": 20
+          },
+          "reply_filter_hold": {
+            "p50": 0.093,
+            "p90": 0.189,
+            "n": 20
+          }
+        },
+        "ar": {
+          "turns": 20,
+          "first_text": {
+            "p50": 1.023,
+            "p90": 1.511,
+            "n": 20
+          },
+          "answer_text": {
+            "p50": 1.023,
+            "p90": 1.511,
+            "n": 20
+          },
+          "llm_time_to_first_token": {
+            "p50": 0.773,
+            "p90": 1.306,
+            "n": 20
+          },
+          "reply_filter_hold": {
+            "p50": 0.197,
+            "p90": 0.278,
+            "n": 20
+          }
+        }
+      },
+      "turns": {
+        "en": [
+          {
+            "first_text": 1.8526427489996422,
+            "answer_text": 1.8526427489996422,
+            "llm_time_to_first_token": 1.8300675009995757,
+            "reply_filter_hold": 0.0016867579997779103
+          },
+          {
+            "first_text": 0.9196799509991251,
+            "answer_text": 0.9196799509991251,
+            "llm_time_to_first_token": 0.7793645290003042,
+            "reply_filter_hold": 0.12008767899897066
+          },
+          {
+            "first_text": 0.8750404679994972,
+            "answer_text": 0.8750404679994972,
+            "llm_time_to_first_token": 0.7425624400002562,
+            "reply_filter_hold": 0.11084780800047156
+          },
+          {
+            "first_text": 0.8016706729995349,
+            "answer_text": 0.8016706729995349,
+            "llm_time_to_first_token": 0.7828585030001705,
+            "reply_filter_hold": 0.0007000680016062688
+          },
+          {
+            "first_text": 0.8431757620001008,
+            "answer_text": 0.8431757620001008,
+            "llm_time_to_first_token": 0.673450533000505,
+            "reply_filter_hold": 0.152761418999944
+          },
+          {
+            "first_text": 0.8708945759990456,
+            "answer_text": 0.8708945759990456,
+            "llm_time_to_first_token": 0.6540904089997639,
+            "reply_filter_hold": 0.1959200140008761
+          },
+          {
+            "first_text": 0.8644299750012578,
+            "answer_text": 0.8644299750012578,
+            "llm_time_to_first_token": 0.6560073809996538,
+            "reply_filter_hold": 0.18862128500040853
+          },
+          {
+            "first_text": 0.8399900599997636,
+            "answer_text": 0.8399900599997636,
+            "llm_time_to_first_token": 0.8100652920002176,
+            "reply_filter_hold": 0.008837760999085731
+          },
+          {
+            "first_text": 0.9147768959992391,
+            "answer_text": 0.9147768959992391,
+            "llm_time_to_first_token": 0.7923509740012378,
+            "reply_filter_hold": 0.1022810300000856
+          },
+          {
+            "first_text": 1.0709960929998488,
+            "answer_text": 1.0709960929998488,
+            "llm_time_to_first_token": 1.0492985760010924,
+            "reply_filter_hold": 0.0017092630005208775
+          },
+          {
+            "first_text": 1.182538757999282,
+            "answer_text": 1.182538757999282,
+            "llm_time_to_first_token": 1.0598895780003659,
+            "reply_filter_hold": 0.10134753599959367
+          },
+          {
+            "first_text": 0.8007809139999154,
+            "answer_text": 0.8007809139999154,
+            "llm_time_to_first_token": 0.7711877919991821,
+            "reply_filter_hold": 0.008790015999693424
+          },
+          {
+            "first_text": 0.8147644380005659,
+            "answer_text": 0.8147644380005659,
+            "llm_time_to_first_token": 0.7931459770006768,
+            "reply_filter_hold": 0.0017664530005276902
+          },
+          {
+            "first_text": 0.8382045179987472,
+            "answer_text": 0.8382045179987472,
+            "llm_time_to_first_token": 0.6837601959996391,
+            "reply_filter_hold": 0.13306801399994583
+          },
+          {
+            "first_text": 0.7241343919995415,
+            "answer_text": 0.7241343919995415,
+            "llm_time_to_first_token": 0.6580155979991105,
+            "reply_filter_hold": 0.04885883899987675
+          },
+          {
+            "first_text": 0.8011962499986112,
+            "answer_text": 0.8011962499986112,
+            "llm_time_to_first_token": 0.698000101998332,
+            "reply_filter_hold": 0.08089715700043598
+          },
+          {
+            "first_text": 1.020202301999234,
+            "answer_text": 1.020202301999234,
+            "llm_time_to_first_token": 0.9983382249993156,
+            "reply_filter_hold": 0.003965669000535854
+          },
+          {
+            "first_text": 0.8703756389986665,
+            "answer_text": 0.8703756389986665,
+            "llm_time_to_first_token": 0.6983035600005678,
+            "reply_filter_hold": 0.15444881900111795
+          },
+          {
+            "first_text": 0.9234067039997171,
+            "answer_text": 0.9234067039997171,
+            "llm_time_to_first_token": 0.8197306220008613,
+            "reply_filter_hold": 0.08417967800050974
+          },
+          {
+            "first_text": 0.9107055919994309,
+            "answer_text": 0.9107055919994309,
+            "llm_time_to_first_token": 0.6990087499998481,
+            "reply_filter_hold": 0.18949999699907494
+          }
+        ],
+        "ar": [
+          {
+            "first_text": 1.1660792120001133,
+            "answer_text": 1.1660792120001133,
+            "llm_time_to_first_token": 1.0935422949987696,
+            "reply_filter_hold": 0.05345115599993733
+          },
+          {
+            "first_text": 1.041411424999751,
+            "answer_text": 1.041411424999751,
+            "llm_time_to_first_token": 0.7516944950002653,
+            "reply_filter_hold": 0.2668553650000831
+          },
+          {
+            "first_text": 0.8601890900008584,
+            "answer_text": 0.8601890900008584,
+            "llm_time_to_first_token": 0.7219210259991087,
+            "reply_filter_hold": 0.11794928400013305
+          },
+          {
+            "first_text": 0.8450479450002604,
+            "answer_text": 0.8450479450002604,
+            "llm_time_to_first_token": 0.627707855999688,
+            "reply_filter_hold": 0.19676723799966567
+          },
+          {
+            "first_text": 0.8922422880004888,
+            "answer_text": 0.8922422880004888,
+            "llm_time_to_first_token": 0.6867818269984127,
+            "reply_filter_hold": 0.18478341300033208
+          },
+          {
+            "first_text": 0.8615256390003196,
+            "answer_text": 0.8615256390003196,
+            "llm_time_to_first_token": 0.6434965030002786,
+            "reply_filter_hold": 0.19653175399980682
+          },
+          {
+            "first_text": 1.0866753490008705,
+            "answer_text": 1.0866753490008705,
+            "llm_time_to_first_token": 0.8750117979998322,
+            "reply_filter_hold": 0.19021103200066136
+          },
+          {
+            "first_text": 1.5070647390002705,
+            "answer_text": 1.5070647390002705,
+            "llm_time_to_first_token": 1.2995093429999542,
+            "reply_filter_hold": 0.18688318400018034
+          },
+          {
+            "first_text": 1.3165713919988775,
+            "answer_text": 1.3165713919988775,
+            "llm_time_to_first_token": 1.056763411999782,
+            "reply_filter_hold": 0.23922429400045075
+          },
+          {
+            "first_text": 0.9878829319986835,
+            "answer_text": 0.9878829319986835,
+            "llm_time_to_first_token": 0.9137734140003886,
+            "reply_filter_hold": 0.05435122400012915
+          },
+          {
+            "first_text": 1.545573597000839,
+            "answer_text": 1.545573597000839,
+            "llm_time_to_first_token": 1.3692806099988957,
+            "reply_filter_hold": 0.15476753099937923
+          },
+          {
+            "first_text": 1.231804931001534,
+            "answer_text": 1.231804931001534,
+            "llm_time_to_first_token": 0.7713720749998174,
+            "reply_filter_hold": 0.43566509099946416
+          },
+          {
+            "first_text": 0.9746646460007469,
+            "answer_text": 0.9746646460007469,
+            "llm_time_to_first_token": 0.7294802560008975,
+            "reply_filter_hold": 0.22472630999982357
+          },
+          {
+            "first_text": 0.8508257550001872,
+            "answer_text": 0.8508257550001872,
+            "llm_time_to_first_token": 0.6238520560000325,
+            "reply_filter_hold": 0.20569884500037006
+          },
+          {
+            "first_text": 1.0050909490000777,
+            "answer_text": 1.0050909490000777,
+            "llm_time_to_first_token": 0.7584095830006845,
+            "reply_filter_hold": 0.22535609000078693
+          },
+          {
+            "first_text": 0.9324907129994244,
+            "answer_text": 0.9324907129994244,
+            "llm_time_to_first_token": 0.7055956040003366,
+            "reply_filter_hold": 0.20696320199931506
+          },
+          {
+            "first_text": 0.9272738679992472,
+            "answer_text": 0.9272738679992472,
+            "llm_time_to_first_token": 0.7737794820004638,
+            "reply_filter_hold": 0.13276572399990982
+          },
+          {
+            "first_text": 1.0439082250013598,
+            "answer_text": 1.0439082250013598,
+            "llm_time_to_first_token": 0.8638791169996693,
+            "reply_filter_hold": 0.1560562859995116
+          },
+          {
+            "first_text": 1.2041560599991499,
+            "answer_text": 1.2041560599991499,
+            "llm_time_to_first_token": 0.8017171550000057,
+            "reply_filter_hold": 0.380869561999134
+          },
+          {
+            "first_text": 2.2738395019987365,
+            "answer_text": 2.2738395019987365,
+            "llm_time_to_first_token": 2.0195108550014993,
+            "reply_filter_hold": 0.2334155250009644
+          }
+        ]
+      }
+    }
+  },
+  "voice": {
+    "every-turn-silence-0.55": {
+      "settings": {
+        "KB_SEARCH_MODE": "every_turn",
+        "VAD_MIN_SILENCE_DURATION_SECONDS": "0.55",
+        "ENDPOINTING_MIN_DELAY_SECONDS": "0.5"
+      },
+      "elevenlabs_characters_used": 1755,
+      "languages": {
+        "en": {
+          "turns": 20,
+          "answered": 18,
+          "cut_offs": 0,
+          "stages_seconds": {
+            "end_to_end": {
+              "p50": 2.756,
+              "p90": 4.279,
+              "n": 16
+            },
+            "end_of_turn_delay": {
+              "p50": 0.955,
+              "p90": 2.007,
+              "n": 16
+            },
+            "transcription_delay": {
+              "p50": 0.947,
+              "p90": 2.002,
+              "n": 16
+            },
+            "llm_time_to_first_token": {
+              "p50": 1.0,
+              "p90": 1.539,
+              "n": 16
+            },
+            "reply_filter_hold": {
+              "p50": 0.154,
+              "p90": 0.184,
+              "n": 18
+            },
+            "tts_time_to_first_byte": {
+              "p50": 0.323,
+              "p90": 0.476,
+              "n": 16
+            },
+            "caller_heard_first_audio": {
+              "p50": 3.911,
+              "p90": 5.712,
+              "n": 18
+            },
+            "caller_heard_answer": {
+              "p50": 3.911,
+              "p90": 5.712,
+              "n": 18
+            }
+          }
+        },
+        "ar": {
+          "turns": 20,
+          "answered": 17,
+          "cut_offs": 0,
+          "stages_seconds": {
+            "end_to_end": {
+              "p50": 2.717,
+              "p90": 4.721,
+              "n": 15
+            },
+            "end_of_turn_delay": {
+              "p50": 1.002,
+              "p90": 1.857,
+              "n": 15
+            },
+            "transcription_delay": {
+              "p50": 1.0,
+              "p90": 1.852,
+              "n": 15
+            },
+            "llm_time_to_first_token": {
+              "p50": 0.855,
+              "p90": 1.176,
+              "n": 15
+            },
+            "reply_filter_hold": {
+              "p50": 0.298,
+              "p90": 0.504,
+              "n": 17
+            },
+            "tts_time_to_first_byte": {
+              "p50": 0.325,
+              "p90": 0.515,
+              "n": 15
+            },
+            "caller_heard_first_audio": {
+              "p50": 4.533,
+              "p90": 7.094,
+              "n": 17
+            },
+            "caller_heard_answer": {
+              "p50": 4.533,
+              "p90": 7.094,
+              "n": 17
+            }
+          }
+        }
+      },
+      "turns": [
+        {
+          "utterance_id": "en-growth-price",
+          "language": "en",
+          "cut_off": false,
+          "answered": true,
+          "stages": {
+            "end_to_end": 2.978437900543213,
+            "end_of_turn_delay": 0.858698844909668,
+            "transcription_delay": 0.8545548915863037,
+            "llm_time_to_first_token": 1.2126440389984054,
+            "reply_filter_hold": 0.07947747700018226,
+            "tts_time_to_first_byte": 0.22313572599887266,
+            "caller_heard_first_audio": 3.992289230998722,
+            "caller_heard_answer": 3.992289230998722
+          }
+        },
+        {
+          "utterance_id": "en-apple-pay",
+          "language": "en",
+          "cut_off": false,
+          "answered": true,
+          "stages": {
+            "end_to_end": 2.238008737564087,
+            "end_of_turn_delay": 0.9291200637817383,
+            "transcription_delay": 0.9243159294128418,
+            "llm_time_to_first_token": 0.762672979000854,
+            "reply_filter_hold": 0.16121680099968216,
+            "tts_time_to_first_byte": 0.37999789500099723,
+            "caller_heard_first_audio": 3.374051696002425,
+            "caller_heard_answer": 3.374051696002425
+          }
+        },
+        {
+          "utterance_id": "en-trial-with-pause",
+          "language": "en",
+          "cut_off": false,
+          "answered": true,
+          "stages": {
+            "end_to_end": 3.5536000728607178,
+            "end_of_turn_delay": 2.2723169326782227,
+            "transcription_delay": 2.2681620121002197,
+            "llm_time_to_first_token": 0.7892995729998802,
+            "reply_filter_hold": 0.16650687100081996,
+            "tts_time_to_first_byte": 0.3189889530003711,
+            "caller_heard_first_audio": 5.395881147002001,
+            "caller_heard_answer": 5.395881147002001
+          }
+        },
+        {
+          "utterance_id": "en-starter-price",
+          "language": "en",
+          "cut_off": false,
+          "answered": true,
+          "stages": {
+            "end_to_end": 2.1286709308624268,
+            "end_of_turn_delay": 0.8925909996032715,
+            "transcription_delay": 0.8878641128540039,
+            "llm_time_to_first_token": 0.9572323849988607,
+            "reply_filter_hold": 0.03594269800123584,
+            "tts_time_to_first_byte": 0.21801970800152048,
+            "caller_heard_first_audio": 3.7289654610012803,
+            "caller_heard_answer": 3.7289654610012803
+          }
+        },
+        {
+          "utterance_id": "en-plan-differences",
+          "language": "en",
+          "cut_off": false,
+          "answered": false,
+          "stages": {
+            "end_to_end": null,
+            "end_of_turn_delay": null,
+            "transcription_delay": null,
+            "llm_time_to_first_token": null,
+            "reply_filter_hold": null,
+            "tts_time_to_first_byte": null,
+            "caller_heard_first_audio": null,
+            "caller_heard_answer": null
+          }
+        },
+        {
+          "utterance_id": "en-change-plan-pause",
+          "language": "en",
+          "cut_off": false,
+          "answered": true,
+          "stages": {
+            "end_to_end": null,
+            "end_of_turn_delay": null,
+            "transcription_delay": null,
+            "llm_time_to_first_token": null,
+            "reply_filter_hold": 0.2776101210001798,
+            "tts_time_to_first_byte": null,
+            "caller_heard_first_audio": 4.0443970230007835,
+            "caller_heard_answer": 4.0443970230007835
+          }
+        },
+        {
+          "utterance_id": "en-enterprise",
+          "language": "en",
+          "cut_off": false,
+          "answered": true,
+          "stages": {
+            "end_to_end": 2.1717169284820557,
+            "end_of_turn_delay": 0.8640711307525635,
+            "transcription_delay": 0.8594651222229004,
+            "llm_time_to_first_token": 0.8348434050003561,
+            "reply_filter_hold": 0.15449443500074267,
+            "tts_time_to_first_byte": 0.23974941100095748,
+            "caller_heard_first_audio": 3.30156634800187,
+            "caller_heard_answer": 3.30156634800187
+          }
+        },
+        {
+          "utterance_id": "en-mada",
+          "language": "en",
+          "cut_off": false,
+          "answered": true,
+          "stages": {
+            "end_to_end": 2.2775981426239014,
+            "end_of_turn_delay": 0.9317071437835693,
+            "transcription_delay": 0.925361156463623,
+            "llm_time_to_first_token": 1.0007111280010577,
+            "reply_filter_hold": 0.13263316599841346,
+            "tts_time_to_first_byte": 0.20481161799943948,
+            "caller_heard_first_audio": 3.3808087689994863,
+            "caller_heard_answer": 3.3808087689994863
+          }
+        },
+        {
+          "utterance_id": "en-bank-transfer",
+          "language": "en",
+          "cut_off": false,
+          "answered": true,
+          "stages": {
+            "end_to_end": 2.206357002258301,
+            "end_of_turn_delay": 1.001060962677002,
+            "transcription_delay": 0.9939501285552979,
+            "llm_time_to_first_token": 0.8533097450017522,
+            "reply_filter_hold": 0.11278583399871422,
+            "tts_time_to_first_byte": 0.22393079900029988,
+            "caller_heard_first_audio": 3.319596460001776,
+            "caller_heard_answer": 3.319596460001776
+          }
+        },
+        {
+          "utterance_id": "en-escalation-pause",
+          "language": "en",
+          "cut_off": false,
+          "answered": true,
+          "stages": {
+            "end_to_end": null,
+            "end_of_turn_delay": null,
+            "transcription_delay": null,
+            "llm_time_to_first_token": null,
+            "reply_filter_hold": 0.18260521200136282,
+            "tts_time_to_first_byte": null,
+            "caller_heard_first_audio": 3.157795397000882,
+            "caller_heard_answer": 3.157795397000882
+          }
+        },
+        {
+          "utterance_id": "en-zatca",
+          "language": "en",
+          "cut_off": false,
+          "answered": true,
+          "stages": {
+            "end_to_end": 6.180394887924194,
+            "end_of_turn_delay": 1.7412190437316895,
+            "transcription_delay": 1.7367289066314697,
+            "llm_time_to_first_token": 3.9122541330016247,
+            "reply_filter_hold": 0.18777331299861544,
+            "tts_time_to_first_byte": 0.3351451830003498,
+            "caller_heard_first_audio": 7.615917873001308,
+            "caller_heard_answer": 7.615917873001308
+          }
+        },
+        {
+          "utterance_id": "en-export",
+          "language": "en",
+          "cut_off": false,
+          "answered": true,
+          "stages": {
+            "end_to_end": 2.965524911880493,
+            "end_of_turn_delay": 1.0447449684143066,
+            "transcription_delay": 1.0386528968811035,
+            "llm_time_to_first_token": 1.5332396939993487,
+            "reply_filter_hold": 0.13737810699967667,
+            "tts_time_to_first_byte": 0.21002751500054728,
+            "caller_heard_first_audio": 4.277016473002732,
+            "caller_heard_answer": 4.277016473002732
+          }
+        },
+        {
+          "utterance_id": "en-export-format",
+          "language": "en",
+          "cut_off": false,
+          "answered": true,
+          "stages": {
+            "end_to_end": 5.003509998321533,
+            "end_of_turn_delay": 3.222606897354126,
+            "transcription_delay": 3.2175040245056152,
+            "llm_time_to_first_token": 1.1440913410006033,
+            "reply_filter_hold": 0.15100303999861353,
+            "tts_time_to_first_byte": 0.47461860700059333,
+            "caller_heard_first_audio": 6.449852907000604,
+            "caller_heard_answer": 6.449852907000604
+          }
+        },
+        {
+          "utterance_id": "en-cancel-data-pause",
+          "language": "en",
+          "cut_off": false,
+          "answered": true,
+          "stages": {
+            "end_to_end": 3.162677049636841,
+            "end_of_turn_delay": 0.9414410591125488,
+            "transcription_delay": 0.9282150268554688,
+            "llm_time_to_first_token": 1.544138794999526,
+            "reply_filter_hold": 0.15640476000044146,
+            "tts_time_to_first_byte": 0.4780717650010047,
+            "caller_heard_first_audio": 4.446240396000576,
+            "caller_heard_answer": 4.446240396000576
+          }
+        },
+        {
+          "utterance_id": "en-trial-length",
+          "language": "en",
+          "cut_off": false,
+          "answered": true,
+          "stages": {
+            "end_to_end": 2.62349796295166,
+            "end_of_turn_delay": 1.040968894958496,
+            "transcription_delay": 1.0361607074737549,
+            "llm_time_to_first_token": 1.2451639440023428,
+            "reply_filter_hold": 0.05581626399907691,
+            "tts_time_to_first_byte": 0.23751401399931638,
+            "caller_heard_first_audio": 3.8298090919997776,
+            "caller_heard_answer": 3.8298090919997776
+          }
+        },
+        {
+          "utterance_id": "en-trial-card",
+          "language": "en",
+          "cut_off": false,
+          "answered": true,
+          "stages": {
+            "end_to_end": 2.4980058670043945,
+            "end_of_turn_delay": 0.9364018440246582,
+            "transcription_delay": 0.9313557147979736,
+            "llm_time_to_first_token": 0.9946703660007188,
+            "reply_filter_hold": 0.096755544998814,
+            "tts_time_to_first_byte": 0.4105190659993241,
+            "caller_heard_first_audio": 3.7394731380009034,
+            "caller_heard_answer": 3.7394731380009034
+          }
+        },
+        {
+          "utterance_id": "en-p1-response",
+          "language": "en",
+          "cut_off": false,
+          "answered": true,
+          "stages": {
+            "end_to_end": 2.888221025466919,
+            "end_of_turn_delay": 0.967843770980835,
+            "transcription_delay": 0.9629247188568115,
+            "llm_time_to_first_token": 0.8649600499993539,
+            "reply_filter_hold": 0.1827167350002128,
+            "tts_time_to_first_byte": 0.7944648270004109,
+            "caller_heard_first_audio": 4.187308128002769,
+            "caller_heard_answer": 4.187308128002769
+          }
+        },
+        {
+          "utterance_id": "en-p3-response",
+          "language": "en",
+          "cut_off": false,
+          "answered": true,
+          "stages": {
+            "end_to_end": null,
+            "end_of_turn_delay": null,
+            "transcription_delay": null,
+            "llm_time_to_first_token": null,
+            "reply_filter_hold": 0.15566631899855565,
+            "tts_time_to_first_byte": null,
+            "caller_heard_first_audio": 3.3687913840021793,
+            "caller_heard_answer": 3.3687913840021793
+          }
+        },
+        {
+          "utterance_id": "en-office-hours",
+          "language": "en",
+          "cut_off": false,
+          "answered": false,
+          "stages": {
+            "end_to_end": 2.2484498023986816,
+            "end_of_turn_delay": 0.8748726844787598,
+            "transcription_delay": 0.8695909976959229,
+            "llm_time_to_first_token": 0.9984396630006813,
+            "reply_filter_hold": null,
+            "tts_time_to_first_byte": 0.3650168329986627,
+            "caller_heard_first_audio": null,
+            "caller_heard_answer": null
+          }
+        },
+        {
+          "utterance_id": "en-ramadan-hours",
+          "language": "en",
+          "cut_off": false,
+          "answered": true,
+          "stages": {
+            "end_to_end": 2.9361839294433594,
+            "end_of_turn_delay": 1.287583827972412,
+            "transcription_delay": 1.282322883605957,
+            "llm_time_to_first_token": 1.005226067998592,
+            "reply_filter_hold": 0.15360337300080573,
+            "tts_time_to_first_byte": 0.32720397300181503,
+            "caller_heard_first_audio": 4.060861859999932,
+            "caller_heard_answer": 4.060861859999932
+          }
+        },
+        {
+          "utterance_id": "ar-growth-price",
+          "language": "ar",
+          "cut_off": false,
+          "answered": false,
+          "stages": {
+            "end_to_end": null,
+            "end_of_turn_delay": null,
+            "transcription_delay": null,
+            "llm_time_to_first_token": null,
+            "reply_filter_hold": null,
+            "tts_time_to_first_byte": null,
+            "caller_heard_first_audio": null,
+            "caller_heard_answer": null
+          }
+        },
+        {
+          "utterance_id": "ar-mada",
+          "language": "ar",
+          "cut_off": false,
+          "answered": false,
+          "stages": {
+            "end_to_end": null,
+            "end_of_turn_delay": null,
+            "transcription_delay": null,
+            "llm_time_to_first_token": null,
+            "reply_filter_hold": null,
+            "tts_time_to_first_byte": null,
+            "caller_heard_first_audio": null,
+            "caller_heard_answer": null
+          }
+        },
+        {
+          "utterance_id": "ar-riyadh-hours",
+          "language": "ar",
+          "cut_off": false,
+          "answered": false,
+          "stages": {
+            "end_to_end": null,
+            "end_of_turn_delay": null,
+            "transcription_delay": null,
+            "llm_time_to_first_token": null,
+            "reply_filter_hold": null,
+            "tts_time_to_first_byte": null,
+            "caller_heard_first_audio": null,
+            "caller_heard_answer": null
+          }
+        },
+        {
+          "utterance_id": "ar-trial-with-pause",
+          "language": "ar",
+          "cut_off": false,
+          "answered": true,
+          "stages": {
+            "end_to_end": 3.5996580123901367,
+            "end_of_turn_delay": 1.0558109283447266,
+            "transcription_delay": 1.0508239269256592,
+            "llm_time_to_first_token": 1.252390366000327,
+            "reply_filter_hold": 0.10573300999931234,
+            "tts_time_to_first_byte": 0.5230091329995048,
+            "caller_heard_first_audio": 4.823096550000628,
+            "caller_heard_answer": 4.823096550000628
+          }
+        },
+        {
+          "utterance_id": "ar-starter-price",
+          "language": "ar",
+          "cut_off": false,
+          "answered": true,
+          "stages": {
+            "end_to_end": 3.1976940631866455,
+            "end_of_turn_delay": 1.1370849609375,
+            "transcription_delay": 1.1325531005859375,
+            "llm_time_to_first_token": 0.9090918319998309,
+            "reply_filter_hold": 0.4473427900011302,
+            "tts_time_to_first_byte": 0.5036699790016428,
+            "caller_heard_first_audio": 4.914487207997809,
+            "caller_heard_answer": 4.914487207997809
+          }
+        },
+        {
+          "utterance_id": "ar-plan-differences",
+          "language": "ar",
+          "cut_off": false,
+          "answered": true,
+          "stages": {
+            "end_to_end": null,
+            "end_of_turn_delay": null,
+            "transcription_delay": null,
+            "llm_time_to_first_token": null,
+            "reply_filter_hold": 0.008877182001015171,
+            "tts_time_to_first_byte": null,
+            "caller_heard_first_audio": 6.629928916998324,
+            "caller_heard_answer": 6.629928916998324
+          }
+        },
+        {
+          "utterance_id": "ar-change-plan-pause",
+          "language": "ar",
+          "cut_off": false,
+          "answered": true,
+          "stages": {
+            "end_to_end": 5.10708212852478,
+            "end_of_turn_delay": 1.4786121845245361,
+            "transcription_delay": 1.4737279415130615,
+            "llm_time_to_first_token": -0.34929256399846054,
+            "reply_filter_hold": 2.077850475998275,
+            "tts_time_to_first_byte": 1.5532281160012644,
+            "caller_heard_first_audio": 6.0450120129989955,
+            "caller_heard_answer": 6.0450120129989955
+          }
+        },
+        {
+          "utterance_id": "ar-enterprise",
+          "language": "ar",
+          "cut_off": false,
+          "answered": true,
+          "stages": {
+            "end_to_end": 2.3535232543945312,
+            "end_of_turn_delay": 0.9388871192932129,
+            "transcription_delay": 0.9342629909515381,
+            "llm_time_to_first_token": 0.7552350240002852,
+            "reply_filter_hold": 0.2758968569996796,
+            "tts_time_to_first_byte": 0.25454863000049954,
+            "caller_heard_first_audio": 3.576860979999765,
+            "caller_heard_answer": 3.576860979999765
+          }
+        },
+        {
+          "utterance_id": "ar-apple-pay",
+          "language": "ar",
+          "cut_off": false,
+          "answered": true,
+          "stages": {
+            "end_to_end": 2.585392951965332,
+            "end_of_turn_delay": 0.8664357662200928,
+            "transcription_delay": 0.8611841201782227,
+            "llm_time_to_first_token": 0.8528100190014811,
+            "reply_filter_hold": 0.36320545299895457,
+            "tts_time_to_first_byte": 0.3562244210006611,
+            "caller_heard_first_audio": 3.7228343360002327,
+            "caller_heard_answer": 3.7228343360002327
+          }
+        },
+        {
+          "utterance_id": "ar-bank-transfer",
+          "language": "ar",
+          "cut_off": false,
+          "answered": true,
+          "stages": {
+            "end_to_end": 6.633487939834595,
+            "end_of_turn_delay": 5.207751035690308,
+            "transcription_delay": 5.2031569480896,
+            "llm_time_to_first_token": 0.9020511319977231,
+            "reply_filter_hold": 0.29766956900130026,
+            "tts_time_to_first_byte": 0.2214569190000475,
+            "caller_heard_first_audio": 7.789775990997441,
+            "caller_heard_answer": 7.789775990997441
+          }
+        },
+        {
+          "utterance_id": "ar-escalation-pause",
+          "language": "ar",
+          "cut_off": false,
+          "answered": true,
+          "stages": {
+            "end_to_end": 3.192861795425415,
+            "end_of_turn_delay": 1.165560007095337,
+            "transcription_delay": 1.1598351001739502,
+            "llm_time_to_first_token": 0.6850232239994511,
+            "reply_filter_hold": 0.5845206150006561,
+            "tts_time_to_first_byte": 0.44206435399974,
+            "caller_heard_first_audio": 4.532558056998823,
+            "caller_heard_answer": 4.532558056998823
+          }
+        },
+        {
+          "utterance_id": "ar-zatca",
+          "language": "ar",
+          "cut_off": false,
+          "answered": true,
+          "stages": {
+            "end_to_end": 3.5277698040008545,
+            "end_of_turn_delay": 1.9476916790008545,
+            "transcription_delay": 1.942978858947754,
+            "llm_time_to_first_token": 0.9207833400014351,
+            "reply_filter_hold": 0.35861360499984585,
+            "tts_time_to_first_byte": 0.2903454050010623,
+            "caller_heard_first_audio": 4.8343743280001945,
+            "caller_heard_answer": 4.8343743280001945
+          }
+        },
+        {
+          "utterance_id": "ar-export",
+          "language": "ar",
+          "cut_off": false,
+          "answered": true,
+          "stages": {
+            "end_to_end": 2.7154030799865723,
+            "end_of_turn_delay": 0.9804201126098633,
+            "transcription_delay": 0.9761080741882324,
+            "llm_time_to_first_token": 0.854923034001331,
+            "reply_filter_hold": 0.4507491909989767,
+            "tts_time_to_first_byte": 0.20982402200024808,
+            "caller_heard_first_audio": 3.9983933369985607,
+            "caller_heard_answer": 3.9983933369985607
+          }
+        },
+        {
+          "utterance_id": "ar-export-format",
+          "language": "ar",
+          "cut_off": false,
+          "answered": true,
+          "stages": {
+            "end_to_end": 2.313354969024658,
+            "end_of_turn_delay": 0.915722131729126,
+            "transcription_delay": 0.9110980033874512,
+            "llm_time_to_first_token": 0.8326892029981536,
+            "reply_filter_hold": 0.16004004100068414,
+            "tts_time_to_first_byte": 0.23428270999829692,
+            "caller_heard_first_audio": 3.561191790999146,
+            "caller_heard_answer": 3.561191790999146
+          }
+        },
+        {
+          "utterance_id": "ar-cancel-data-pause",
+          "language": "ar",
+          "cut_off": false,
+          "answered": true,
+          "stages": {
+            "end_to_end": 2.71737003326416,
+            "end_of_turn_delay": 1.001871109008789,
+            "transcription_delay": 1.000256061553955,
+            "llm_time_to_first_token": 0.8592118420001498,
+            "reply_filter_hold": 0.21789878999879875,
+            "tts_time_to_first_byte": 0.3991556259989011,
+            "caller_heard_first_audio": 3.9040515329998016,
+            "caller_heard_answer": 3.9040515329998016
+          }
+        },
+        {
+          "utterance_id": "ar-trial-length",
+          "language": "ar",
+          "cut_off": false,
+          "answered": true,
+          "stages": {
+            "end_to_end": 2.141132116317749,
+            "end_of_turn_delay": 0.861738920211792,
+            "transcription_delay": 0.8563792705535889,
+            "llm_time_to_first_token": 0.6920547139998234,
+            "reply_filter_hold": 0.196716718000971,
+            "tts_time_to_first_byte": 0.3828085959994496,
+            "caller_heard_first_audio": 3.285836618000758,
+            "caller_heard_answer": 3.285836618000758
+          }
+        },
+        {
+          "utterance_id": "ar-trial-card",
+          "language": "ar",
+          "cut_off": false,
+          "answered": true,
+          "stages": {
+            "end_to_end": 2.0526788234710693,
+            "end_of_turn_delay": 0.873053789138794,
+            "transcription_delay": 0.8680429458618164,
+            "llm_time_to_first_token": 0.7514276230012911,
+            "reply_filter_hold": 0.07566199099892401,
+            "tts_time_to_first_byte": 0.3247010049999517,
+            "caller_heard_first_audio": 3.2068869919985445,
+            "caller_heard_answer": 3.2068869919985445
+          }
+        },
+        {
+          "utterance_id": "ar-p1-response",
+          "language": "ar",
+          "cut_off": false,
+          "answered": true,
+          "stages": {
+            "end_to_end": null,
+            "end_of_turn_delay": null,
+            "transcription_delay": null,
+            "llm_time_to_first_token": null,
+            "reply_filter_hold": 0.12393783100014844,
+            "tts_time_to_first_byte": null,
+            "caller_heard_first_audio": 8.225429591000648,
+            "caller_heard_answer": 8.225429591000648
+          }
+        },
+        {
+          "utterance_id": "ar-p3-response",
+          "language": "ar",
+          "cut_off": false,
+          "answered": true,
+          "stages": {
+            "end_to_end": 2.6879751682281494,
+            "end_of_turn_delay": 0.9166641235351562,
+            "transcription_delay": 0.9117209911346436,
+            "llm_time_to_first_token": 1.0605785899988405,
+            "reply_filter_hold": 0.41827921100048115,
+            "tts_time_to_first_byte": 0.28511344700018526,
+            "caller_heard_first_audio": 3.90352142699885,
+            "caller_heard_answer": 3.90352142699885
+          }
+        },
+        {
+          "utterance_id": "ar-ramadan-hours",
+          "language": "ar",
+          "cut_off": false,
+          "answered": true,
+          "stages": {
+            "end_to_end": 4.1414971351623535,
+            "end_of_turn_delay": 1.7201530933380127,
+            "transcription_delay": 1.7147400379180908,
+            "llm_time_to_first_token": 1.4791004889993928,
+            "reply_filter_hold": 0.3404859740003303,
+            "tts_time_to_first_byte": 0.3121485499996197,
+            "caller_heard_first_audio": 5.333867112000007,
+            "caller_heard_answer": 5.333867112000007
+          }
+        }
+      ]
+    },
+    "every-turn-silence-0.30": {
+      "settings": {
+        "KB_SEARCH_MODE": "every_turn",
+        "VAD_MIN_SILENCE_DURATION_SECONDS": "0.3",
+        "ENDPOINTING_MIN_DELAY_SECONDS": "0.3"
+      },
+      "elevenlabs_characters_used": 1984,
+      "languages": {
+        "en": {
+          "turns": 20,
+          "answered": 19,
+          "cut_offs": 0,
+          "stages_seconds": {
+            "end_to_end": {
+              "p50": 2.31,
+              "p90": 5.521,
+              "n": 18
+            },
+            "end_of_turn_delay": {
+              "p50": 0.842,
+              "p90": 3.421,
+              "n": 18
+            },
+            "transcription_delay": {
+              "p50": 0.837,
+              "p90": 3.416,
+              "n": 18
+            },
+            "llm_time_to_first_token": {
+              "p50": 0.915,
+              "p90": 1.232,
+              "n": 18
+            },
+            "reply_filter_hold": {
+              "p50": 0.144,
+              "p90": 0.19,
+              "n": 20
+            },
+            "tts_time_to_first_byte": {
+              "p50": 0.242,
+              "p90": 0.366,
+              "n": 18
+            },
+            "caller_heard_first_audio": {
+              "p50": 3.562,
+              "p90": 6.866,
+              "n": 19
+            },
+            "caller_heard_answer": {
+              "p50": 3.562,
+              "p90": 6.866,
+              "n": 19
+            }
+          }
+        },
+        "ar": {
+          "turns": 20,
+          "answered": 16,
+          "cut_offs": 0,
+          "stages_seconds": {
+            "end_to_end": {
+              "p50": 2.918,
+              "p90": 6.292,
+              "n": 14
+            },
+            "end_of_turn_delay": {
+              "p50": 0.744,
+              "p90": 2.332,
+              "n": 14
+            },
+            "transcription_delay": {
+              "p50": 0.739,
+              "p90": 2.327,
+              "n": 14
+            },
+            "llm_time_to_first_token": {
+              "p50": 1.171,
+              "p90": 1.39,
+              "n": 14
+            },
+            "reply_filter_hold": {
+              "p50": 0.205,
+              "p90": 0.516,
+              "n": 16
+            },
+            "tts_time_to_first_byte": {
+              "p50": 0.372,
+              "p90": 0.593,
+              "n": 14
+            },
+            "caller_heard_first_audio": {
+              "p50": 4.421,
+              "p90": 7.709,
+              "n": 16
+            },
+            "caller_heard_answer": {
+              "p50": 4.421,
+              "p90": 7.709,
+              "n": 16
+            }
+          }
+        }
+      },
+      "turns": [
+        {
+          "utterance_id": "en-growth-price",
+          "language": "en",
+          "cut_off": false,
+          "answered": true,
+          "stages": {
+            "end_to_end": 3.1640138626098633,
+            "end_of_turn_delay": 1.26021409034729,
+            "transcription_delay": 1.2554688453674316,
+            "llm_time_to_first_token": 1.182631356001366,
+            "reply_filter_hold": 0.12432547199932742,
+            "tts_time_to_first_byte": 0.21115840399943409,
+            "caller_heard_first_audio": 4.141744892998759,
+            "caller_heard_answer": 4.141744892998759
+          }
+        },
+        {
+          "utterance_id": "en-apple-pay",
+          "language": "en",
+          "cut_off": false,
+          "answered": true,
+          "stages": {
+            "end_to_end": 1.8507509231567383,
+            "end_of_turn_delay": 0.7629659175872803,
+            "transcription_delay": 0.7585127353668213,
+            "llm_time_to_first_token": 0.7281152680006926,
+            "reply_filter_hold": 0.0637640700006159,
+            "tts_time_to_first_byte": 0.2278671160001977,
+            "caller_heard_first_audio": 2.80283145499925,
+            "caller_heard_answer": 2.80283145499925
+          }
+        },
+        {
+          "utterance_id": "en-trial-with-pause",
+          "language": "en",
+          "cut_off": false,
+          "answered": false,
+          "stages": {
+            "end_to_end": null,
+            "end_of_turn_delay": null,
+            "transcription_delay": null,
+            "llm_time_to_first_token": null,
+            "reply_filter_hold": 0.1532565910001722,
+            "tts_time_to_first_byte": null,
+            "caller_heard_first_audio": null,
+            "caller_heard_answer": null
+          }
+        },
+        {
+          "utterance_id": "en-starter-price",
+          "language": "en",
+          "cut_off": false,
+          "answered": true,
+          "stages": {
+            "end_to_end": null,
+            "end_of_turn_delay": null,
+            "transcription_delay": null,
+            "llm_time_to_first_token": null,
+            "reply_filter_hold": 0.03354842699991423,
+            "tts_time_to_first_byte": null,
+            "caller_heard_first_audio": 2.6902003420000256,
+            "caller_heard_answer": 2.6902003420000256
+          }
+        },
+        {
+          "utterance_id": "en-plan-differences",
+          "language": "en",
+          "cut_off": false,
+          "answered": true,
+          "stages": {
+            "end_to_end": 7.3344080448150635,
+            "end_of_turn_delay": 6.050570011138916,
+            "transcription_delay": 6.047871112823486,
+            "llm_time_to_first_token": 0.6442747290002444,
+            "reply_filter_hold": 0.30510309799865354,
+            "tts_time_to_first_byte": 0.32375982200028375,
+            "caller_heard_first_audio": 8.640213283999401,
+            "caller_heard_answer": 8.640213283999401
+          }
+        },
+        {
+          "utterance_id": "en-change-plan-pause",
+          "language": "en",
+          "cut_off": false,
+          "answered": true,
+          "stages": {
+            "end_to_end": 3.2557311058044434,
+            "end_of_turn_delay": 3.0007131099700928,
+            "transcription_delay": 1.788132905960083,
+            "llm_time_to_first_token": 0.8761312730002828,
+            "reply_filter_hold": 0.15741567999975814,
+            "tts_time_to_first_byte": 0.24754752599983476,
+            "caller_heard_first_audio": 4.4950415219973365,
+            "caller_heard_answer": 4.4950415219973365
+          }
+        },
+        {
+          "utterance_id": "en-enterprise",
+          "language": "en",
+          "cut_off": false,
+          "answered": true,
+          "stages": {
+            "end_to_end": 2.445903778076172,
+            "end_of_turn_delay": 0.6747188568115234,
+            "transcription_delay": 0.6696126461029053,
+            "llm_time_to_first_token": 1.2559572360005404,
+            "reply_filter_hold": 0.12061596599960467,
+            "tts_time_to_first_byte": 0.3515032399991469,
+            "caller_heard_first_audio": 3.7638529849991755,
+            "caller_heard_answer": 3.7638529849991755
+          }
+        },
+        {
+          "utterance_id": "en-mada",
+          "language": "en",
+          "cut_off": false,
+          "answered": true,
+          "stages": {
+            "end_to_end": 1.9687097072601318,
+            "end_of_turn_delay": 0.6977448463439941,
+            "transcription_delay": 0.6914117336273193,
+            "llm_time_to_first_token": 0.8949817639986577,
+            "reply_filter_hold": 0.16361207000045397,
+            "tts_time_to_first_byte": 0.20994622099897242,
+            "caller_heard_first_audio": 3.3317641859994183,
+            "caller_heard_answer": 3.3317641859994183
+          }
+        },
+        {
+          "utterance_id": "en-bank-transfer",
+          "language": "en",
+          "cut_off": false,
+          "answered": true,
+          "stages": {
+            "end_to_end": 6.106645822525024,
+            "end_of_turn_delay": 2.1141140460968018,
+            "transcription_delay": 2.1092348098754883,
+            "llm_time_to_first_token": 3.527626944000076,
+            "reply_filter_hold": 0.18493739099903905,
+            "tts_time_to_first_byte": 0.24426795700128423,
+            "caller_heard_first_audio": 7.479448198999307,
+            "caller_heard_answer": 7.479448198999307
+          }
+        },
+        {
+          "utterance_id": "en-escalation-pause",
+          "language": "en",
+          "cut_off": false,
+          "answered": true,
+          "stages": {
+            "end_to_end": 1.8581037521362305,
+            "end_of_turn_delay": 0.6453979015350342,
+            "transcription_delay": 0.640737771987915,
+            "llm_time_to_first_token": 0.8203678550016775,
+            "reply_filter_hold": 0.16672311999900558,
+            "tts_time_to_first_byte": 0.20884518200000457,
+            "caller_heard_first_audio": 3.1195856829999684,
+            "caller_heard_answer": 3.1195856829999684
+          }
+        },
+        {
+          "utterance_id": "en-zatca",
+          "language": "en",
+          "cut_off": false,
+          "answered": true,
+          "stages": {
+            "end_to_end": 3.2489120960235596,
+            "end_of_turn_delay": 3.0015971660614014,
+            "transcription_delay": 1.7463579177856445,
+            "llm_time_to_first_token": 0.8060037020004529,
+            "reply_filter_hold": 0.1432199569990189,
+            "tts_time_to_first_byte": 0.2398991650006792,
+            "caller_heard_first_audio": 4.3982987710005546,
+            "caller_heard_answer": 4.3982987710005546
+          }
+        },
+        {
+          "utterance_id": "en-export",
+          "language": "en",
+          "cut_off": false,
+          "answered": true,
+          "stages": {
+            "end_to_end": 4.86342716217041,
+            "end_of_turn_delay": 3.300164222717285,
+            "transcription_delay": 3.2951910495758057,
+            "llm_time_to_first_token": 1.2219817160003004,
+            "reply_filter_hold": 0.0011552420000953134,
+            "tts_time_to_first_byte": 0.3052751939994778,
+            "caller_heard_first_audio": 6.359447284001362,
+            "caller_heard_answer": 6.359447284001362
+          }
+        },
+        {
+          "utterance_id": "en-export-format",
+          "language": "en",
+          "cut_off": false,
+          "answered": true,
+          "stages": {
+            "end_to_end": 2.2912099361419678,
+            "end_of_turn_delay": 1.0368430614471436,
+            "transcription_delay": 1.0318939685821533,
+            "llm_time_to_first_token": 0.9342919639984757,
+            "reply_filter_hold": 0.10334607300137577,
+            "tts_time_to_first_byte": 0.21160589200007962,
+            "caller_heard_first_audio": 3.5616539159982494,
+            "caller_heard_answer": 3.5616539159982494
+          }
+        },
+        {
+          "utterance_id": "en-cancel-data-pause",
+          "language": "en",
+          "cut_off": false,
+          "answered": true,
+          "stages": {
+            "end_to_end": 2.328145980834961,
+            "end_of_turn_delay": 0.7048277854919434,
+            "transcription_delay": 0.7019908428192139,
+            "llm_time_to_first_token": 1.0066072830013582,
+            "reply_filter_hold": 0.10302154999953927,
+            "tts_time_to_first_byte": 0.4869469459990796,
+            "caller_heard_first_audio": 3.7192320430003747,
+            "caller_heard_answer": 3.7192320430003747
+          }
+        },
+        {
+          "utterance_id": "en-trial-length",
+          "language": "en",
+          "cut_off": false,
+          "answered": true,
+          "stages": {
+            "end_to_end": 1.7367868423461914,
+            "end_of_turn_delay": 0.6260318756103516,
+            "transcription_delay": 0.6204347610473633,
+            "llm_time_to_first_token": 0.8002872330016544,
+            "reply_filter_hold": 0.08273135699892009,
+            "tts_time_to_first_byte": 0.20111087800069072,
+            "caller_heard_first_audio": 3.1114388829992095,
+            "caller_heard_answer": 3.1114388829992095
+          }
+        },
+        {
+          "utterance_id": "en-trial-card",
+          "language": "en",
+          "cut_off": false,
+          "answered": true,
+          "stages": {
+            "end_to_end": 2.206944704055786,
+            "end_of_turn_delay": 0.8078536987304688,
+            "transcription_delay": 0.802020788192749,
+            "llm_time_to_first_token": 0.9714357619996008,
+            "reply_filter_hold": 0.14555816299980506,
+            "tts_time_to_first_byte": 0.21639070000128413,
+            "caller_heard_first_audio": 3.531879766000202,
+            "caller_heard_answer": 3.531879766000202
+          }
+        },
+        {
+          "utterance_id": "en-p1-response",
+          "language": "en",
+          "cut_off": false,
+          "answered": true,
+          "stages": {
+            "end_to_end": 1.904541015625,
+            "end_of_turn_delay": 0.6230218410491943,
+            "transcription_delay": 0.614206075668335,
+            "llm_time_to_first_token": 0.7863828290010133,
+            "reply_filter_hold": 0.18621071399866196,
+            "tts_time_to_first_byte": 0.23439938800038362,
+            "caller_heard_first_audio": 3.2496551559997897,
+            "caller_heard_answer": 3.2496551559997897
+          }
+        },
+        {
+          "utterance_id": "en-p3-response",
+          "language": "en",
+          "cut_off": false,
+          "answered": true,
+          "stages": {
+            "end_to_end": 2.10664701461792,
+            "end_of_turn_delay": 0.8764128684997559,
+            "transcription_delay": 0.8713788986206055,
+            "llm_time_to_first_token": 0.6607478630012338,
+            "reply_filter_hold": 0.14293038199866714,
+            "tts_time_to_first_byte": 0.3996647439998924,
+            "caller_heard_first_audio": 3.2887156839988165,
+            "caller_heard_answer": 3.2887156839988165
+          }
+        },
+        {
+          "utterance_id": "en-office-hours",
+          "language": "en",
+          "cut_off": false,
+          "answered": true,
+          "stages": {
+            "end_to_end": 2.1012210845947266,
+            "end_of_turn_delay": 0.6118309497833252,
+            "transcription_delay": 0.6063480377197266,
+            "llm_time_to_first_token": 0.9416397929999221,
+            "reply_filter_hold": 0.20354151500032458,
+            "tts_time_to_first_byte": 0.33734391600046365,
+            "caller_heard_first_audio": 3.2785113869977067,
+            "caller_heard_answer": 3.2785113869977067
+          }
+        },
+        {
+          "utterance_id": "en-ramadan-hours",
+          "language": "en",
+          "cut_off": false,
+          "answered": true,
+          "stages": {
+            "end_to_end": 5.269800901412964,
+            "end_of_turn_delay": 3.7037699222564697,
+            "transcription_delay": 3.698127031326294,
+            "llm_time_to_first_token": 1.0512185619991214,
+            "reply_filter_hold": 0.18799613900046097,
+            "tts_time_to_first_byte": 0.2817406679987471,
+            "caller_heard_first_audio": 6.712965193002674,
+            "caller_heard_answer": 6.712965193002674
+          }
+        },
+        {
+          "utterance_id": "ar-growth-price",
+          "language": "ar",
+          "cut_off": false,
+          "answered": true,
+          "stages": {
+            "end_to_end": null,
+            "end_of_turn_delay": null,
+            "transcription_delay": null,
+            "llm_time_to_first_token": null,
+            "reply_filter_hold": 0.16108600299958198,
+            "tts_time_to_first_byte": null,
+            "caller_heard_first_audio": 3.2585263769997255,
+            "caller_heard_answer": 3.2585263769997255
+          }
+        },
+        {
+          "utterance_id": "ar-mada",
+          "language": "ar",
+          "cut_off": false,
+          "answered": false,
+          "stages": {
+            "end_to_end": null,
+            "end_of_turn_delay": null,
+            "transcription_delay": null,
+            "llm_time_to_first_token": null,
+            "reply_filter_hold": null,
+            "tts_time_to_first_byte": null,
+            "caller_heard_first_audio": null,
+            "caller_heard_answer": null
+          }
+        },
+        {
+          "utterance_id": "ar-riyadh-hours",
+          "language": "ar",
+          "cut_off": false,
+          "answered": false,
+          "stages": {
+            "end_to_end": null,
+            "end_of_turn_delay": null,
+            "transcription_delay": null,
+            "llm_time_to_first_token": null,
+            "reply_filter_hold": null,
+            "tts_time_to_first_byte": null,
+            "caller_heard_first_audio": null,
+            "caller_heard_answer": null
+          }
+        },
+        {
+          "utterance_id": "ar-trial-with-pause",
+          "language": "ar",
+          "cut_off": false,
+          "answered": true,
+          "stages": {
+            "end_to_end": 3.4797418117523193,
+            "end_of_turn_delay": 0.8222477436065674,
+            "transcription_delay": 0.8171389102935791,
+            "llm_time_to_first_token": 1.1719216939982289,
+            "reply_filter_hold": 0.24713300800067373,
+            "tts_time_to_first_byte": 0.35856509399854986,
+            "caller_heard_first_audio": 4.790635404000568,
+            "caller_heard_answer": 4.790635404000568
+          }
+        },
+        {
+          "utterance_id": "ar-starter-price",
+          "language": "ar",
+          "cut_off": false,
+          "answered": true,
+          "stages": {
+            "end_to_end": 7.943080902099609,
+            "end_of_turn_delay": 4.960071802139282,
+            "transcription_delay": 4.953756809234619,
+            "llm_time_to_first_token": 1.3941896209998959,
+            "reply_filter_hold": 0.25150277899956563,
+            "tts_time_to_first_byte": 1.1482753159998538,
+            "caller_heard_first_audio": 9.901544981999905,
+            "caller_heard_answer": 15.921376677000808
+          }
+        },
+        {
+          "utterance_id": "ar-plan-differences",
+          "language": "ar",
+          "cut_off": false,
+          "answered": true,
+          "stages": {
+            "end_to_end": 4.664143085479736,
+            "end_of_turn_delay": 1.1826601028442383,
+            "transcription_delay": 1.1778528690338135,
+            "llm_time_to_first_token": 1.213256449002074,
+            "reply_filter_hold": 0.1476127429996268,
+            "tts_time_to_first_byte": 0.2812108830003126,
+            "caller_heard_first_audio": 6.347315270000763,
+            "caller_heard_answer": 6.347315270000763
+          }
+        },
+        {
+          "utterance_id": "ar-change-plan-pause",
+          "language": "ar",
+          "cut_off": false,
+          "answered": true,
+          "stages": {
+            "end_to_end": 6.323003768920898,
+            "end_of_turn_delay": 2.824965715408325,
+            "transcription_delay": 2.8196117877960205,
+            "llm_time_to_first_token": 1.381866068999443,
+            "reply_filter_hold": 0.6406398540002556,
+            "tts_time_to_first_byte": 0.44498745599958056,
+            "caller_heard_first_audio": 7.742304172998047,
+            "caller_heard_answer": 7.742304172998047
+          }
+        },
+        {
+          "utterance_id": "ar-enterprise",
+          "language": "ar",
+          "cut_off": false,
+          "answered": true,
+          "stages": {
+            "end_to_end": 2.6132431030273438,
+            "end_of_turn_delay": 0.5746409893035889,
+            "transcription_delay": 0.5695879459381104,
+            "llm_time_to_first_token": 1.1704111630006082,
+            "reply_filter_hold": 0.2547810260002734,
+            "tts_time_to_first_byte": 0.3862880549986585,
+            "caller_heard_first_audio": 4.135181940999246,
+            "caller_heard_answer": 4.135181940999246
+          }
+        },
+        {
+          "utterance_id": "ar-apple-pay",
+          "language": "ar",
+          "cut_off": false,
+          "answered": true,
+          "stages": {
+            "end_to_end": 2.6419589519500732,
+            "end_of_turn_delay": 0.7636809349060059,
+            "transcription_delay": 0.7580239772796631,
+            "llm_time_to_first_token": 1.2921395339981245,
+            "reply_filter_hold": 0.15540997100106324,
+            "tts_time_to_first_byte": 0.2024509089987987,
+            "caller_heard_first_audio": 3.95046985999943,
+            "caller_heard_answer": 3.95046985999943
+          }
+        },
+        {
+          "utterance_id": "ar-bank-transfer",
+          "language": "ar",
+          "cut_off": false,
+          "answered": true,
+          "stages": {
+            "end_to_end": 6.221181869506836,
+            "end_of_turn_delay": 0.7917819023132324,
+            "transcription_delay": 0.7870337963104248,
+            "llm_time_to_first_token": 4.124248973999784,
+            "reply_filter_hold": 0.18054591800137132,
+            "tts_time_to_first_byte": 0.46042015599959996,
+            "caller_heard_first_audio": 7.676227940999524,
+            "caller_heard_answer": 7.676227940999524
+          }
+        },
+        {
+          "utterance_id": "ar-escalation-pause",
+          "language": "ar",
+          "cut_off": false,
+          "answered": true,
+          "stages": {
+            "end_to_end": null,
+            "end_of_turn_delay": null,
+            "transcription_delay": null,
+            "llm_time_to_first_token": null,
+            "reply_filter_hold": 0.21991440400051943,
+            "tts_time_to_first_byte": null,
+            "caller_heard_first_audio": 7.128066224000577,
+            "caller_heard_answer": 7.128066224000577
+          }
+        },
+        {
+          "utterance_id": "ar-zatca",
+          "language": "ar",
+          "cut_off": false,
+          "answered": false,
+          "stages": {
+            "end_to_end": null,
+            "end_of_turn_delay": null,
+            "transcription_delay": null,
+            "llm_time_to_first_token": null,
+            "reply_filter_hold": null,
+            "tts_time_to_first_byte": null,
+            "caller_heard_first_audio": null,
+            "caller_heard_answer": null
+          }
+        },
+        {
+          "utterance_id": "ar-export",
+          "language": "ar",
+          "cut_off": false,
+          "answered": true,
+          "stages": {
+            "end_to_end": 4.11769700050354,
+            "end_of_turn_delay": 1.0800869464874268,
+            "transcription_delay": 1.0752220153808594,
+            "llm_time_to_first_token": 1.2657773310002085,
+            "reply_filter_hold": 0.0013657750005222624,
+            "tts_time_to_first_byte": 0.6374651590012945,
+            "caller_heard_first_audio": 5.825048156999401,
+            "caller_heard_answer": 5.825048156999401
+          }
+        },
+        {
+          "utterance_id": "ar-export-format",
+          "language": "ar",
+          "cut_off": false,
+          "answered": false,
+          "stages": {
+            "end_to_end": null,
+            "end_of_turn_delay": null,
+            "transcription_delay": null,
+            "llm_time_to_first_token": null,
+            "reply_filter_hold": null,
+            "tts_time_to_first_byte": null,
+            "caller_heard_first_audio": null,
+            "caller_heard_answer": null
+          }
+        },
+        {
+          "utterance_id": "ar-cancel-data-pause",
+          "language": "ar",
+          "cut_off": false,
+          "answered": true,
+          "stages": {
+            "end_to_end": 2.8004448413848877,
+            "end_of_turn_delay": 0.6542849540710449,
+            "transcription_delay": 0.652897834777832,
+            "llm_time_to_first_token": 1.0386271470015345,
+            "reply_filter_hold": 0.1727240519994666,
+            "tts_time_to_first_byte": 0.2474130829996284,
+            "caller_heard_first_audio": 4.379348023001512,
+            "caller_heard_answer": 4.379348023001512
+          }
+        },
+        {
+          "utterance_id": "ar-trial-length",
+          "language": "ar",
+          "cut_off": false,
+          "answered": true,
+          "stages": {
+            "end_to_end": 2.2529850006103516,
+            "end_of_turn_delay": 0.6738660335540771,
+            "transcription_delay": 0.6690878868103027,
+            "llm_time_to_first_token": 0.9807353500000318,
+            "reply_filter_hold": 0.2770501150007476,
+            "tts_time_to_first_byte": 0.29260272499959683,
+            "caller_heard_first_audio": 3.761086863001765,
+            "caller_heard_answer": 3.761086863001765
+          }
+        },
+        {
+          "utterance_id": "ar-trial-card",
+          "language": "ar",
+          "cut_off": false,
+          "answered": true,
+          "stages": {
+            "end_to_end": 1.84195876121521,
+            "end_of_turn_delay": 0.5930478572845459,
+            "transcription_delay": 0.5876867771148682,
+            "llm_time_to_first_token": 0.7824378940003953,
+            "reply_filter_hold": 0.18964125599995896,
+            "tts_time_to_first_byte": 0.22379721099969174,
+            "caller_heard_first_audio": 3.0527945649992034,
+            "caller_heard_answer": 3.0527945649992034
+          }
+        },
+        {
+          "utterance_id": "ar-p1-response",
+          "language": "ar",
+          "cut_off": false,
+          "answered": true,
+          "stages": {
+            "end_to_end": 3.0352702140808105,
+            "end_of_turn_delay": 0.6510913372039795,
+            "transcription_delay": 0.6458029747009277,
+            "llm_time_to_first_token": 1.026795570998729,
+            "reply_filter_hold": 0.6824614940014726,
+            "tts_time_to_first_byte": 0.41089254899998195,
+            "caller_heard_first_audio": 4.462109001999124,
+            "caller_heard_answer": 4.462109001999124
+          }
+        },
+        {
+          "utterance_id": "ar-p3-response",
+          "language": "ar",
+          "cut_off": false,
+          "answered": true,
+          "stages": {
+            "end_to_end": 2.601806879043579,
+            "end_of_turn_delay": 0.6313037872314453,
+            "transcription_delay": 0.6260359287261963,
+            "llm_time_to_first_token": 0.8890697999995609,
+            "reply_filter_hold": 0.3906815820009797,
+            "tts_time_to_first_byte": 0.48909523299880675,
+            "caller_heard_first_audio": 4.150122737002675,
+            "caller_heard_answer": 4.150122737002675
+          }
+        },
+        {
+          "utterance_id": "ar-ramadan-hours",
+          "language": "ar",
+          "cut_off": false,
+          "answered": true,
+          "stages": {
+            "end_to_end": 2.4856581687927246,
+            "end_of_turn_delay": 0.7245988845825195,
+            "transcription_delay": 0.7207221984863281,
+            "llm_time_to_first_token": 0.9737477859998762,
+            "reply_filter_hold": 0.14163220699992962,
+            "tts_time_to_first_byte": 0.3208867100001953,
+            "caller_heard_first_audio": 3.8699908290000167,
+            "caller_heard_answer": 3.8699908290000167
+          }
+        }
+      ]
+    },
+    "tool-silence-0.30": {
+      "settings": {
+        "KB_SEARCH_MODE": "tool",
+        "VAD_MIN_SILENCE_DURATION_SECONDS": "0.3",
+        "ENDPOINTING_MIN_DELAY_SECONDS": "0.3"
+      },
+      "elevenlabs_characters_used": 1646,
+      "languages": {
+        "en": {
+          "turns": 20,
+          "answered": 17,
+          "cut_offs": 1,
+          "stages_seconds": {
+            "end_to_end": {
+              "p50": 2.465,
+              "p90": 4.413,
+              "n": 17
+            },
+            "end_of_turn_delay": {
+              "p50": 0.916,
+              "p90": 2.734,
+              "n": 17
+            },
+            "transcription_delay": {
+              "p50": 0.901,
+              "p90": 2.435,
+              "n": 17
+            },
+            "llm_time_to_first_token": {
+              "p50": 1.003,
+              "p90": 1.546,
+              "n": 17
+            },
+            "reply_filter_hold": {
+              "p50": 0.135,
+              "p90": 0.267,
+              "n": 18
+            },
+            "tts_time_to_first_byte": {
+              "p50": 0.262,
+              "p90": 0.527,
+              "n": 17
+            },
+            "caller_heard_first_audio": {
+              "p50": 3.509,
+              "p90": 5.513,
+              "n": 17
+            },
+            "caller_heard_answer": {
+              "p50": 5.501,
+              "p90": 7.276,
+              "n": 17
+            }
+          }
+        },
+        "ar": {
+          "turns": 20,
+          "answered": 14,
+          "cut_offs": 0,
+          "stages_seconds": {
+            "end_to_end": {
+              "p50": 2.883,
+              "p90": 6.027,
+              "n": 14
+            },
+            "end_of_turn_delay": {
+              "p50": 1.139,
+              "p90": 3.396,
+              "n": 14
+            },
+            "transcription_delay": {
+              "p50": 1.076,
+              "p90": 3.028,
+              "n": 14
+            },
+            "llm_time_to_first_token": {
+              "p50": 1.185,
+              "p90": 2.89,
+              "n": 14
+            },
+            "reply_filter_hold": {
+              "p50": 0.202,
+              "p90": 0.304,
+              "n": 14
+            },
+            "tts_time_to_first_byte": {
+              "p50": 0.314,
+              "p90": 0.48,
+              "n": 14
+            },
+            "caller_heard_first_audio": {
+              "p50": 4.024,
+              "p90": 7.339,
+              "n": 14
+            },
+            "caller_heard_answer": {
+              "p50": 7.641,
+              "p90": 9.266,
+              "n": 14
+            }
+          }
+        }
+      },
+      "turns": [
+        {
+          "utterance_id": "en-growth-price",
+          "language": "en",
+          "cut_off": false,
+          "answered": true,
+          "stages": {
+            "end_to_end": 3.455132007598877,
+            "end_of_turn_delay": 1.6075942516326904,
+            "transcription_delay": 1.5912370681762695,
+            "llm_time_to_first_token": 1.168083802000183,
+            "reply_filter_hold": 0.11516931699952693,
+            "tts_time_to_first_byte": 0.24134312700152805,
+            "caller_heard_first_audio": 4.391424975998234,
+            "caller_heard_answer": 7.291622220998761
+          }
+        },
+        {
+          "utterance_id": "en-apple-pay",
+          "language": "en",
+          "cut_off": false,
+          "answered": false,
+          "stages": {
+            "end_to_end": null,
+            "end_of_turn_delay": null,
+            "transcription_delay": null,
+            "llm_time_to_first_token": null,
+            "reply_filter_hold": null,
+            "tts_time_to_first_byte": null,
+            "caller_heard_first_audio": null,
+            "caller_heard_answer": null
+          }
+        },
+        {
+          "utterance_id": "en-trial-with-pause",
+          "language": "en",
+          "cut_off": false,
+          "answered": false,
+          "stages": {
+            "end_to_end": null,
+            "end_of_turn_delay": null,
+            "transcription_delay": null,
+            "llm_time_to_first_token": null,
+            "reply_filter_hold": 0.07466478499918594,
+            "tts_time_to_first_byte": null,
+            "caller_heard_first_audio": null,
+            "caller_heard_answer": null
+          }
+        },
+        {
+          "utterance_id": "en-starter-price",
+          "language": "en",
+          "cut_off": true,
+          "answered": true,
+          "stages": {
+            "end_to_end": 4.784624099731445,
+            "end_of_turn_delay": 2.5562150478363037,
+            "transcription_delay": 2.5544917583465576,
+            "llm_time_to_first_token": 1.7024603139998362,
+            "reply_filter_hold": 0.024578859000030207,
+            "tts_time_to_first_byte": 0.4827530190013931,
+            "caller_heard_first_audio": 4.089547318999394,
+            "caller_heard_answer": 6.480962552999699
+          }
+        },
+        {
+          "utterance_id": "en-plan-differences",
+          "language": "en",
+          "cut_off": false,
+          "answered": true,
+          "stages": {
+            "end_to_end": 3.6115031242370605,
+            "end_of_turn_delay": 0.9678151607513428,
+            "transcription_delay": 0.9524719715118408,
+            "llm_time_to_first_token": 1.9045177520001744,
+            "reply_filter_hold": 0.16159762899951602,
+            "tts_time_to_first_byte": 0.5823893080014386,
+            "caller_heard_first_audio": 4.94950457899904,
+            "caller_heard_answer": 4.94950457899904
+          }
+        },
+        {
+          "utterance_id": "en-change-plan-pause",
+          "language": "en",
+          "cut_off": false,
+          "answered": true,
+          "stages": {
+            "end_to_end": 4.475695848464966,
+            "end_of_turn_delay": 3.0003278255462646,
+            "transcription_delay": 2.2718608379364014,
+            "llm_time_to_first_token": 1.0029046809995634,
+            "reply_filter_hold": 0.14192056700085232,
+            "tts_time_to_first_byte": 0.23922591200062016,
+            "caller_heard_first_audio": 5.685863136997796,
+            "caller_heard_answer": 5.685863136997796
+          }
+        },
+        {
+          "utterance_id": "en-enterprise",
+          "language": "en",
+          "cut_off": false,
+          "answered": true,
+          "stages": {
+            "end_to_end": 1.9185516834259033,
+            "end_of_turn_delay": 0.6622357368469238,
+            "transcription_delay": 0.6475498676300049,
+            "llm_time_to_first_token": 0.8117420960006712,
+            "reply_filter_hold": 0.2141084739996586,
+            "tts_time_to_first_byte": 0.23308370799895783,
+            "caller_heard_first_audio": 3.142751106997821,
+            "caller_heard_answer": 3.142751106997821
+          }
+        },
+        {
+          "utterance_id": "en-mada",
+          "language": "en",
+          "cut_off": false,
+          "answered": true,
+          "stages": {
+            "end_to_end": 2.187520980834961,
+            "end_of_turn_delay": 0.8388040065765381,
+            "transcription_delay": 0.8230538368225098,
+            "llm_time_to_first_token": 0.8175008169982902,
+            "reply_filter_hold": 0.27039274600065255,
+            "tts_time_to_first_byte": 0.26220603399997344,
+            "caller_heard_first_audio": 3.2719700429988734,
+            "caller_heard_answer": 5.680989021999267
+          }
+        },
+        {
+          "utterance_id": "en-bank-transfer",
+          "language": "en",
+          "cut_off": false,
+          "answered": true,
+          "stages": {
+            "end_to_end": 2.4645330905914307,
+            "end_of_turn_delay": 1.169692039489746,
+            "transcription_delay": 1.1578330993652344,
+            "llm_time_to_first_token": 0.7340125090013316,
+            "reply_filter_hold": 0.10655426099947363,
+            "tts_time_to_first_byte": 0.40505310099979397,
+            "caller_heard_first_audio": 3.508684649998031,
+            "caller_heard_answer": 3.508684649998031
+          }
+        },
+        {
+          "utterance_id": "en-escalation-pause",
+          "language": "en",
+          "cut_off": false,
+          "answered": false,
+          "stages": {
+            "end_to_end": null,
+            "end_of_turn_delay": null,
+            "transcription_delay": null,
+            "llm_time_to_first_token": null,
+            "reply_filter_hold": null,
+            "tts_time_to_first_byte": null,
+            "caller_heard_first_audio": null,
+            "caller_heard_answer": null
+          }
+        },
+        {
+          "utterance_id": "en-zatca",
+          "language": "en",
+          "cut_off": false,
+          "answered": true,
+          "stages": {
+            "end_to_end": 2.1086859703063965,
+            "end_of_turn_delay": 0.6023037433624268,
+            "transcription_delay": 0.5855557918548584,
+            "llm_time_to_first_token": 1.0704515480010741,
+            "reply_filter_hold": 0.12333498999942094,
+            "tts_time_to_first_byte": 0.21578790899911837,
+            "caller_heard_first_audio": 3.19647746299961,
+            "caller_heard_answer": 3.19647746299961
+          }
+        },
+        {
+          "utterance_id": "en-export",
+          "language": "en",
+          "cut_off": false,
+          "answered": true,
+          "stages": {
+            "end_to_end": 4.174497842788696,
+            "end_of_turn_delay": 3.0006418228149414,
+            "transcription_delay": 2.3995208740234375,
+            "llm_time_to_first_token": 1.0070819249976921,
+            "reply_filter_hold": 0.16491794400099025,
+            "tts_time_to_first_byte": 0.5859888750001119,
+            "caller_heard_first_audio": 5.501292419998208,
+            "caller_heard_answer": 5.501292419998208
+          }
+        },
+        {
+          "utterance_id": "en-export-format",
+          "language": "en",
+          "cut_off": false,
+          "answered": true,
+          "stages": {
+            "end_to_end": 1.8209118843078613,
+            "end_of_turn_delay": 0.6382129192352295,
+            "transcription_delay": 0.6224179267883301,
+            "llm_time_to_first_token": 0.8550972269986232,
+            "reply_filter_hold": 0.06790106600055879,
+            "tts_time_to_first_byte": 0.21714749700004177,
+            "caller_heard_first_audio": 3.011310884998238,
+            "caller_heard_answer": 3.011310884998238
+          }
+        },
+        {
+          "utterance_id": "en-cancel-data-pause",
+          "language": "en",
+          "cut_off": false,
+          "answered": true,
+          "stages": {
+            "end_to_end": 2.076699733734131,
+            "end_of_turn_delay": 0.6533749103546143,
+            "transcription_delay": 0.651087760925293,
+            "llm_time_to_first_token": 0.923523995998039,
+            "reply_filter_hold": 0.15381432000140194,
+            "tts_time_to_first_byte": 0.23667250600010448,
+            "caller_heard_first_audio": 3.2887745370007906,
+            "caller_heard_answer": 7.266202062999582
+          }
+        },
+        {
+          "utterance_id": "en-trial-length",
+          "language": "en",
+          "cut_off": false,
+          "answered": true,
+          "stages": {
+            "end_to_end": 4.371186971664429,
+            "end_of_turn_delay": 2.5052928924560547,
+            "transcription_delay": 2.48911190032959,
+            "llm_time_to_first_token": 1.4425036010015901,
+            "reply_filter_hold": 0.04442767999898933,
+            "tts_time_to_first_byte": 0.35459618999993836,
+            "caller_heard_first_audio": 5.53156936099731,
+            "caller_heard_answer": 5.53156936099731
+          }
+        },
+        {
+          "utterance_id": "en-trial-card",
+          "language": "en",
+          "cut_off": false,
+          "answered": true,
+          "stages": {
+            "end_to_end": 2.0267691612243652,
+            "end_of_turn_delay": 0.6013171672821045,
+            "transcription_delay": 0.5852279663085938,
+            "llm_time_to_first_token": 0.9410953000005975,
+            "reply_filter_hold": 0.25239615899954515,
+            "tts_time_to_first_byte": 0.23915520499940612,
+            "caller_heard_first_audio": 3.1298772299996926,
+            "caller_heard_answer": 3.1298772299996926
+          }
+        },
+        {
+          "utterance_id": "en-p1-response",
+          "language": "en",
+          "cut_off": false,
+          "answered": true,
+          "stages": {
+            "end_to_end": 2.3247690200805664,
+            "end_of_turn_delay": 0.8307299613952637,
+            "transcription_delay": 0.8141970634460449,
+            "llm_time_to_first_token": 0.6877141929999198,
+            "reply_filter_hold": 0.595839759998853,
+            "tts_time_to_first_byte": 0.2146503180010768,
+            "caller_heard_first_audio": 3.4586992009990354,
+            "caller_heard_answer": 3.4586992009990354
+          }
+        },
+        {
+          "utterance_id": "en-p3-response",
+          "language": "en",
+          "cut_off": false,
+          "answered": true,
+          "stages": {
+            "end_to_end": 2.708306074142456,
+            "end_of_turn_delay": 0.9156961441040039,
+            "transcription_delay": 0.9009168148040771,
+            "llm_time_to_first_token": 1.230523890000768,
+            "reply_filter_hold": 0.26556278499992914,
+            "tts_time_to_first_byte": 0.2978128590002598,
+            "caller_heard_first_audio": 4.218639620998147,
+            "caller_heard_answer": 4.218639620998147
+          }
+        },
+        {
+          "utterance_id": "en-office-hours",
+          "language": "en",
+          "cut_off": false,
+          "answered": true,
+          "stages": {
+            "end_to_end": 2.8229711055755615,
+            "end_of_turn_delay": 1.2335631847381592,
+            "transcription_delay": 1.2164320945739746,
+            "llm_time_to_first_token": 0.9518788810000842,
+            "reply_filter_hold": 0.08429299199997331,
+            "tts_time_to_first_byte": 0.48979432299893233,
+            "caller_heard_first_audio": 4.1085961139961,
+            "caller_heard_answer": 8.668781328997284
+          }
+        },
+        {
+          "utterance_id": "en-ramadan-hours",
+          "language": "en",
+          "cut_off": false,
+          "answered": true,
+          "stages": {
+            "end_to_end": 2.407111883163452,
+            "end_of_turn_delay": 0.8090670108795166,
+            "transcription_delay": 0.7834351062774658,
+            "llm_time_to_first_token": 1.1521356660014135,
+            "reply_filter_hold": 0.12795189899952675,
+            "tts_time_to_first_byte": 0.326868411999385,
+            "caller_heard_first_audio": 3.5023670789978496,
+            "caller_heard_answer": 6.3820754699991085
+          }
+        },
+        {
+          "utterance_id": "ar-growth-price",
+          "language": "ar",
+          "cut_off": false,
+          "answered": true,
+          "stages": {
+            "end_to_end": 3.2029480934143066,
+            "end_of_turn_delay": 1.1430861949920654,
+            "transcription_delay": 1.0323729515075684,
+            "llm_time_to_first_token": 1.3002337449997867,
+            "reply_filter_hold": 0.10516237699994235,
+            "tts_time_to_first_byte": 0.23176233300000604,
+            "caller_heard_first_audio": 3.8339981619992614,
+            "caller_heard_answer": 7.943164392998369
+          }
+        },
+        {
+          "utterance_id": "ar-mada",
+          "language": "ar",
+          "cut_off": false,
+          "answered": true,
+          "stages": {
+            "end_to_end": 1.9544801712036133,
+            "end_of_turn_delay": 0.773339033126831,
+            "transcription_delay": 0.7603192329406738,
+            "llm_time_to_first_token": 0.7758376299989322,
+            "reply_filter_hold": 0.14604936500109034,
+            "tts_time_to_first_byte": 0.20147691599959217,
+            "caller_heard_first_audio": 2.8850213999994594,
+            "caller_heard_answer": 7.1051434189994325
+          }
+        },
+        {
+          "utterance_id": "ar-riyadh-hours",
+          "language": "ar",
+          "cut_off": false,
+          "answered": true,
+          "stages": {
+            "end_to_end": 2.4935905933380127,
+            "end_of_turn_delay": 0.9686965942382812,
+            "transcription_delay": 0.9518189430236816,
+            "llm_time_to_first_token": 0.7981909629997972,
+            "reply_filter_hold": 0.17372750100003032,
+            "tts_time_to_first_byte": 0.4314464119997865,
+            "caller_heard_first_audio": 3.4499819329994352,
+            "caller_heard_answer": 6.439262100999258
+          }
+        },
+        {
+          "utterance_id": "ar-trial-with-pause",
+          "language": "ar",
+          "cut_off": false,
+          "answered": true,
+          "stages": {
+            "end_to_end": 2.6745269298553467,
+            "end_of_turn_delay": 0.7731497287750244,
+            "transcription_delay": 0.7715339660644531,
+            "llm_time_to_first_token": 1.2636155940017488,
+            "reply_filter_hold": 0.3373831329990935,
+            "tts_time_to_first_byte": 0.22823538600096072,
+            "caller_heard_first_audio": 3.655551496998669,
+            "caller_heard_answer": 8.59495742099898
+          }
+        },
+        {
+          "utterance_id": "ar-starter-price",
+          "language": "ar",
+          "cut_off": false,
+          "answered": true,
+          "stages": {
+            "end_to_end": 2.313052177429199,
+            "end_of_turn_delay": 0.7244431972503662,
+            "transcription_delay": 0.708381175994873,
+            "llm_time_to_first_token": 0.9586225920011202,
+            "reply_filter_hold": 0.31588910299979034,
+            "tts_time_to_first_byte": 0.31409085799896275,
+            "caller_heard_first_audio": 3.8259606689989596,
+            "caller_heard_answer": 7.787348416999521
+          }
+        },
+        {
+          "utterance_id": "ar-plan-differences",
+          "language": "ar",
+          "cut_off": false,
+          "answered": true,
+          "stages": {
+            "end_to_end": 2.724681854248047,
+            "end_of_turn_delay": 1.1352448463439941,
+            "transcription_delay": 1.1196236610412598,
+            "llm_time_to_first_token": 1.1044512429998576,
+            "reply_filter_hold": 0.2461803639998834,
+            "tts_time_to_first_byte": 0.21068208799988497,
+            "caller_heard_first_audio": 4.1131771950003895,
+            "caller_heard_answer": 8.692293742000402
+          }
+        },
+        {
+          "utterance_id": "ar-change-plan-pause",
+          "language": "ar",
+          "cut_off": false,
+          "answered": true,
+          "stages": {
+            "end_to_end": 2.3240559101104736,
+            "end_of_turn_delay": 0.7946548461914062,
+            "transcription_delay": 0.7783589363098145,
+            "llm_time_to_first_token": 0.8725360930002353,
+            "reply_filter_hold": 0.1984010739997757,
+            "tts_time_to_first_byte": 0.221096146000491,
+            "caller_heard_first_audio": 3.7466386079977383,
+            "caller_heard_answer": 9.257420470996294
+          }
+        },
+        {
+          "utterance_id": "ar-enterprise",
+          "language": "ar",
+          "cut_off": false,
+          "answered": true,
+          "stages": {
+            "end_to_end": 3.0222890377044678,
+            "end_of_turn_delay": 1.1555640697479248,
+            "transcription_delay": 1.138800859451294,
+            "llm_time_to_first_token": 1.201470418000099,
+            "reply_filter_hold": 0.18503664700074296,
+            "tts_time_to_first_byte": 0.43032846900132427,
+            "caller_heard_first_audio": 4.299694616000124,
+            "caller_heard_answer": 9.269187457999578
+          }
+        },
+        {
+          "utterance_id": "ar-apple-pay",
+          "language": "ar",
+          "cut_off": false,
+          "answered": true,
+          "stages": {
+            "end_to_end": 2.743159055709839,
+            "end_of_turn_delay": 0.9295558929443359,
+            "transcription_delay": 0.9108099937438965,
+            "llm_time_to_first_token": 1.150934449999113,
+            "reply_filter_hold": 0.18325563700091152,
+            "tts_time_to_first_byte": 0.37355332799961616,
+            "caller_heard_first_audio": 3.935304742999506,
+            "caller_heard_answer": 3.935304742999506
+          }
+        },
+        {
+          "utterance_id": "ar-bank-transfer",
+          "language": "ar",
+          "cut_off": false,
+          "answered": true,
+          "stages": {
+            "end_to_end": 3.3488569259643555,
+            "end_of_turn_delay": 1.36381196975708,
+            "transcription_delay": 1.3444929122924805,
+            "llm_time_to_first_token": 1.1679535709990887,
+            "reply_filter_hold": 0.27603468199959025,
+            "tts_time_to_first_byte": 0.45370017800087226,
+            "caller_heard_first_audio": 4.409699207000813,
+            "caller_heard_answer": 4.409699207000813
+          }
+        },
+        {
+          "utterance_id": "ar-escalation-pause",
+          "language": "ar",
+          "cut_off": false,
+          "answered": true,
+          "stages": {
+            "end_to_end": 5.6925318241119385,
+            "end_of_turn_delay": 3.0009870529174805,
+            "transcription_delay": 1.8122410774230957,
+            "llm_time_to_first_token": 1.4449872909990518,
+            "reply_filter_hold": 0.18050877600035165,
+            "tts_time_to_first_byte": 2.090644916999736,
+            "caller_heard_first_audio": 6.972599420998449,
+            "caller_heard_answer": 6.972599420998449
+          }
+        },
+        {
+          "utterance_id": "ar-zatca",
+          "language": "ar",
+          "cut_off": false,
+          "answered": false,
+          "stages": {
+            "end_to_end": null,
+            "end_of_turn_delay": null,
+            "transcription_delay": null,
+            "llm_time_to_first_token": null,
+            "reply_filter_hold": null,
+            "tts_time_to_first_byte": null,
+            "caller_heard_first_audio": null,
+            "caller_heard_answer": null
+          }
+        },
+        {
+          "utterance_id": "ar-export",
+          "language": "ar",
+          "cut_off": false,
+          "answered": false,
+          "stages": {
+            "end_to_end": null,
+            "end_of_turn_delay": null,
+            "transcription_delay": null,
+            "llm_time_to_first_token": null,
+            "reply_filter_hold": null,
+            "tts_time_to_first_byte": null,
+            "caller_heard_first_audio": null,
+            "caller_heard_answer": null
+          }
+        },
+        {
+          "utterance_id": "ar-export-format",
+          "language": "ar",
+          "cut_off": false,
+          "answered": false,
+          "stages": {
+            "end_to_end": null,
+            "end_of_turn_delay": null,
+            "transcription_delay": null,
+            "llm_time_to_first_token": null,
+            "reply_filter_hold": null,
+            "tts_time_to_first_byte": null,
+            "caller_heard_first_audio": null,
+            "caller_heard_answer": null
+          }
+        },
+        {
+          "utterance_id": "ar-cancel-data-pause",
+          "language": "ar",
+          "cut_off": false,
+          "answered": true,
+          "stages": {
+            "end_to_end": 5.268263816833496,
+            "end_of_turn_delay": 1.1424250602722168,
+            "transcription_delay": 1.1251869201660156,
+            "llm_time_to_first_token": 3.2333763090009597,
+            "reply_filter_hold": 0.21501256599913177,
+            "tts_time_to_first_byte": 0.4913108000000648,
+            "caller_heard_first_audio": 6.4739125770011015,
+            "caller_heard_answer": 6.4739125770011015
+          }
+        },
+        {
+          "utterance_id": "ar-trial-length",
+          "language": "ar",
+          "cut_off": false,
+          "answered": true,
+          "stages": {
+            "end_to_end": 6.170287132263184,
+            "end_of_turn_delay": 3.564918041229248,
+            "transcription_delay": 3.5496408939361572,
+            "llm_time_to_first_token": 2.0890543309997156,
+            "reply_filter_hold": 0.20508585199968365,
+            "tts_time_to_first_byte": 0.3132727510001132,
+            "caller_heard_first_audio": 7.49539578400254,
+            "caller_heard_answer": 7.49539578400254
+          }
+        },
+        {
+          "utterance_id": "ar-trial-card",
+          "language": "ar",
+          "cut_off": false,
+          "answered": true,
+          "stages": {
+            "end_to_end": 15.987981796264648,
+            "end_of_turn_delay": 9.500778913497925,
+            "transcription_delay": 9.499799013137817,
+            "llm_time_to_first_token": 5.909064476998537,
+            "reply_filter_hold": 0.2564878900011536,
+            "tts_time_to_first_byte": 0.308483264001552,
+            "caller_heard_first_audio": 17.20702213000004,
+            "caller_heard_answer": 21.72719010000037
+          }
+        },
+        {
+          "utterance_id": "ar-p1-response",
+          "language": "ar",
+          "cut_off": false,
+          "answered": false,
+          "stages": {
+            "end_to_end": null,
+            "end_of_turn_delay": null,
+            "transcription_delay": null,
+            "llm_time_to_first_token": null,
+            "reply_filter_hold": null,
+            "tts_time_to_first_byte": null,
+            "caller_heard_first_audio": null,
+            "caller_heard_answer": null
+          }
+        },
+        {
+          "utterance_id": "ar-p3-response",
+          "language": "ar",
+          "cut_off": false,
+          "answered": false,
+          "stages": {
+            "end_to_end": null,
+            "end_of_turn_delay": null,
+            "transcription_delay": null,
+            "llm_time_to_first_token": null,
+            "reply_filter_hold": null,
+            "tts_time_to_first_byte": null,
+            "caller_heard_first_audio": null,
+            "caller_heard_answer": null
+          }
+        },
+        {
+          "utterance_id": "ar-ramadan-hours",
+          "language": "ar",
+          "cut_off": false,
+          "answered": false,
+          "stages": {
+            "end_to_end": null,
+            "end_of_turn_delay": null,
+            "transcription_delay": null,
+            "llm_time_to_first_token": null,
+            "reply_filter_hold": null,
+            "tts_time_to_first_byte": null,
+            "caller_heard_first_audio": null,
+            "caller_heard_answer": null
+          }
+        }
+      ]
+    }
+  },
+  "default_configuration": {
+    "kb_search_mode": "every_turn",
+    "vad_min_silence_duration_seconds": 0.3,
+    "endpointing_min_delay_seconds": 0.3,
+    "stt_language": "ar",
+    "stt_secondary_languages": [
+      "en"
+    ],
+    "voice_run": "every-turn-silence-0.30",
+    "why": "Searching before the model put the answer in the caller's ear 2-3 s sooner than the search tool at p50 (voice runs every-turn-silence-0.30 and tool-silence-0.30) and passed as many conversation evals (21 and 23 of 32 against 21 and 23); the final eval run on this configuration passed 24 of 32. A 0.3 s silence wait cut the typical end-of-turn delay by 0.1-0.3 s against 0.55/0.5 s with no early cut-off on eight utterances with 0.7-1.7 s pauses."
+  },
+  "notes": [
+    "Each voice run asks 20 distinct questions per language, one LiveKit room per language, through LiveKit Cloud; the agent worker, VAD and ONNX embedder run on this Mac.",
+    "end_to_end and its stages are measured by the agent (LiveKit metrics, from the caller's last speech to the agent's first audio leaving the worker); end_of_turn_delay includes transcription_delay. llm_time_to_first_token is LiveKit's llm_node first token minus reply_filter_hold, so in every_turn mode it includes the knowledge search.",
+    "caller_heard_first_audio and caller_heard_answer are measured by the bench caller, from the end of its utterance to audible agent audio, so they add both network legs and audio buffering. In tool mode the first audio is the acknowledgement and the answer comes after the tool round trip.",
+    "Turns the agent never answered are excluded from the percentiles and counted in answered: in every run the ElevenLabs realtime STT websocket was closed by the server 8-13 times (no error message) and the turns spoken during a reconnect were not transcribed.",
+    "A cut-off is agent audio while the caller is still speaking; the one in tool-silence-0.30 is the late reply to the previous unanswered turn. A turn committed before the STT's last words arrive is not counted, because LiveKit logs it only once per process.",
+    "text_mode runs time the same questions through the agent and Claude without voice; they were run before the every_turn fixes (neutral note on a miss, no search after tool calls or on read-back answers), which do not change the path these knowledge questions take."
+  ]
+}

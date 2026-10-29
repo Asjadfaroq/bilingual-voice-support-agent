@@ -12,6 +12,9 @@ class Settings(BaseSettings):
     livekit_url: str
     livekit_api_key: SecretStr
     livekit_api_secret: SecretStr
+    # Empty: LiveKit sends every new room to this worker, as the Agents Playground expects. The
+    # latency bench names its worker so no other running worker answers its rooms.
+    agent_name: str = ""
 
     eleven_api_key: SecretStr
     elevenlabs_base_url: str = "https://api.elevenlabs.io/v1"
@@ -23,9 +26,10 @@ class Settings(BaseSettings):
     # Per-language voice overrides, e.g. {"ar": "<voice id>"}; unset languages use tts_voice_id.
     tts_voice_id_by_language: dict[str, str] = {}
 
-    # Unset means ElevenLabs detects the language of every committed transcript.
-    stt_language: str | None = None
-    stt_secondary_languages: list[str] = []
+    # Pinned: left to detect freely, Scribe heard the Arabic test audio as Bulgarian. The
+    # caller's language comes from the transcript's script, so English turns tagged "ar" are fine.
+    stt_language: str | None = "ar"
+    stt_secondary_languages: list[str] = ["en"]
     # Share of a transcript's letters that must be in one script for the script to decide
     # the caller's language; mixed transcripts fall back to the STT's detected language.
     script_dominance_threshold: float = 0.8
@@ -59,14 +63,25 @@ class Settings(BaseSettings):
     langfuse_secret_key: SecretStr | None = None
 
     turn_detector_version: Literal["v1", "v1-mini"] = "v1"
-    endpointing_min_delay_seconds: float = 0.5
+    # 0.3 s against 0.5 s cut the typical end-of-turn delay by 0.1-0.3 s with no early cut-offs
+    # on pauses of 0.7-1.7 s (evals/results/latency.json).
+    endpointing_min_delay_seconds: float = 0.3
     endpointing_max_delay_seconds: float = 3.0
     # "adaptive" is LiveKit's cloud model that ignores backchannels; "vad" is local and free.
     interruption_mode: Literal["vad", "adaptive"] = "vad"
     interruption_min_duration_seconds: float = 0.5
     preemptive_generation_enabled: bool = True
-    vad_min_silence_duration_seconds: float = 0.55
+    # LiveKit's turn detector needs at least 0.25 s.
+    vad_min_silence_duration_seconds: float = 0.3
     latency_budget_seconds: float = 1.0
+    # Set only for the latency bench: each turn's measurements go to the caller on this topic.
+    turn_latency_topic: str | None = None
+    bench_turns_per_language: int = 20
+    bench_reply_timeout_seconds: float = 30.0
+    # The bench waits this long without agent audio before it speaks the next utterance.
+    bench_quiet_before_turn_seconds: float = 1.0
+    # The bench stops before ElevenLabs credits fall below this many characters.
+    bench_min_elevenlabs_characters_left: int = 3000
     worker_initialize_timeout_seconds: float = 60.0
     # One warm process means a call never waits for the embedding model to load.
     worker_idle_processes: int = 1
@@ -101,6 +116,10 @@ class Settings(BaseSettings):
     kb_chunk_max_characters: int = 1200
     kb_top_k: int = 3
     kb_min_similarity: float = 0.72
+    # "tool": the model calls search_knowledge_base; "every_turn": each new caller turn is searched
+    # before the model runs. every_turn reached the caller with the answer 2-3 s sooner by voice
+    # and passed as many conversation evals (evals/results/latency.json, docs/DECISIONS.md).
+    kb_search_mode: Literal["tool", "every_turn"] = "every_turn"
     kb_rerank_enabled: bool = False
     kb_rerank_model: str = "cross-encoder/mmarco-mMiniLMv2-L12-H384-v1"
     kb_rerank_candidate_count: int = 10

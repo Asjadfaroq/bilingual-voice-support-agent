@@ -12,8 +12,9 @@ from voice_agent.conversation.instructions import (
     CALLER_IDENTIFIED_NOTE,
     REPLY_LANGUAGE_NOTES,
 )
-from voice_agent.conversation.support_agent import LanguageSettings, SupportAgent
+from voice_agent.conversation.support_agent import SupportAgent
 from voice_agent.crm.hubspot_client import HubSpotContact
+from voice_agent.pipeline.language import LanguageSettings
 
 
 class RecordingTTS:
@@ -49,7 +50,9 @@ def model(monkeypatch: pytest.MonkeyPatch) -> ScriptedModel:
 
 def make_agent(tts: RecordingTTS | None, call: CallState | None = None) -> SupportAgent:
     settings = LanguageSettings("sarah", {"ar": "arabic-voice"}, 0.8, 6)
-    return SupportAgent(settings, cast(elevenlabs.TTS, tts), call or CallState())
+    return SupportAgent(
+        settings, cast(elevenlabs.TTS, tts), call or CallState(), kb_search_mode="tool"
+    )
 
 
 async def reply_to(agent: SupportAgent, history: ChatContext, caller_text: str) -> str:

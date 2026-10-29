@@ -5,3 +5,36 @@
 {"id": "ar-mada", "language": "ar", "text": "هل تدعمون الدفع عن طريق مدى؟"}
 {"id": "ar-riyadh-hours", "language": "ar", "text": "ما هي ساعات عمل مكتب الرياض؟"}
 {"id": "ar-trial-with-pause", "language": "ar", "text": "أبغى أسأل عن <break time=\"1.5s\" /> الفترة التجريبية المجانية."}
+{"id": "en-starter-price", "language": "en", "text": "What does the Starter plan cost each month?"}
+{"id": "en-plan-differences", "language": "en", "text": "What's the difference between Starter and Growth?"}
+{"id": "en-change-plan-pause", "language": "en", "text": "Can I change my plan <break time=\"0.6s\" /> in the middle of the month?"}
+{"id": "en-enterprise", "language": "en", "text": "Do you have a plan for bigger companies?"}
+{"id": "en-mada", "language": "en", "text": "Can my customers pay with mada cards?"}
+{"id": "en-bank-transfer", "language": "en", "text": "Do you accept bank transfers?"}
+{"id": "en-escalation-pause", "language": "en", "text": "I wanted to check <break time=\"0.8s\" /> how escalation works."}
+{"id": "en-zatca", "language": "en", "text": "Is Ledgerly compliant with ZATCA e-invoicing?"}
+{"id": "en-export", "language": "en", "text": "Can I export all of my invoices?"}
+{"id": "en-export-format", "language": "en", "text": "Which file formats can I export my data in?"}
+{"id": "en-cancel-data-pause", "language": "en", "text": "What happens to my data <break time=\"1.0s\" /> if I cancel?"}
+{"id": "en-trial-length", "language": "en", "text": "How long is the free trial?"}
+{"id": "en-trial-card", "language": "en", "text": "Do I need a credit card for the trial?"}
+{"id": "en-p1-response", "language": "en", "text": "How quickly do you respond to an urgent ticket?"}
+{"id": "en-p3-response", "language": "en", "text": "How long does a low priority ticket take?"}
+{"id": "en-office-hours", "language": "en", "text": "What are your office hours?"}
+{"id": "en-ramadan-hours", "language": "en", "text": "Do your hours change during Ramadan?"}
+{"id": "ar-starter-price", "language": "ar", "text": "كم تكلفة باقة البداية في الشهر؟"}
+{"id": "ar-plan-differences", "language": "ar", "text": "ما الفرق بين باقة البداية وباقة النمو؟"}
+{"id": "ar-change-plan-pause", "language": "ar", "text": "هل أقدر أغيّر باقتي <break time=\"0.6s\" /> في منتصف الشهر؟"}
+{"id": "ar-enterprise", "language": "ar", "text": "هل عندكم باقة للشركات الكبيرة؟"}
+{"id": "ar-apple-pay", "language": "ar", "text": "هل تدعمون الدفع عن طريق أبل باي؟"}
+{"id": "ar-bank-transfer", "language": "ar", "text": "هل تقبلون التحويل البنكي؟"}
+{"id": "ar-escalation-pause", "language": "ar", "text": "أبغى أعرف <break time=\"0.8s\" /> كيف يتم التصعيد؟"}
+{"id": "ar-zatca", "language": "ar", "text": "هل ليدجرلي متوافق مع الفوترة الإلكترونية من هيئة الزكاة؟"}
+{"id": "ar-export", "language": "ar", "text": "هل أقدر أصدّر كل فواتيري؟"}
+{"id": "ar-export-format", "language": "ar", "text": "بأي صيغ أقدر أصدّر بياناتي؟"}
+{"id": "ar-cancel-data-pause", "language": "ar", "text": "ماذا يحدث لبياناتي <break time=\"1.0s\" /> إذا ألغيت الاشتراك؟"}
+{"id": "ar-trial-length", "language": "ar", "text": "كم مدة الفترة التجريبية المجانية؟"}
+{"id": "ar-trial-card", "language": "ar", "text": "هل أحتاج بطاقة ائتمان للفترة التجريبية؟"}
+{"id": "ar-p1-response", "language": "ar", "text": "كم تستغرقون للرد على تذكرة عاجلة؟"}
+{"id": "ar-p3-response", "language": "ar", "text": "كم يستغرق الرد على تذكرة منخفضة الأولوية؟"}
+{"id": "ar-ramadan-hours", "language": "ar", "text": "هل تتغير ساعات العمل في رمضان؟"}

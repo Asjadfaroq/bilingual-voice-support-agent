@@ -12,10 +12,12 @@ from simulated_caller import Scenario, SimulatedCaller
 from voice_agent.config import Settings
 from voice_agent.conversation.call_state import CallResources, CallState
 from voice_agent.conversation.instructions import GREETING
-from voice_agent.conversation.support_agent import LanguageSettings, SupportAgent
+from voice_agent.conversation.support_agent import SupportAgent
 from voice_agent.conversation.tools import identify_caller_by_line
+from voice_agent.crm.hubspot_client import HubSpotClient
 from voice_agent.knowledge.ingest import TextEmbedder
 from voice_agent.pipeline.components import build_llm
+from voice_agent.pipeline.language import LanguageSettings
 
 
 @dataclass(frozen=True)
@@ -64,6 +66,27 @@ def seed_fake_hubspot(setup: dict[str, Any]) -> FakeHubSpot:
     return hubspot
 
 
+def build_call_resources(
+    settings: Settings,
+    knowledge_pool: AsyncConnectionPool,
+    embed: TextEmbedder,
+    crm: HubSpotClient,
+    call: CallState,
+) -> CallResources:
+    return CallResources(
+        knowledge_pool, embed, None, settings.kb_top_k, settings.kb_min_similarity, crm,
+        settings.hubspot_ticket_pipeline_id, settings.hubspot_new_ticket_stage_id,
+        settings.ticket_status_limit, settings.default_country_calling_code, call,
+    )  # fmt: skip
+
+
+def text_mode_language_settings(settings: Settings) -> LanguageSettings:
+    return LanguageSettings(
+        settings.tts_voice_id, {}, settings.script_dominance_threshold,
+        settings.reply_language_min_letters,
+    )  # fmt: skip
+
+
 async def run_simulated_call(
     scenario: Scenario,
     settings: Settings,
@@ -73,16 +96,10 @@ async def run_simulated_call(
     hubspot = seed_fake_hubspot(scenario.setup)
     crm = hubspot.client()
     call = CallState(caller_phone=scenario.setup.get("caller_phone"))
-    resources = CallResources(
-        knowledge_pool, embed, None, settings.kb_top_k, settings.kb_min_similarity, crm,
-        settings.hubspot_ticket_pipeline_id, settings.hubspot_new_ticket_stage_id,
-        settings.ticket_status_limit, settings.default_country_calling_code, call,
-    )  # fmt: skip
-    language_settings = LanguageSettings(
-        settings.tts_voice_id, {}, settings.script_dominance_threshold,
-        settings.reply_language_min_letters,
-    )  # fmt: skip
-    agent = SupportAgent(language_settings, None, call)
+    resources = build_call_resources(settings, knowledge_pool, embed, crm, call)
+    agent = SupportAgent(
+        text_mode_language_settings(settings), None, call, kb_search_mode=settings.kb_search_mode
+    )
     await identify_caller_by_line(resources)
     outcome = CallOutcome(scenario)
 
@@ -104,7 +121,7 @@ async def run_simulated_call(
             outcome.details_turn = turn
         hubspot.caller_turn = turn
         outcome.caller_lines.append(line)
-        seen = len(session.history.items)
+        seen, searched = len(session.history.items), len(call.knowledge_lookups)
         await session.run(user_input=line)
         # Read-backs are said by the tools themselves, so the turn is read from the history.
         while session.current_speech is not None:
@@ -112,6 +129,11 @@ async def run_simulated_call(
         last_agent_text = (
             record_turn(outcome, session.history.items[seen:], turn) or last_agent_text
         )
+        # Searching before the model is the same knowledge base search, shown as the tool call.
+        outcome.tool_calls += [
+            ToolCall("search_knowledge_base", {"question": question}, passages, turn)
+            for question, passages in call.knowledge_lookups[searched:]
+        ]
         if any(tool.name == "end_call" for tool in outcome.tool_calls):
             break
     await session.aclose()

@@ -1,10 +1,15 @@
+import asyncio
+import json
 import logging
+from collections.abc import Callable
 from dataclasses import asdict, dataclass
 
-from livekit.agents import AgentSession, ConversationItemAddedEvent
+from livekit.agents import AgentSession, ConversationItemAddedEvent, get_job_context
 from livekit.agents.llm import ChatMessage, MetricsReport
 
 logger = logging.getLogger(__name__)
+# Publishing is fire-and-forget; the tasks are kept so they are not garbage collected mid-send.
+pending_publishes: set[asyncio.Task[None]] = set()
 
 
 @dataclass(frozen=True)
@@ -47,7 +52,28 @@ def describe_turn_latency(latency: TurnLatency, budget_seconds: float) -> str:
     )
 
 
-def log_latency_for_each_turn(session: AgentSession, budget_seconds: float) -> None:
+def publish_measurement(topic: str | None, measurement: dict[str, object]) -> None:
+    if topic is None:
+        return
+    room = get_job_context().room
+    task = asyncio.create_task(
+        room.local_participant.publish_data(json.dumps(measurement), reliable=True, topic=topic)
+    )
+    pending_publishes.add(task)
+    task.add_done_callback(pending_publishes.discard)
+
+
+def reply_filter_hold_reporter(topic: str | None) -> Callable[[float], None]:
+    def report_hold(seconds: float) -> None:
+        logger.info("reply filter held the first sentence for %.2fs", seconds)
+        publish_measurement(topic, {"kind": "reply_filter_hold", "seconds": seconds})
+
+    return report_hold
+
+
+def log_latency_for_each_turn(
+    session: AgentSession, budget_seconds: float, report_topic: str | None = None
+) -> None:
     latest_user_metrics: MetricsReport = {}
 
     def on_conversation_item_added(event: ConversationItemAddedEvent) -> None:
@@ -65,5 +91,6 @@ def log_latency_for_each_turn(session: AgentSession, budget_seconds: float) -> N
                 describe_turn_latency(latency, budget_seconds),
                 extra={"turn_latency": asdict(latency)},
             )
+            publish_measurement(report_topic, {"kind": "turn", **asdict(latency)})
 
     session.on("conversation_item_added", on_conversation_item_added)

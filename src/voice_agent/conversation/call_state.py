@@ -26,8 +26,13 @@ class CallState:
     line_checked: bool = False
     contact: HubSpotContact | None = None
     language: CallerLanguage | None = None
+    # Every language the caller spoke, in the order they first used it, for the call log.
+    languages: list[CallerLanguage] = field(default_factory=list)
     ticket_ids: list[str] = field(default_factory=list)
     pending_write: PendingWrite | None = None
+    # Searches made before the model (kb_search_mode "every_turn"): question and result, so a
+    # transcript shows what each reply was grounded on.
+    knowledge_lookups: list[tuple[str, str]] = field(default_factory=list)
 
 
 @dataclass(frozen=True)

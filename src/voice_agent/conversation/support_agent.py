@@ -1,22 +1,28 @@
 from collections.abc import AsyncGenerator, AsyncIterable
-from dataclasses import dataclass
 
 from livekit import rtc
-from livekit.agents import Agent, FlushSentinel, ModelSettings, UserInputTranscribedEvent
+from livekit.agents import Agent, ModelSettings, UserInputTranscribedEvent
 from livekit.agents.beta.tools import EndCallTool
-from livekit.agents.llm import ChatChunk, ChatContext, Tool
+from livekit.agents.llm import ChatContext, Tool
 from livekit.plugins import elevenlabs
 from opentelemetry import trace
 
+from voice_agent.conversation import knowledge_first
 from voice_agent.conversation.call_state import CallState, caller_identity_note
 from voice_agent.conversation.confirmation import caller_messages
 from voice_agent.conversation.instructions import (
     GREETING,
     REPLY_LANGUAGE_NOTES,
-    SUPPORT_INSTRUCTIONS,
     WRONG_LANGUAGE_RETRY_NOTES,
 )
-from voice_agent.conversation.reply_filter import guarded_reply, prose_language, spoken_sentences
+from voice_agent.conversation.reply_filter import (
+    ReplyChunk,
+    ReportHold,
+    guarded_reply,
+    ignore_hold,
+    prose_language,
+    spoken_sentences,
+)
 from voice_agent.conversation.ticket_tools import (
     create_ticket,
     get_ticket_status,
@@ -29,17 +35,18 @@ from voice_agent.conversation.tools import (
 )
 from voice_agent.pipeline.language import (
     CallerLanguage,
-    choose_reply_voice,
+    LanguageSettings,
     detect_caller_language,
+    reply_voice_for,
 )
 
-
-@dataclass(frozen=True)
-class LanguageSettings:
-    default_voice_id: str
-    voice_id_by_language: dict[str, str]
-    script_dominance_threshold: float
-    reply_language_min_letters: int
+CRM_TOOLS = [
+    find_or_create_contact,
+    create_ticket,
+    get_ticket_status,
+    request_human_callback,
+    record_caller_answer,
+]
 
 
 class SupportAgent(Agent):
@@ -48,32 +55,28 @@ class SupportAgent(Agent):
         language_settings: LanguageSettings,
         reply_tts: elevenlabs.TTS | None,
         call: CallState,
+        *,
+        kb_search_mode: knowledge_first.KnowledgeSearchMode,
+        report_reply_filter_hold: ReportHold = ignore_hold,
     ) -> None:
         super().__init__(
-            instructions=SUPPORT_INSTRUCTIONS,
+            instructions=knowledge_first.SUPPORT_INSTRUCTIONS[kb_search_mode],
             tools=[
-                search_knowledge_base,
-                find_or_create_contact,
-                create_ticket,
-                get_ticket_status,
-                request_human_callback,
-                record_caller_answer,
+                *([search_knowledge_base] if kb_search_mode == "tool" else []),
+                *CRM_TOOLS,
                 # The agent says goodbye before calling end_call, so the tool asks for no reply.
                 EndCallTool(end_instructions=None, ignore_on_enter=True),
             ],
         )
         self._language_settings = language_settings
         self._call = call
+        self._kb_search_mode = kb_search_mode
+        self._report_reply_filter_hold = report_reply_filter_hold
         # None in text mode, where there is no voice to switch.
         self._reply_tts = reply_tts
         self._caller_language: CallerLanguage | None = None
-        self._caller_languages: list[CallerLanguage] = []
         self._latest_final_transcript = ""
         self._latest_final_stt_language: str | None = None
-
-    @property
-    def caller_languages(self) -> list[CallerLanguage]:
-        return list(self._caller_languages)
 
     async def on_enter(self) -> None:
         self.session.on("user_input_transcribed", self._remember_stt_language)
@@ -100,39 +103,47 @@ class SupportAgent(Agent):
             return
         self._caller_language = language
         self._call.language = language
-        if language not in self._caller_languages:
-            self._caller_languages.append(language)
+        if language not in self._call.languages:
+            self._call.languages.append(language)
         if self._reply_tts is None:
             return
-        voice = choose_reply_voice(
-            language,
-            self._language_settings.default_voice_id,
-            self._language_settings.voice_id_by_language,
-        )
+        voice = reply_voice_for(language, self._language_settings)
         self._reply_tts.update_options(language=voice.language, voice_id=voice.voice_id)
 
     def llm_node(
         self, chat_ctx: ChatContext, tools: list[Tool], model_settings: ModelSettings
-    ) -> AsyncGenerator[ChatChunk | str | FlushSentinel, None]:
+    ) -> AsyncGenerator[ReplyChunk, None]:
         # Every generation, spoken or typed, before or after a tool call, gets the reply
         # language and who the caller is; the notes live only in this generation's context.
         messages = caller_messages(chat_ctx)
-        language = self._language_of(messages[-1].text_content or "") if messages else None
+        caller_text = (messages[-1].text_content or "") if messages else ""
+        language = self._language_of(caller_text) if messages else None
+        searches = knowledge_first.searches_before_reply(chat_ctx, self._call)
         chat_ctx = chat_ctx.copy()
         if note := caller_identity_note(self._call):
             chat_ctx.add_message(role="system", content=note)
-        if language is None:
-            return Agent.default.llm_node(self, chat_ctx, tools, model_settings)
-        trace.get_current_span().set_attribute("voice_agent.reply_language", language)
-        self._switch_voice_to(language)
-        chat_ctx.add_message(role="system", content=REPLY_LANGUAGE_NOTES[language])
-        return guarded_reply(
-            lambda context: Agent.default.llm_node(self, context, tools, model_settings),
-            chat_ctx,
-            language,
-            WRONG_LANGUAGE_RETRY_NOTES[language],
-            self._language_settings.reply_language_min_letters,
-        )
+        if language is not None:
+            trace.get_current_span().set_attribute("voice_agent.reply_language", language)
+            self._switch_voice_to(language)
+            chat_ctx.add_message(role="system", content=REPLY_LANGUAGE_NOTES[language])
+
+        def generate(context: ChatContext) -> AsyncGenerator[ReplyChunk, None]:
+            return Agent.default.llm_node(self, context, tools, model_settings)
+
+        def start_reply(context: ChatContext) -> AsyncGenerator[ReplyChunk, None]:
+            if language is None:
+                return generate(context)
+            retry_note = WRONG_LANGUAGE_RETRY_NOTES[language]
+            min_letters = self._language_settings.reply_language_min_letters
+            report_hold = self._report_reply_filter_hold
+            return guarded_reply(generate, context, language, retry_note, min_letters, report_hold)
+
+        if self._kb_search_mode == "every_turn" and caller_text and searches:
+            resources = self.session.userdata
+            return knowledge_first.reply_with_knowledge(
+                start_reply, chat_ctx, caller_text, resources
+            )
+        return start_reply(chat_ctx)
 
     def _spoken_language(self, sentence: str) -> CallerLanguage:
         min_letters = self._language_settings.reply_language_min_letters

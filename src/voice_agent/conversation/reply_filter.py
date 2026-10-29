@@ -1,4 +1,5 @@
 import re
+import time
 from collections.abc import AsyncGenerator, AsyncIterable, Callable
 from typing import Literal
 
@@ -11,6 +12,7 @@ from voice_agent.pipeline.spoken_text import to_spoken_text
 ReplyChunk = ChatChunk | str | FlushSentinel
 StartReply = Callable[[ChatContext], AsyncGenerator[ReplyChunk, None]]
 SentenceVerdict = Literal["keep", "meta", "wrong_language"]
+ReportHold = Callable[[float], None]
 
 # A reply is in the language most of its letters are written in.
 MAJORITY_SCRIPT = 0.5
@@ -24,6 +26,11 @@ META_SENTENCE = re.compile(
     r"(?:ال)?(?:عربية|إنجليزية)",
     re.IGNORECASE,
 )
+
+
+def ignore_hold(seconds: float) -> None:
+    # Text-mode evals and unit tests have no caller waiting on audio.
+    return None
 
 
 def prose_language(text: str, min_letters: int) -> CallerLanguage | None:
@@ -77,13 +84,24 @@ async def guarded_reply(
     language: CallerLanguage,
     retry_note: str,
     min_letters: int,
+    report_hold: ReportHold,
 ) -> AsyncGenerator[ReplyChunk, None]:
     stream, splitter = start_reply(chat_ctx), SentenceSplitter()
     retried = spoke = False
+    # The hold is how long the caller waits on the filter: from the model's first text to the
+    # first sentence let through, including a regenerated reply.
+    first_text_at: float | None = None
+
+    def report_first_sentence() -> None:
+        if not spoke and first_text_at is not None:
+            report_hold(time.perf_counter() - first_text_at)
+
     while True:
         restart = False
         async for chunk in stream:
             text, rest_of_chunk = split_text(chunk)
+            if text and first_text_at is None:
+                first_text_at = time.perf_counter()
             sentences = splitter.push(text)
             if rest_of_chunk is not None and text == "" and not sentences:
                 sentences = [remainder] if (remainder := splitter.flush()) else []
@@ -93,6 +111,7 @@ async def guarded_reply(
                     restart = True
                     break
                 if verdict == "keep":
+                    report_first_sentence()
                     spoke = True
                     yield sentence + " "
             if restart:
@@ -103,6 +122,7 @@ async def guarded_reply(
         if not restart:
             remainder = splitter.flush()
             if remainder and judge_sentence(remainder, language, min_letters) == "keep":
+                report_first_sentence()
                 yield remainder
             return
         # A reply that opens in the wrong language is regenerated once with a firmer note.
