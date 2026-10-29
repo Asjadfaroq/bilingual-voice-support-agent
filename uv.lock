@@ -1057,9 +1057,6 @@ elevenlabs = [
 silero = [
     { name = "livekit-plugins-silero" },
 ]
-turn-detector = [
-    { name = "livekit-plugins-turn-detector" },
-]
 
 [[package]]
 name = "livekit-api"
@@ -1161,22 +1158,6 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/16/f4/4ee656d42f81b13e016c7186c8b8d38c12636ef26b010e82fd496129b638/livekit_plugins_silero-1.8.10.tar.gz", hash = "sha256:4e35df7a4edbafa5154b9f730f3593db7cf42a93cf663eb937fb720fc4a38e39", size = 1955462, upload-time = "2026-10-29T02:22:46.766Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/40/b4/c52023a9a5bf47024a822a4f5f3843f4a3a8772df883d1f0e658a737cbc5/livekit_plugins_silero-1.8.10-py3-none-any.whl", hash = "sha256:4c31f05c62cc03416d1c3971069268249be3c941beadfc2e0c332c62e8512d86", size = 3903182, upload-time = "2026-10-29T02:22:44.875Z" },
-]
-
-[[package]]
-name = "livekit-plugins-turn-detector"
-version = "1.8.10"
-source = { registry = "https://pypi.org/simple" }
-dependencies = [
-    { name = "jinja2" },
-    { name = "livekit-agents" },
-    { name = "numpy" },
-    { name = "onnxruntime" },
-    { name = "transformers" },
-]
-sdist = { url = "https://files.pythonhosted.org/packages/41/48/3acce491cabdded8c5798231ff8f9e8ba6f031383024e8687fe2a1789b84/livekit_plugins_turn_detector-1.8.10.tar.gz", hash = "sha256:9633bcdbfdc8b1da915a58201e6596110f15c0ae36c56cf12dc6e3d718514a2f", size = 7464, upload-time = "2026-10-28T17:21:36.639Z" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/5c/75/645513be935a6a55ad7efbbb8625a2b293dbd7e93cfd7b9c6b9eeae2a776/livekit_plugins_turn_detector-1.8.10-py3-none-any.whl", hash = "sha256:6c4a118c1b442ef96e9f280a0043a389613b17305f93c0c0ea3f2efa3eed9898", size = 10542, upload-time = "2026-10-28T17:21:35.229Z" },
 ]
 
 [[package]]
@@ -1973,6 +1954,9 @@ wheels = [
 binary = [
     { name = "psycopg-binary", marker = "implementation_name != 'pypy'" },
 ]
+pool = [
+    { name = "psycopg-pool" },
+]
 
 [[package]]
 name = "psycopg-binary"
@@ -2023,6 +2007,18 @@ wheels = [
     { url = "https://files.pythonhosted.org/packages/5d/0f/62113dc6b1df65983a1f2fc816c04b1edfa22f2ae9d4abee74ed267f4a96/psycopg_binary-3.3.6-cp315-cp315-musllinux_1_2_riscv64.whl", hash = "sha256:c7753871eb57e6a5f4646f6168590c6653073dea5e9e720b201c8875332df4c8", size = 4027121, upload-time = "2026-09-18T13:22:38.334Z" },
     { url = "https://files.pythonhosted.org/packages/5d/d5/cf0cbd1ea5a7d8167fe2c6953efde19101f7b193bd61a23e6d622ad6854c/psycopg_binary-3.3.6-cp315-cp315-musllinux_1_2_x86_64.whl", hash = "sha256:303732e798fe6729f8e12021b9c96107df8e95ecec4dd487c67b98ec2a59435e", size = 4336388, upload-time = "2026-09-18T13:22:45.576Z" },
     { url = "https://files.pythonhosted.org/packages/98/33/e2a5b36edf8aa422f6fa4b894756eb33dc93b36df5f65121280bb8b929c4/psycopg_binary-3.3.6-cp315-cp315-win_amd64.whl", hash = "sha256:2f122603f36050937982abf9668d8bc4769a79f7c93a65013b1c49f1cab7b56b", size = 3756154, upload-time = "2026-09-18T13:22:51.283Z" },
+]
+
+[[package]]
+name = "psycopg-pool"
+version = "3.3.3"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "typing-extensions" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/74/5e/c0664b968b102ff68b811d999c728546c48d5c1eec03e3bbaf88c0cb4472/psycopg_pool-3.3.3.tar.gz", hash = "sha256:df87b5d9d0ad7db37f6cdad4fa8ce113d250f5997f6db38e9a99192fb67f9e1d", size = 32006, upload-time = "2026-09-22T15:53:24.947Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/5d/b4/452c6607a0f479465cd8a9b0d9956919fcb150050c1f83f9f11e6b8ee8dc/psycopg_pool-3.3.3-py3-none-any.whl", hash = "sha256:9b9cd6a4fcec47a410f7e82d408540e7f77b478509e91b44c1a5457a13e5ff37", size = 40304, upload-time = "2026-09-22T15:53:23.712Z" },
 ]
 
 [[package]]
@@ -2890,11 +2886,11 @@ dependencies = [
     { name = "aiohttp" },
     { name = "anthropic" },
     { name = "httpx" },
-    { name = "livekit-agents", extra = ["anthropic", "elevenlabs", "silero", "turn-detector"] },
+    { name = "livekit-agents", extra = ["anthropic", "elevenlabs", "silero"] },
     { name = "livekit-api" },
     { name = "numpy" },
     { name = "pgvector" },
-    { name = "psycopg", extra = ["binary"] },
+    { name = "psycopg", extra = ["binary", "pool"] },
     { name = "pydantic-settings" },
     { name = "pyyaml" },
     { name = "sentence-transformers" },
@@ -2915,11 +2911,11 @@ requires-dist = [
     { name = "aiohttp", specifier = ">=3.14.5" },
     { name = "anthropic", specifier = ">=1.17.0" },
     { name = "httpx", specifier = ">=0.28.1" },
-    { name = "livekit-agents", extras = ["anthropic", "elevenlabs", "silero", "turn-detector"], specifier = "~=1.8" },
+    { name = "livekit-agents", extras = ["anthropic", "elevenlabs", "silero"], specifier = "~=1.8" },
     { name = "livekit-api", specifier = ">=1.2.2" },
     { name = "numpy", specifier = ">=2.5.4" },
     { name = "pgvector", specifier = ">=0.5.1" },
-    { name = "psycopg", extras = ["binary"], specifier = ">=3.3.6" },
+    { name = "psycopg", extras = ["binary", "pool"], specifier = ">=3.3.6" },
     { name = "pydantic-settings", specifier = ">=2.16.2" },
     { name = "pyyaml", specifier = ">=6.0.3" },
     { name = "sentence-transformers", specifier = ">=6.2.0" },

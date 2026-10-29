@@ -8,3 +8,9 @@
 - No ANN index on `knowledge_chunks`: the KB is 19 chunks, and an exact scan is both faster and exact.
 - `search.py` imports the `TextEmbedder` type from `ingest.py` rather than adding an embeddings module that is not in the spec tree; ingest owns the stored format that search reads.
 - `scripts/seed.py` seeds only the knowledge base until HubSpot seeding is added in step 5; the Langfuse compose profile is added with tracing in step 6.
+- Turn detection uses `livekit.agents.inference.TurnDetector` (audio model, lists Arabic) instead of the deprecated `livekit-plugins-turn-detector` multilingual text model, whose language list does not include Arabic; `v1` runs on LiveKit Inference and falls back to the local `v1-mini` at the free-plan limit.
+- Barge-in uses `interruption_mode="vad"` by default: local, free and identical in dev and production; `adaptive` (LiveKit Inference, ignores backchannels like "uh-huh") is one config change away.
+- Claude Haiku 5.5 runs with thinking disabled and effort `low`; the LiveKit Anthropic plugin has no option for these, so `ReasoningControlledLLM` attaches them to every request.
+- The worker runs with `python -m livekit.agents start ... --dev`, because the built-in `cli.run_app` CLI is deprecated in livekit-agents 1.8.
+- `search_knowledge_base` asks the LLM for the question in English: the KB is English, and e5 scores English queries higher than the same question in Arabic.
+- Turn latency is read from LiveKit's per-message metrics (`e2e_latency`, `llm_node_ttft`, `tts_node_ttfb`, `end_of_turn_delay`, `transcription_delay`); on knowledge turns the first audio is the agent's short acknowledgement before the tool call.

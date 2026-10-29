@@ -1,5 +1,6 @@
 from functools import lru_cache
 from pathlib import Path
+from typing import Literal
 
 from pydantic import SecretStr
 from pydantic_settings import BaseSettings, SettingsConfigDict
@@ -20,8 +21,26 @@ class Settings(BaseSettings):
     # "Sarah": a calm premade voice that ElevenLabs verifies for both Arabic and English.
     tts_voice_id: str = "EXAVITQu4vr4xnSDxMaL"
 
+    stt_language: str = "en"
+
     anthropic_api_key: SecretStr
     llm_model: str = "claude-haiku-5-5"
+    # Thinking adds seconds before the first token, which a caller hears as dead air.
+    llm_thinking: Literal["disabled", "adaptive"] = "disabled"
+    llm_effort: Literal["low", "medium", "high"] = "low"
+
+    turn_detector_version: Literal["v1", "v1-mini"] = "v1"
+    endpointing_min_delay_seconds: float = 0.5
+    endpointing_max_delay_seconds: float = 3.0
+    # "adaptive" is LiveKit's cloud model that ignores backchannels; "vad" is local and free.
+    interruption_mode: Literal["vad", "adaptive"] = "vad"
+    interruption_min_duration_seconds: float = 0.5
+    preemptive_generation_enabled: bool = True
+    vad_min_silence_duration_seconds: float = 0.55
+    latency_budget_seconds: float = 1.0
+    worker_initialize_timeout_seconds: float = 60.0
+    # One warm process means a call never waits for the embedding model to load.
+    worker_idle_processes: int = 1
 
     hubspot_access_token: SecretStr
     hubspot_base_url: str = "https://api-eu1.hubapi.com"
@@ -29,6 +48,10 @@ class Settings(BaseSettings):
     provider_timeout_seconds: float = 10.0
 
     database_url: str = "postgresql://voice_agent:voice_agent@localhost:5434/voice_agent"
+    db_pool_min_size: int = 1
+    db_pool_max_size: int = 2
+    # A caller waits in silence for this long if the database is down, so it stays short.
+    db_connection_timeout_seconds: float = 2.0
     kb_directory: Path = Path("data/kb")
     embedding_model: str = "intfloat/multilingual-e5-small"
     embedding_dimensions: int = 384
