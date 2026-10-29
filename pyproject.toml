@@ -67,4 +67,7 @@ testpaths = ["tests"]
 pythonpath = ["evals"]
 asyncio_mode = "auto"
 asyncio_default_fixture_loop_scope = "function"
-markers = ["database: needs the pgvector database from docker compose"]
+markers = [
+    "database: needs the pgvector database from docker compose",
+    "models: downloads the embedding and reranker models from Hugging Face",
+]
