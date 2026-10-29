@@ -143,7 +143,8 @@ async def run_support_call(ctx: JobContext) -> None:
             ticket_ids=call_state.ticket_ids,
         )
         try:
-            await log_call(crm, record, session.history, build_call_summariser(settings))
+            if settings.call_logging_enabled:
+                await log_call(crm, record, session.history, build_call_summariser(settings))
         except HubSpotError as error:
             logger.error("End-of-call logging failed: %s", error)
         await crm.aclose()

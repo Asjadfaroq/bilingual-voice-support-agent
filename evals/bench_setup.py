@@ -62,7 +62,11 @@ async def start_worker(
     overrides: dict[str, str], agent_name: str, log_path: Path
 ) -> asyncio.subprocess.Process:
     environment = {**os.environ, **overrides}
-    environment |= {"AGENT_NAME": agent_name, "TURN_LATENCY_TOPIC": LATENCY_TOPIC}
+    environment |= {
+        "AGENT_NAME": agent_name,
+        "TURN_LATENCY_TOPIC": LATENCY_TOPIC,
+        "CALL_LOGGING_ENABLED": "false",
+    }
     command = [sys.executable, "-m", "livekit.agents", "start", "src/voice_agent/worker.py"]
     with log_path.open("w") as log_file:
         worker = await asyncio.create_subprocess_exec(

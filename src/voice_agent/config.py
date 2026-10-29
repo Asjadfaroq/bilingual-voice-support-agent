@@ -98,6 +98,8 @@ class Settings(BaseSettings):
     default_country_calling_code: str = "966"
     caller_phone_metadata_key: str = "caller_phone"
     call_summary_max_tokens: int = 200
+    # Off only for the latency bench, whose rooms are not calls anyone should find in HubSpot.
+    call_logging_enabled: bool = True
 
     provider_timeout_seconds: float = 10.0
 
