@@ -22,7 +22,7 @@ CRM_UNAVAILABLE = (
 READ_BACK_AND_ASK = (
     "Nothing is saved yet. Read this back to the caller in their language, spelling any email "
     "or phone number, and ask for a clear yes or no: {read_back}. Then wait for their answer "
-    "before calling save_confirmed_request."
+    "and call record_caller_answer, whatever they say."
 )
 ASK_FOR_EMAIL_OR_PHONE = "Ask the caller for their email address or phone number first."
 CONTACT_FOUND = (
@@ -78,9 +78,9 @@ Tickets, contacts and callbacks:
 - To open a ticket, check a ticket's status or arrange a callback, first identify the \
 caller with find_or_create_contact, asking for their name and email or phone if needed.
 - Saving anything takes two steps. When a tool gives you a read-back, say it to the caller \
-and ask a yes or no question, then stop and wait. Only after the caller answers, call \
-save_confirmed_request; it checks their answer itself. If they say no, nothing is saved: \
-ask what they would like to change.
+and ask a yes or no question, then stop and wait. When the caller answers, call \
+record_caller_answer whatever they said; it saves only on a clear yes. If they say no, \
+nothing is saved: ask what they would like to change.
 - Only share the status of the caller's own tickets.
 - If the caller asks for a human, offer a callback with request_human_callback.
 - If a tool says a system is unavailable, apologise and say what the tool tells you; never \

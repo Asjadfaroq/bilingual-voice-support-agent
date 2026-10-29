@@ -11,7 +11,7 @@ from voice_agent.conversation.ticket_tools import (
     get_ticket_status,
     request_human_callback,
 )
-from voice_agent.conversation.tools import find_or_create_contact, save_confirmed_request
+from voice_agent.conversation.tools import find_or_create_contact, record_caller_answer
 from voice_agent.crm.hubspot_client import HubSpotContact
 
 SARA = HubSpotContact(id="7", first_name="Sara")
@@ -45,7 +45,7 @@ async def test_ticket_is_read_back_and_nothing_is_saved_before_the_caller_answer
     tickets = hubspot_api.post("/crm/v3/objects/tickets")
 
     read_back = await propose_billing_ticket(call_context)
-    premature_save = await save_confirmed_request(call_context)
+    premature_save = await record_caller_answer(call_context)
 
     assert "A P2 billing ticket: Duplicate charge on invoice 4412" in read_back
     assert premature_save == WAITING_FOR_ANSWER
@@ -61,7 +61,7 @@ async def test_confirmed_ticket_is_created_for_the_caller_after_a_spoken_yes(
     await propose_billing_ticket(call_context)
     call_context.caller_says("Yes, please open it.")
 
-    reply = await save_confirmed_request(call_context)
+    reply = await record_caller_answer(call_context)
 
     sent = json.loads(tickets.calls.last.request.content)
     assert sent["properties"]["hs_ticket_priority"] == "MEDIUM"
@@ -78,7 +78,7 @@ async def test_declined_confirmation_creates_no_ticket(
     await propose_billing_ticket(call_context)
     call_context.caller_says("No, don't open that.")
 
-    reply = await save_confirmed_request(call_context)
+    reply = await record_caller_answer(call_context)
 
     assert reply == NOT_CONFIRMED
     assert not tickets.called
@@ -93,7 +93,7 @@ async def test_a_later_yes_cannot_approve_an_old_read_back(
     call_context.caller_says("How long will it take?")
     call_context.caller_says("Yes.")
 
-    assert await save_confirmed_request(call_context) == NOT_CONFIRMED
+    assert await record_caller_answer(call_context) == NOT_CONFIRMED
     assert not tickets.called
 
 
@@ -113,7 +113,7 @@ async def test_new_contact_spelling_is_read_back_before_it_is_created(
     )
     assert "s a r a at e x dot c o m" in read_back and not creation.called
     call_context.caller_says("Yes, that's right")
-    await save_confirmed_request(call_context)
+    await record_caller_answer(call_context)
 
     assert json.loads(creation.calls.last.request.content)["properties"]["email"] == "sara@ex.com"
     assert call_context.userdata.call.contact == HubSpotContact(id="7", first_name="Sara")
@@ -177,7 +177,7 @@ async def test_confirmed_human_callback_is_an_urgent_ticket_and_ends_the_call(
     await request_human_callback(call_context, reason="Caller asked for a human")
     call_context.caller_says("نعم")
 
-    reply = await save_confirmed_request(call_context)
+    reply = await record_caller_answer(call_context)
 
     assert (
         json.loads(tickets.calls.last.request.content)["properties"]["hs_ticket_priority"]
@@ -193,6 +193,6 @@ async def test_crm_outage_keeps_the_caller_talking_and_saves_nothing(
     await propose_billing_ticket(call_context)
     call_context.caller_says("Yes")
 
-    assert await save_confirmed_request(call_context) == say.CRM_UNAVAILABLE
+    assert await record_caller_answer(call_context) == say.CRM_UNAVAILABLE
     assert call_context.userdata.call.ticket_ids == []
     assert call_context.userdata.call.pending_write is None

@@ -3,12 +3,14 @@ from dataclasses import dataclass, field
 
 import psycopg
 from livekit.agents import RunContext, function_tool
+from livekit.agents.telemetry import tracer
 from psycopg_pool import AsyncConnectionPool
 
 from voice_agent.conversation import instructions as say
 from voice_agent.conversation.confirmation import (
     PendingWrite,
     PerformWrite,
+    WriteKind,
     confirm_before_write,
     propose_write,
     spell_for_read_back,
@@ -80,9 +82,10 @@ async def search_knowledge_base(context: RunContext[CallResources], question: st
 
 
 def ask_to_confirm(
-    context: RunContext[CallResources], read_back: str, perform: PerformWrite
+    context: RunContext[CallResources], kind: WriteKind, read_back: str, perform: PerformWrite
 ) -> str:
-    context.userdata.call.pending_write = propose_write(read_back, perform, context.session.history)
+    history = context.session.history
+    context.userdata.call.pending_write = propose_write(kind, read_back, perform, history)
     return say.READ_BACK_AND_ASK.format(read_back=read_back)
 
 
@@ -104,11 +107,8 @@ async def find_or_create_contact(
         phone: A phone number the caller gave; leave empty to use the line they call from.
     """
     resources = context.userdata
-    raw_phone = phone or resources.call.caller_phone
-    phone_number = (
-        normalize_phone_number(raw_phone, resources.default_country_calling_code)
-        if raw_phone
-        else None
+    phone_number = normalize_phone_number(
+        phone or resources.call.caller_phone, resources.default_country_calling_code
     )
     if not phone_number and not email:
         return say.ASK_FOR_EMAIL_OR_PHONE
@@ -130,20 +130,27 @@ async def find_or_create_contact(
     details = [f"{first_name} {last_name}"]
     details += [f"email {spell_for_read_back(email)}"] if email else []
     details += [f"phone {spell_for_read_back(phone_number)}"] if phone_number else []
-    return ask_to_confirm(context, "A new contact for " + ", ".join(details), create_contact)
+    read_back = "A new contact for " + ", ".join(details)
+    return ask_to_confirm(context, "contact", read_back, create_contact)
 
 
 @function_tool
-async def save_confirmed_request(context: RunContext[CallResources]) -> str:
-    """Save the contact, ticket or callback you last read back. Call this only after the
-    caller has answered the read-back; their answer is checked before anything is saved."""
+async def record_caller_answer(context: RunContext[CallResources]) -> str:
+    """Pass on the caller's answer to the read-back you just gave, whether it was yes, no or
+    anything else. The request is saved only if the answer is a clear yes."""
     call = context.userdata.call
-    try:
-        result = await confirm_before_write(call.pending_write, context.session.history)
-    except HubSpotError as error:
-        logger.error("Saving a confirmed request failed: %s", error)
-        call.pending_write = None
-        return say.CRM_UNAVAILABLE
+    pending = call.pending_write
+    with tracer.start_as_current_span("confirmation_decision") as span:
+        span.set_attribute("voice_agent.write.kind", pending.kind if pending else "none")
+        try:
+            result = await confirm_before_write(pending, context.session.history)
+        except HubSpotError as error:
+            logger.error("Saving a confirmed request failed: %s", error)
+            span.set_attribute("voice_agent.confirmation.decision", "failed")
+            call.pending_write = None
+            return say.CRM_UNAVAILABLE
+        span.set_attribute("voice_agent.confirmation.decision", result.decision)
+        span.set_attribute("voice_agent.confirmation.caller_answer", result.caller_answer or "")
     if result.pending_resolved:
         call.pending_write = None
     return result.reply_for_llm

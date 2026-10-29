@@ -5,7 +5,10 @@ DIGIT = r"[0-9\u0660-\u0669]"
 EMAIL_PATTERN = re.compile(r"[\w.+-]+@[\w-]+(?:\.[\w-]+)+")
 # Saudi national IDs start with 1 and iqama numbers with 2; both are ten digits.
 NATIONAL_ID_PATTERN = re.compile(rf"(?<!{DIGIT})[12\u0661\u0662]{DIGIT}{{9}}(?!{DIGIT})")
-PHONE_PATTERN = re.compile(rf"(?<![\w+])\+?{DIGIT}(?:[\s-]?{DIGIT}){{7,14}}(?!{DIGIT})")
+# Dates such as 2026-10-29 have the shape of a phone number, so they are excluded.
+PHONE_PATTERN = re.compile(
+    rf"(?<![\w+])(?!\d{{4}}-\d{{2}}-\d{{2}})\+?{DIGIT}(?:[\s-]?{DIGIT}){{7,14}}(?!{DIGIT})"
+)
 
 # Read-backs spell values out ("s a r a at e x dot c o m"), which no email or phone pattern
 # matches, so any run of six or more single characters and spoken symbols is masked.

@@ -21,6 +21,12 @@ def test_emails_phones_and_saudi_ids_are_masked(text: str, expected: str) -> Non
     assert mask_pii(text) == expected
 
 
+def test_dates_and_timestamps_are_not_mistaken_for_phone_numbers() -> None:
+    text = "completion at 2026-10-29T15:10:17.364077+00:00, last updated 2026-10-27"
+
+    assert mask_pii(text) == text
+
+
 def test_spelled_out_read_backs_are_masked() -> None:
     read_back = (
         "the email s a r a dot v o i c e dash e 2 e at e x a m p l e dot c o m, "

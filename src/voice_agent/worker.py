@@ -13,6 +13,7 @@ from voice_agent.crm.call_log import CallRecord, build_call_summariser, log_call
 from voice_agent.crm.hubspot_client import HubSpotClient, HubSpotError
 from voice_agent.knowledge.ingest import build_sentence_embedder
 from voice_agent.knowledge.search import build_cross_encoder_reranker
+from voice_agent.metrics.tracing import CallTraceContext, start_call_tracing
 from voice_agent.metrics.turn_latency import log_latency_for_each_turn
 from voice_agent.pipeline.components import (
     build_llm,
@@ -91,6 +92,24 @@ async def run_support_call(ctx: JobContext) -> None:
     )
 
     reply_tts = build_tts(settings)
+    agent = SupportAgent(
+        LanguageSettings(
+            default_voice_id=settings.tts_voice_id,
+            voice_id_by_language=settings.tts_voice_id_by_language,
+            script_dominance_threshold=settings.script_dominance_threshold,
+        ),
+        reply_tts=reply_tts,
+    )
+    trace_provider = start_call_tracing(
+        settings,
+        CallTraceContext(
+            call_id=ctx.job.room.name,
+            caller_key=lambda: (
+                call_state.caller_phone or (call_state.contact.id if call_state.contact else None)
+            ),
+            languages=lambda: list(agent.caller_languages),
+        ),
+    )
     session = AgentSession[CallResources](
         stt=build_stt(settings),
         llm=build_llm(settings),
@@ -112,14 +131,6 @@ async def run_support_call(ctx: JobContext) -> None:
         ),
     )
     log_latency_for_each_turn(session, settings.latency_budget_seconds)
-    agent = SupportAgent(
-        LanguageSettings(
-            default_voice_id=settings.tts_voice_id,
-            voice_id_by_language=settings.tts_voice_id_by_language,
-            script_dominance_threshold=settings.script_dominance_threshold,
-        ),
-        reply_tts=reply_tts,
-    )
     started_at = datetime.now(UTC)
 
     # One callback, because LiveKit runs shutdown callbacks concurrently and the call must be
@@ -138,6 +149,8 @@ async def run_support_call(ctx: JobContext) -> None:
             logger.error("End-of-call logging failed: %s", error)
         await crm.aclose()
         await knowledge_pool.close()
+        if trace_provider is not None:
+            trace_provider.shutdown()
 
     ctx.add_shutdown_callback(log_call_and_close)
     await session.start(agent=agent, room=ctx.room)

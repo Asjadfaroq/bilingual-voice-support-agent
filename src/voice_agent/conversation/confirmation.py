@@ -1,6 +1,7 @@
 import re
 from collections.abc import Awaitable, Callable
 from dataclasses import dataclass
+from typing import Literal
 
 from livekit.agents.llm import ChatContext, ChatMessage
 
@@ -28,6 +29,8 @@ NEGATING_WORDS = frozenset(
 )
 
 PerformWrite = Callable[[], Awaitable[str]]
+WriteKind = Literal["contact", "ticket", "callback"]
+ConfirmationDecision = Literal["saved", "declined", "waiting_for_answer", "nothing_pending"]
 
 NOTHING_TO_CONFIRM = (
     "There is no request waiting for confirmation. Do not tell the caller anything was saved."
@@ -43,6 +46,7 @@ NOT_CONFIRMED = (
 
 @dataclass(frozen=True)
 class PendingWrite:
+    kind: WriteKind
     read_back: str
     perform: PerformWrite
     asked_after_message_id: str | None
@@ -67,9 +71,11 @@ def caller_messages(history: ChatContext) -> list[ChatMessage]:
     return [item for item in history.items if isinstance(item, ChatMessage) and item.role == "user"]
 
 
-def propose_write(read_back: str, perform: PerformWrite, history: ChatContext) -> PendingWrite:
+def propose_write(
+    kind: WriteKind, read_back: str, perform: PerformWrite, history: ChatContext
+) -> PendingWrite:
     messages = caller_messages(history)
-    return PendingWrite(read_back, perform, messages[-1].id if messages else None)
+    return PendingWrite(kind, read_back, perform, messages[-1].id if messages else None)
 
 
 def answer_to_read_back(history: ChatContext, pending: PendingWrite) -> ChatMessage | None:
@@ -86,21 +92,27 @@ def answer_to_read_back(history: ChatContext, pending: PendingWrite) -> ChatMess
 @dataclass(frozen=True)
 class ConfirmationResult:
     reply_for_llm: str
-    pending_resolved: bool
+    decision: ConfirmationDecision
+    caller_answer: str | None = None
+
+    @property
+    def pending_resolved(self) -> bool:
+        return self.decision != "waiting_for_answer"
 
 
 async def confirm_before_write(
     pending: PendingWrite | None, history: ChatContext
 ) -> ConfirmationResult:
     if pending is None:
-        return ConfirmationResult(NOTHING_TO_CONFIRM, pending_resolved=True)
+        return ConfirmationResult(NOTHING_TO_CONFIRM, "nothing_pending")
     answer = answer_to_read_back(history, pending)
     if answer is None:
-        return ConfirmationResult(WAITING_FOR_ANSWER, pending_resolved=False)
+        return ConfirmationResult(WAITING_FOR_ANSWER, "waiting_for_answer")
+    answer_text = answer.text_content or ""
     # Only the caller's very next turn counts, so a later yes can never approve an old read-back.
-    if not is_explicit_yes(answer.text_content or ""):
-        return ConfirmationResult(NOT_CONFIRMED, pending_resolved=True)
-    return ConfirmationResult(await pending.perform(), pending_resolved=True)
+    if not is_explicit_yes(answer_text):
+        return ConfirmationResult(NOT_CONFIRMED, "declined", answer_text)
+    return ConfirmationResult(await pending.perform(), "saved", answer_text)
 
 
 def spell_for_read_back(value: str) -> str:

@@ -32,7 +32,9 @@ class HubSpotTicket:
     last_modified: str
 
 
-def normalize_phone_number(raw_phone: str, default_country_code: str) -> str:
+def normalize_phone_number(raw_phone: str | None, default_country_code: str) -> str | None:
+    if not raw_phone:
+        return None
     digits = re.sub(r"[^\d+]", "", raw_phone.translate(ARABIC_INDIC_DIGITS))
     if digits.startswith("+"):
         return digits

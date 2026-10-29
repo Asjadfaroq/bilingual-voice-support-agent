@@ -72,7 +72,9 @@ async def create_ticket(
         ending = await open_ticket(resources, contact.id, properties)
         return say.TICKET_CREATED.format(ending=ending)
 
-    return ask_to_confirm(context, f"A {priority} {category} ticket: {subject}", save_ticket)
+    return ask_to_confirm(
+        context, "ticket", f"A {priority} {category} ticket: {subject}", save_ticket
+    )
 
 
 def describe_ticket(ticket: HubSpotTicket, stage_labels: dict[str, str]) -> str:
@@ -134,6 +136,5 @@ async def request_human_callback(context: RunContext[CallResources], reason: str
         await open_ticket(resources, contact.id, properties)
         return say.CALLBACK_CREATED
 
-    return ask_to_confirm(
-        context, f"An urgent callback from a colleague about: {reason}", save_callback
-    )
+    read_back = f"An urgent callback from a colleague about: {reason}"
+    return ask_to_confirm(context, "callback", read_back, save_callback)

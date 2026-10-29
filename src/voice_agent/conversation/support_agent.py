@@ -5,6 +5,7 @@ from livekit.agents import Agent, FlushSentinel, ModelSettings, UserInputTranscr
 from livekit.agents.beta.tools import EndCallTool
 from livekit.agents.llm import ChatChunk, ChatContext, ChatMessage, Tool
 from livekit.plugins import elevenlabs
+from opentelemetry import trace
 
 from voice_agent.conversation.instructions import (
     GREETING,
@@ -18,7 +19,7 @@ from voice_agent.conversation.ticket_tools import (
 )
 from voice_agent.conversation.tools import (
     find_or_create_contact,
-    save_confirmed_request,
+    record_caller_answer,
     search_knowledge_base,
 )
 from voice_agent.pipeline.language import (
@@ -54,7 +55,7 @@ class SupportAgent(Agent):
                 create_ticket,
                 get_ticket_status,
                 request_human_callback,
-                save_confirmed_request,
+                record_caller_answer,
                 # The agent says goodbye before calling end_call, so the tool asks for no reply.
                 EndCallTool(end_instructions=None, ignore_on_enter=True),
             ],
@@ -114,6 +115,7 @@ class SupportAgent(Agent):
         caller_text = latest_caller_text(chat_ctx)
         language = self._language_of(caller_text) if caller_text is not None else None
         if language is not None:
+            trace.get_current_span().set_attribute("voice_agent.reply_language", language)
             self._switch_voice_to(language)
             chat_ctx = chat_ctx.copy()
             chat_ctx.add_message(role="system", content=REPLY_LANGUAGE_NOTES[language])

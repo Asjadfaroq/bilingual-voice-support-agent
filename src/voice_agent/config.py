@@ -35,6 +35,25 @@ class Settings(BaseSettings):
     # Thinking adds seconds before the first token, which a caller hears as dead air.
     llm_thinking: Literal["disabled", "adaptive"] = "disabled"
     llm_effort: Literal["low", "medium", "high"] = "low"
+    judge_model: str = "claude-sonnet-5-5"
+    judge_effort: Literal["low", "medium", "high"] = "medium"
+    judge_max_tokens: int = 1500
+    # Fixed before the first eval run: a scenario passes the judge only if all three rubric
+    # scores reach this.
+    judge_pass_score: int = 4
+    eval_max_caller_turns: int = 10
+    eval_concurrency: int = 4
+    # USD per million tokens (input, output), from Anthropic's price list; used for trace and
+    # eval costs. Haiku's price is for prompts up to 100K tokens, which every call here is.
+    model_prices_usd_per_million_tokens: dict[str, tuple[float, float]] = {
+        "claude-haiku-5-5": (0.10, 0.50),
+        "claude-sonnet-5-5": (2.00, 10.00),
+    }
+
+    # Tracing is on when both keys are set.
+    langfuse_host: str = "http://localhost:3100"
+    langfuse_public_key: SecretStr | None = None
+    langfuse_secret_key: SecretStr | None = None
 
     turn_detector_version: Literal["v1", "v1-mini"] = "v1"
     endpointing_min_delay_seconds: float = 0.5
