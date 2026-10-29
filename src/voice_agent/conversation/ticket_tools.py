@@ -98,7 +98,7 @@ def describe_ticket(ticket: HubSpotTicket, stage_labels: dict[str, str]) -> str:
 @function_tool
 async def get_ticket_status(
     context: RunContext[CallResources], ticket_number_ending: str | None = None
-) -> str:
+) -> str | None:
     """Look up the status and last update of the identified caller's own tickets.
 
     Args:
@@ -117,7 +117,8 @@ async def get_ticket_status(
     if ticket_number_ending:
         tickets = [ticket for ticket in tickets if ticket.id.endswith(ticket_number_ending)]
         if not tickets:
-            return say.NO_MATCHING_TICKET
+            context.session.say(say.NO_MATCHING_TICKET[caller_language(resources.call)])
+            return None
     if not tickets:
         return say.NO_TICKETS
     newest_first = sorted(tickets, key=lambda ticket: ticket.last_modified, reverse=True)

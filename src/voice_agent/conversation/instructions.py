@@ -80,10 +80,12 @@ CONTACT_FOUND = (
 CONTACT_CREATED = "The contact is saved. Continue with what the caller wanted."
 CONTACT_NEEDED = "Identify the caller first with find_or_create_contact, then try again."
 TICKET_CREATED = "The ticket is saved. Tell the caller its number ends in {ending}."
-NO_MATCHING_TICKET = (
-    "No ticket with that number belongs to this caller. Say so, and do not share anything "
-    "about other tickets."
-)
+# Spoken by the tool itself, word for word, whether the ticket belongs to someone else or does
+# not exist, so the caller cannot learn that a ticket number exists.
+NO_MATCHING_TICKET: dict[CallerLanguage, str] = {
+    "en": "I couldn't find a ticket with that number on your account. Could you check the number?",
+    "ar": "لم أجد تذكرة بهذا الرقم في حسابك. هل يمكنك التأكد من الرقم؟",
+}
 NO_TICKETS = "This caller has no tickets yet. Offer to open one."
 CALLBACK_CREATED = (
     "The urgent callback is saved. Tell the caller a colleague will call them back, say a "
