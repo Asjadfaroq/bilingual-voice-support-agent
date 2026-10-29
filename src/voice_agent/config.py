@@ -1,0 +1,45 @@
+from functools import lru_cache
+from pathlib import Path
+
+from pydantic import SecretStr
+from pydantic_settings import BaseSettings, SettingsConfigDict
+
+
+class Settings(BaseSettings):
+    model_config = SettingsConfigDict(env_file=".env", extra="ignore")
+
+    livekit_url: str
+    livekit_api_key: SecretStr
+    livekit_api_secret: SecretStr
+
+    eleven_api_key: SecretStr
+    elevenlabs_base_url: str = "https://api.elevenlabs.io/v1"
+    stt_model: str = "scribe_v2_realtime"
+    stt_sample_rate_hz: int = 16000
+    tts_model: str = "eleven_flash_v2_5"
+    # "Sarah": a calm premade voice that ElevenLabs verifies for both Arabic and English.
+    tts_voice_id: str = "EXAVITQu4vr4xnSDxMaL"
+
+    anthropic_api_key: SecretStr
+    llm_model: str = "claude-haiku-5-5"
+
+    hubspot_access_token: SecretStr
+    hubspot_base_url: str = "https://api-eu1.hubapi.com"
+
+    provider_timeout_seconds: float = 10.0
+
+    database_url: str = "postgresql://voice_agent:voice_agent@localhost:5434/voice_agent"
+    kb_directory: Path = Path("data/kb")
+    embedding_model: str = "intfloat/multilingual-e5-small"
+    embedding_dimensions: int = 384
+    kb_chunk_max_characters: int = 1200
+    kb_top_k: int = 3
+    kb_min_similarity: float = 0.72
+    kb_rerank_enabled: bool = False
+    kb_rerank_model: str = "cross-encoder/mmarco-mMiniLMv2-L12-H384-v1"
+    kb_rerank_candidate_count: int = 10
+
+
+@lru_cache
+def get_settings() -> Settings:
+    return Settings()
