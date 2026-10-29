@@ -1,53 +1,23 @@
 import logging
-from dataclasses import dataclass, field
 
 import psycopg
 from livekit.agents import RunContext, function_tool
 from livekit.agents.telemetry import tracer
-from psycopg_pool import AsyncConnectionPool
 
 from voice_agent.conversation import instructions as say
+from voice_agent.conversation.call_state import CallResources, CallState
 from voice_agent.conversation.confirmation import (
-    PendingWrite,
     PerformWrite,
     WriteKind,
     confirm_before_write,
     propose_write,
     spell_for_read_back,
 )
-from voice_agent.crm.hubspot_client import (
-    HubSpotClient,
-    HubSpotContact,
-    HubSpotError,
-    normalize_phone_number,
-)
+from voice_agent.crm.hubspot_client import HubSpotError, normalize_phone_number
 from voice_agent.knowledge import search
-from voice_agent.knowledge.ingest import TextEmbedder
+from voice_agent.pipeline.language import CallerLanguage
 
 logger = logging.getLogger(__name__)
-
-
-@dataclass
-class CallState:
-    caller_phone: str | None = None
-    contact: HubSpotContact | None = None
-    ticket_ids: list[str] = field(default_factory=list)
-    pending_write: PendingWrite | None = None
-
-
-@dataclass(frozen=True)
-class CallResources:
-    knowledge_pool: AsyncConnectionPool
-    embed: TextEmbedder
-    reranker: search.Reranker | None
-    kb_top_k: int
-    kb_min_similarity: float
-    crm: HubSpotClient
-    ticket_pipeline_id: str
-    new_ticket_stage_id: str
-    ticket_status_limit: int
-    default_country_calling_code: str
-    call: CallState = field(default_factory=CallState)
 
 
 async def look_up_knowledge(question: str, resources: CallResources) -> str:
@@ -81,12 +51,30 @@ async def search_knowledge_base(context: RunContext[CallResources], question: st
     return await look_up_knowledge(question, context.userdata)
 
 
-def ask_to_confirm(
+def caller_language(call: CallState) -> CallerLanguage:
+    return call.language or "en"
+
+
+def say_read_back(
     context: RunContext[CallResources], kind: WriteKind, read_back: str, perform: PerformWrite
-) -> str:
+) -> None:
+    # Spoken here rather than by the LLM, so the caller hears exactly what will be saved.
     history = context.session.history
     context.userdata.call.pending_write = propose_write(kind, read_back, perform, history)
-    return say.READ_BACK_AND_ASK.format(read_back=read_back)
+    context.session.say(read_back)
+
+
+async def identify_caller_by_line(resources: CallResources) -> None:
+    call = resources.call
+    phone = normalize_phone_number(call.caller_phone, resources.default_country_calling_code)
+    if phone is None or call.contact is not None:
+        return
+    try:
+        call.contact = await resources.crm.find_contact(phone=phone, email=None)
+    except HubSpotError as error:
+        logger.error("Looking up the caller's line failed: %s", error)
+        return
+    call.line_checked = True
 
 
 @function_tool
@@ -96,9 +84,9 @@ async def find_or_create_contact(
     last_name: str,
     email: str | None = None,
     phone: str | None = None,
-) -> str:
-    """Find the caller's contact by phone or email. If none exists, prepare a new contact
-    and get the read-back to confirm with the caller before anything is saved.
+) -> str | None:
+    """Find the caller's contact by email or phone. If none exists, prepare a new contact;
+    the tool then reads it back to the caller itself, and nothing is saved before a yes.
 
     Args:
         first_name: The caller's first name in Latin letters.
@@ -107,6 +95,8 @@ async def find_or_create_contact(
         phone: A phone number the caller gave; leave empty to use the line they call from.
     """
     resources = context.userdata
+    if resources.call.contact is not None:
+        return say.CONTACT_FOUND.format(first_name=resources.call.contact.first_name)
     phone_number = normalize_phone_number(
         phone or resources.call.caller_phone, resources.default_country_calling_code
     )
@@ -127,11 +117,15 @@ async def find_or_create_contact(
         )
         return say.CONTACT_CREATED
 
+    language = caller_language(resources.call)
+    labels = say.DETAIL_LABELS[language]
     details = [f"{first_name} {last_name}"]
-    details += [f"email {spell_for_read_back(email)}"] if email else []
-    details += [f"phone {spell_for_read_back(phone_number)}"] if phone_number else []
-    read_back = "A new contact for " + ", ".join(details)
-    return ask_to_confirm(context, "contact", read_back, create_contact)
+    details += [f"{labels['email']} {spell_for_read_back(email)}"] if email else []
+    details += [f"{labels['phone']} {spell_for_read_back(phone_number)}"] if phone_number else []
+    separator = "، " if language == "ar" else ", "
+    read_back = say.READ_BACKS["contact"][language].format(details=separator.join(details))
+    say_read_back(context, "contact", read_back, create_contact)
+    return None
 
 
 @function_tool

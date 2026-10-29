@@ -12,7 +12,7 @@ from psycopg import AsyncConnection
 from psycopg_pool import AsyncConnectionPool
 
 from voice_agent.config import Settings
-from voice_agent.conversation.tools import CallResources, CallState
+from voice_agent.conversation.call_state import CallResources, CallState
 from voice_agent.crm.hubspot_client import HubSpotClient
 from voice_agent.knowledge.ingest import TextEmbedder, create_knowledge_table
 
@@ -96,6 +96,11 @@ def make_call_resources(crm: HubSpotClient, embed: TextEmbedder) -> CallResource
 class FakeSession:
     def __init__(self) -> None:
         self.history = ChatContext.empty()
+        self.spoken: list[str] = []
+
+    def say(self, text: str) -> None:
+        self.spoken.append(text)
+        self.history.add_message(role="assistant", content=text)
 
 
 class FakeRunContext:

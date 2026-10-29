@@ -1,17 +1,22 @@
-from collections.abc import AsyncGenerator
+from collections.abc import AsyncGenerator, AsyncIterable
 from dataclasses import dataclass
 
+from livekit import rtc
 from livekit.agents import Agent, FlushSentinel, ModelSettings, UserInputTranscribedEvent
 from livekit.agents.beta.tools import EndCallTool
-from livekit.agents.llm import ChatChunk, ChatContext, ChatMessage, Tool
+from livekit.agents.llm import ChatChunk, ChatContext, Tool
 from livekit.plugins import elevenlabs
 from opentelemetry import trace
 
+from voice_agent.conversation.call_state import CallState, caller_identity_note
+from voice_agent.conversation.confirmation import caller_messages
 from voice_agent.conversation.instructions import (
     GREETING,
     REPLY_LANGUAGE_NOTES,
     SUPPORT_INSTRUCTIONS,
+    WRONG_LANGUAGE_RETRY_NOTES,
 )
+from voice_agent.conversation.reply_filter import guarded_reply, prose_language, spoken_sentences
 from voice_agent.conversation.ticket_tools import (
     create_ticket,
     get_ticket_status,
@@ -34,18 +39,15 @@ class LanguageSettings:
     default_voice_id: str
     voice_id_by_language: dict[str, str]
     script_dominance_threshold: float
-
-
-def latest_caller_text(chat_ctx: ChatContext) -> str | None:
-    for item in reversed(chat_ctx.items):
-        if isinstance(item, ChatMessage) and item.role == "user":
-            return item.text_content or ""
-    return None
+    reply_language_min_letters: int
 
 
 class SupportAgent(Agent):
     def __init__(
-        self, language_settings: LanguageSettings, reply_tts: elevenlabs.TTS | None
+        self,
+        language_settings: LanguageSettings,
+        reply_tts: elevenlabs.TTS | None,
+        call: CallState,
     ) -> None:
         super().__init__(
             instructions=SUPPORT_INSTRUCTIONS,
@@ -61,6 +63,7 @@ class SupportAgent(Agent):
             ],
         )
         self._language_settings = language_settings
+        self._call = call
         # None in text mode, where there is no voice to switch.
         self._reply_tts = reply_tts
         self._caller_language: CallerLanguage | None = None
@@ -96,6 +99,7 @@ class SupportAgent(Agent):
         if language == self._caller_language:
             return
         self._caller_language = language
+        self._call.language = language
         if language not in self._caller_languages:
             self._caller_languages.append(language)
         if self._reply_tts is None:
@@ -111,12 +115,33 @@ class SupportAgent(Agent):
         self, chat_ctx: ChatContext, tools: list[Tool], model_settings: ModelSettings
     ) -> AsyncGenerator[ChatChunk | str | FlushSentinel, None]:
         # Every generation, spoken or typed, before or after a tool call, gets the reply
-        # language; the note lives only in this generation's context, never in the history.
-        caller_text = latest_caller_text(chat_ctx)
-        language = self._language_of(caller_text) if caller_text is not None else None
-        if language is not None:
-            trace.get_current_span().set_attribute("voice_agent.reply_language", language)
-            self._switch_voice_to(language)
-            chat_ctx = chat_ctx.copy()
-            chat_ctx.add_message(role="system", content=REPLY_LANGUAGE_NOTES[language])
-        return Agent.default.llm_node(self, chat_ctx, tools, model_settings)
+        # language and who the caller is; the notes live only in this generation's context.
+        messages = caller_messages(chat_ctx)
+        language = self._language_of(messages[-1].text_content or "") if messages else None
+        chat_ctx = chat_ctx.copy()
+        if note := caller_identity_note(self._call):
+            chat_ctx.add_message(role="system", content=note)
+        if language is None:
+            return Agent.default.llm_node(self, chat_ctx, tools, model_settings)
+        trace.get_current_span().set_attribute("voice_agent.reply_language", language)
+        self._switch_voice_to(language)
+        chat_ctx.add_message(role="system", content=REPLY_LANGUAGE_NOTES[language])
+        return guarded_reply(
+            lambda context: Agent.default.llm_node(self, context, tools, model_settings),
+            chat_ctx,
+            language,
+            WRONG_LANGUAGE_RETRY_NOTES[language],
+            self._language_settings.reply_language_min_letters,
+        )
+
+    def _spoken_language(self, sentence: str) -> CallerLanguage:
+        min_letters = self._language_settings.reply_language_min_letters
+        return self._caller_language or prose_language(sentence, min_letters) or "en"
+
+    def tts_node(
+        self, text: AsyncIterable[str], model_settings: ModelSettings
+    ) -> AsyncGenerator[rtc.AudioFrame, None]:
+        # Numbers, priorities and Latin terms become words here, for every spoken sentence:
+        # the LLM's replies and the read-backs the tools say themselves.
+        spoken = spoken_sentences(text, self._spoken_language)
+        return Agent.default.tts_node(self, spoken, model_settings)

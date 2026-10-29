@@ -5,7 +5,8 @@ from typing import Literal
 from livekit.agents import RunContext, function_tool
 
 from voice_agent.conversation import instructions as say
-from voice_agent.conversation.tools import CallResources, ask_to_confirm
+from voice_agent.conversation.call_state import CallResources
+from voice_agent.conversation.tools import caller_language, say_read_back
 from voice_agent.crm.hubspot_client import HubSpotError, HubSpotTicket
 
 logger = logging.getLogger(__name__)
@@ -45,9 +46,10 @@ async def create_ticket(
     priority: TicketPriority,
     subject: str,
     description: str,
-) -> str:
-    """Prepare a support ticket for the identified caller and get the read-back to confirm
-    with them; nothing is saved until they say yes.
+    spoken_subject: str,
+) -> str | None:
+    """Prepare a support ticket for the identified caller. The tool reads it back to the
+    caller itself; nothing is saved until they say yes.
 
     Args:
         category: billing, bug, account, it or question.
@@ -55,6 +57,8 @@ async def create_ticket(
             broken with a workaround, P3 for a minor issue or a question.
         subject: A short English subject, such as "Duplicate charge on invoice 4412".
         description: What the caller reported, in English.
+        spoken_subject: A short phrase in the caller's language that completes "a ticket
+            about ...", addressed to the caller, such as "a duplicate charge on invoice 4412".
     """
     resources = context.userdata
     contact = resources.call.contact
@@ -72,9 +76,14 @@ async def create_ticket(
         ending = await open_ticket(resources, contact.id, properties)
         return say.TICKET_CREATED.format(ending=ending)
 
-    return ask_to_confirm(
-        context, "ticket", f"A {priority} {category} ticket: {subject}", save_ticket
+    language = caller_language(resources.call)
+    read_back = say.READ_BACKS["ticket"][language].format(
+        priority=priority,
+        category=say.CATEGORY_WORDS[language][category],
+        subject=spoken_subject.rstrip(" .،"),
     )
+    say_read_back(context, "ticket", read_back, save_ticket)
+    return None
 
 
 def describe_ticket(ticket: HubSpotTicket, stage_labels: dict[str, str]) -> str:
@@ -117,12 +126,16 @@ async def get_ticket_status(
 
 
 @function_tool
-async def request_human_callback(context: RunContext[CallResources], reason: str) -> str:
-    """Prepare an urgent callback request so a colleague calls the caller back, and get
-    the read-back to confirm with them. Use it when the caller asks for a human.
+async def request_human_callback(
+    context: RunContext[CallResources], reason: str, spoken_reason: str
+) -> str | None:
+    """Prepare an urgent callback request so a colleague calls the caller back. The tool
+    reads it back to the caller itself. Use it when the caller asks for a human.
 
     Args:
         reason: Why the caller wants a colleague to call back, in English.
+        spoken_reason: A short phrase in the caller's language that completes "call you back
+            about ...", addressed to the caller, such as "your invoices failing to send".
     """
     resources = context.userdata
     contact = resources.call.contact
@@ -136,5 +149,8 @@ async def request_human_callback(context: RunContext[CallResources], reason: str
         await open_ticket(resources, contact.id, properties)
         return say.CALLBACK_CREATED
 
-    read_back = f"An urgent callback from a colleague about: {reason}"
-    return ask_to_confirm(context, "callback", read_back, save_callback)
+    read_back = say.READ_BACKS["callback"][caller_language(resources.call)].format(
+        reason=spoken_reason.rstrip(" .،")
+    )
+    say_read_back(context, "callback", read_back, save_callback)
+    return None

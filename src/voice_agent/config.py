@@ -29,6 +29,9 @@ class Settings(BaseSettings):
     # Share of a transcript's letters that must be in one script for the script to decide
     # the caller's language; mixed transcripts fall back to the STT's detected language.
     script_dominance_threshold: float = 0.8
+    # Fewer letters than this (after names, emails and numbers are removed) is too little text
+    # to call a reply sentence Arabic or English.
+    reply_language_min_letters: int = 6
 
     anthropic_api_key: SecretStr
     llm_model: str = "claude-haiku-5-5"

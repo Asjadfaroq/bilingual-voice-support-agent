@@ -4,9 +4,18 @@ from typing import Literal
 
 from livekit.agents.language import LanguageCode
 
+from voice_agent.privacy.pii import EMAIL_PATTERN, SPELLED_VALUE_PATTERN
+
 CallerLanguage = Literal["en", "ar"]
 SUPPORTED_LANGUAGES: dict[str, CallerLanguage] = {"en": "en", "ar": "ar"}
 
+# Product names, emails, spelled values and numbers look the same in both languages, so they
+# are removed before a line's language is judged from its script.
+NAMES_IN_ANY_LANGUAGE = re.compile(
+    r"Larkspur Systems|Larkspur|Ledgerly|Apple Pay|Mastercard|Visa|mada|ZATCA|SADAD|CSV|PDF|QR|SAR"
+    r"|\bP[1-3]\b|\d+",
+    re.IGNORECASE,
+)
 ARABIC_LETTER = re.compile("[\u0600-\u06ff\u0750-\u077f\u08a0-\u08ff]")
 LATIN_LETTER = re.compile(r"[A-Za-z]")
 
@@ -21,6 +30,11 @@ def language_from_stt(stt_language: str | None) -> CallerLanguage | None:
     if not stt_language:
         return None
     return SUPPORTED_LANGUAGES.get(LanguageCode(stt_language).language)
+
+
+def prose_text(text: str) -> str:
+    without_emails = SPELLED_VALUE_PATTERN.sub(" ", EMAIL_PATTERN.sub(" ", text))
+    return NAMES_IN_ANY_LANGUAGE.sub(" ", without_emails)
 
 
 def language_from_script(transcript: str, dominance_threshold: float) -> CallerLanguage | None:
@@ -41,7 +55,8 @@ def detect_caller_language(
 ) -> CallerLanguage | None:
     # The STT plugin reports "en" whenever ElevenLabs omits the language, so a transcript
     # written almost wholly in one script outranks the tag; the tag decides mixed turns.
-    return language_from_script(transcript, dominance_threshold) or language_from_stt(stt_language)
+    prose = prose_text(transcript)
+    return language_from_script(prose, dominance_threshold) or language_from_stt(stt_language)
 
 
 def choose_reply_voice(

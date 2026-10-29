@@ -1,4 +1,3 @@
-import json
 import logging
 from datetime import UTC, datetime
 
@@ -7,8 +6,13 @@ from livekit.agents import AgentServer, AgentSession, JobContext, JobProcess
 from psycopg_pool import AsyncConnectionPool
 
 from voice_agent.config import Settings, get_settings
+from voice_agent.conversation.call_state import (
+    CallResources,
+    CallState,
+    caller_phone_from_metadata,
+)
 from voice_agent.conversation.support_agent import LanguageSettings, SupportAgent
-from voice_agent.conversation.tools import CallResources, CallState
+from voice_agent.conversation.tools import identify_caller_by_line
 from voice_agent.crm.call_log import CallRecord, build_call_summariser, log_call
 from voice_agent.crm.hubspot_client import HubSpotClient, HubSpotError
 from voice_agent.knowledge.ingest import build_sentence_embedder
@@ -37,16 +41,6 @@ def build_hubspot_client(settings: Settings) -> HubSpotClient:
     return HubSpotClient(
         http, settings.hubspot_max_attempts, settings.hubspot_retry_backoff_seconds
     )
-
-
-def caller_phone_from_metadata(room_metadata: str, key: str) -> str | None:
-    # Playground rooms have no metadata; a phone gateway would put the caller's number here.
-    try:
-        metadata = json.loads(room_metadata) if room_metadata else {}
-    except json.JSONDecodeError:
-        return None
-    phone = metadata.get(key) if isinstance(metadata, dict) else None
-    return phone if isinstance(phone, str) and phone else None
 
 
 def load_models_once_per_process(process: JobProcess) -> None:
@@ -97,8 +91,10 @@ async def run_support_call(ctx: JobContext) -> None:
             default_voice_id=settings.tts_voice_id,
             voice_id_by_language=settings.tts_voice_id_by_language,
             script_dominance_threshold=settings.script_dominance_threshold,
+            reply_language_min_letters=settings.reply_language_min_letters,
         ),
         reply_tts=reply_tts,
+        call=call_state,
     )
     trace_provider = start_call_tracing(
         settings,
@@ -154,3 +150,5 @@ async def run_support_call(ctx: JobContext) -> None:
 
     ctx.add_shutdown_callback(log_call_and_close)
     await session.start(agent=agent, room=ctx.room)
+    # After start, so the greeting plays while HubSpot answers.
+    await identify_caller_by_line(session.userdata)

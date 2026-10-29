@@ -42,3 +42,9 @@ def test_reply_voice_uses_the_language_override_or_falls_back_to_the_default() -
 
     assert choose_reply_voice("ar", "default-voice", overrides) == ReplyVoice("ar", "arabic-voice")
     assert choose_reply_voice("en", "default-voice", overrides) == ReplyVoice("en", "default-voice")
+
+
+def test_an_email_in_an_arabic_line_does_not_stop_it_being_arabic() -> None:
+    line = "أنا خالد العتيبي، إيميلي khaled.otaibi@example.com، سجلني عندكم كعميل لو سمحت."
+
+    assert detect_caller_language(line, None, DOMINANCE) == "ar"

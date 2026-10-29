@@ -13,6 +13,7 @@ dependencies = [
     "httpx>=0.28.1",
     "livekit-agents[anthropic,elevenlabs,silero]~=1.8",
     "livekit-api>=1.2.2",
+    "num2words>=0.5.14",
     "numpy>=2.5.4",
     "pgvector>=0.5.1",
     "psycopg[binary,pool]>=3.3.6",
