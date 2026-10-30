@@ -1,6 +1,7 @@
 import argparse
 import asyncio
 import os
+import sys
 import uuid
 from datetime import UTC, datetime, timedelta
 from pathlib import Path
@@ -9,6 +10,7 @@ from bench_caller import BenchCaller
 from bench_setup import LATENCY_TOPIC, caller_token, start_worker, wait_until
 from demo_audio import line_audio, load_script
 from demo_records import logged_call_links
+from demo_transcript import LiveTranscript
 from latency_bench import reply_finished
 from livekit import api, rtc
 
@@ -38,27 +40,39 @@ def listener_token(settings: Settings, room_name: str) -> str:
     )
 
 
+def send_diagnostics_to(path: Path) -> None:
+    # The terminal shows only the transcript; warnings and the LiveKit SDK's logs, which write
+    # straight to standard error, go to this file instead.
+    sys.stderr.flush()
+    os.dup2(os.open(path, os.O_WRONLY | os.O_CREAT | os.O_TRUNC), sys.stderr.fileno())
+
+
 async def run_demo(language: str, wait_for_listener: bool) -> None:
     settings, script = get_settings(), load_script(language)
     audio = [line_audio(line, script.voice, settings) for line in script.lines]
     agent_name = f"demo-{uuid.uuid4().hex[:8]}"
     room_name = f"demo-call-{language}-{uuid.uuid4().hex[:6]}"
     log_path = Path(os.environ.get("TMPDIR", "/tmp")) / f"{agent_name}.log"
+    send_diagnostics_to(log_path.with_suffix(".caller.log"))
+    print(f"Logs: {log_path} (agent) and {log_path.with_suffix('.caller.log')} (caller)")
     worker = await start_worker(
         {}, agent_name, log_path, settings.bench_worker_log_level, log_calls=True
     )
     try:
         if wait_for_listener:
-            print("\nIn the Agents Playground choose Manual and enter:")
-            print(f"  URL:   {settings.livekit_url}")
-            print(f"  Token: {listener_token(settings, room_name)}\n")
-            await asyncio.to_thread(input, "Press Enter once the Playground says it is connected… ")
+            print("\nOpen https://meet.livekit.io, choose Custom, turn camera and microphone off,")
+            print("and connect with:")
+            print(f"  LiveKit URL: {settings.livekit_url}")
+            print(f"  Token:       {listener_token(settings, room_name)}\n")
+            await asyncio.to_thread(input, "Press Enter once you have joined the room… ")
         since = datetime.now(UTC).strftime("%Y-%m-%dT%H:%M:%S")
-        room = rtc.Room()
+        room, caller_identity = rtc.Room(), f"caller-{language}"
+        transcript = LiveTranscript(room, caller_identity)
         caller = BenchCaller(room, settings.stt_sample_rate_hz, LATENCY_TOPIC)
         await room.connect(
-            settings.livekit_url, caller_token(settings, room_name, f"caller-{language}", None)
+            settings.livekit_url, caller_token(settings, room_name, caller_identity, None)
         )
+        transcript.heading("Larkspur support line")
         await caller.start()
         async with api.LiveKitAPI(
             settings.livekit_url,
@@ -72,12 +86,11 @@ async def run_demo(language: str, wait_for_listener: bool) -> None:
             settings.bench_reply_timeout_seconds,
         )
         await wait_until(reply_finished(caller, 0.0, quiet), timeout)
-        for line, pcm in zip(script.lines, audio, strict=True):
-            print(f"caller: {line.clip}")
+        for pcm in audio:
             ended = await caller.say(pcm)
             await wait_until(reply_finished(caller, ended, quiet), timeout)
         await room.disconnect()
-        print("Waiting for the call to be logged in HubSpot…")
+        transcript.heading("Call ended. Waiting for the call to be logged in HubSpot…")
         links = None
         deadline = asyncio.get_running_loop().time() + CALL_LOG_TIMEOUT_SECONDS
         while links is None and asyncio.get_running_loop().time() < deadline:
