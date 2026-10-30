@@ -2,6 +2,7 @@ import asyncio
 import sys
 from collections.abc import Awaitable, Callable
 from dataclasses import dataclass
+from functools import partial
 from urllib.parse import urlparse
 
 import aiohttp
@@ -102,14 +103,6 @@ async def list_one_hubspot_object(settings: Settings, object_type: str) -> Check
     return CheckOutcome(True, f"read {object_type} from {settings.hubspot_base_url}")
 
 
-async def check_hubspot_contacts(settings: Settings) -> CheckOutcome:
-    return await list_one_hubspot_object(settings, "contacts")
-
-
-async def check_hubspot_tickets(settings: Settings) -> CheckOutcome:
-    return await list_one_hubspot_object(settings, "tickets")
-
-
 async def check_anthropic(settings: Settings) -> CheckOutcome:
     client = anthropic.AsyncAnthropic(
         api_key=settings.anthropic_api_key.get_secret_value(),
@@ -126,8 +119,8 @@ ACCOUNT_CHECKS: dict[str, AccountCheck] = {
     "LiveKit": check_livekit,
     "ElevenLabs STT": check_elevenlabs_stt,
     "ElevenLabs TTS": check_elevenlabs_tts,
-    "HubSpot contacts": check_hubspot_contacts,
-    "HubSpot tickets": check_hubspot_tickets,
+    "HubSpot contacts": partial(list_one_hubspot_object, object_type="contacts"),
+    "HubSpot tickets": partial(list_one_hubspot_object, object_type="tickets"),
     "Anthropic": check_anthropic,
 }
 

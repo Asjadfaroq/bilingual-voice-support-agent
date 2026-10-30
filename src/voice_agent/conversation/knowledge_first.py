@@ -1,6 +1,8 @@
+import logging
 from collections.abc import AsyncGenerator
 from typing import Literal
 
+import psycopg
 from livekit.agents.llm import ChatContext, ChatMessage
 
 from voice_agent.conversation.call_state import CallResources, CallState
@@ -11,7 +13,9 @@ from voice_agent.conversation.instructions import (
 )
 from voice_agent.conversation.reply_filter import ReplyChunk, StartReply
 from voice_agent.conversation.system_notes import with_system_notes
-from voice_agent.conversation.tools import look_up_knowledge
+from voice_agent.knowledge import search
+
+logger = logging.getLogger(__name__)
 
 # "tool": the model calls search_knowledge_base; "every_turn": the knowledge base is searched
 # with the caller's words before every generation and the result is added to it.
@@ -40,6 +44,25 @@ EARLIER_KNOWLEDGE = (
     "Knowledge base results for the caller's earlier turns, which your earlier answers were "
     "based on:\n{passages}"
 )
+
+
+async def look_up_knowledge(question: str, resources: CallResources) -> str:
+    try:
+        async with resources.knowledge_pool.connection() as connection:
+            matches = await search.search_knowledge_base(
+                question,
+                connection=connection,
+                embed=resources.embed,
+                top_k=resources.kb_top_k,
+                min_similarity=resources.kb_min_similarity,
+                reranker=resources.reranker,
+            )
+    except psycopg.Error as error:
+        logger.error("Knowledge base search failed: %s: %s", type(error).__name__, error)
+        return KNOWLEDGE_BASE_UNAVAILABLE
+    if not matches:
+        return NO_KNOWLEDGE_BASE_MATCH
+    return "\n\n".join(f"[{match.source_id}] {match.heading}\n{match.content}" for match in matches)
 
 
 def earlier_knowledge_notes(call: CallState, mode: KnowledgeSearchMode) -> list[str]:

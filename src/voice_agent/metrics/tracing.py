@@ -18,7 +18,6 @@ TRACE_NAME = "support_call"
 OTEL_TRACES_PATH = "/api/public/otel/v1/traces"
 CALLER_ID_LENGTH = 12
 TOKENS_PER_PRICE_UNIT = 1_000_000
-# USD per million tokens (input, output) by model id, from Settings.
 ModelPrices = dict[str, tuple[float, float]]
 
 

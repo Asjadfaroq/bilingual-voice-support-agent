@@ -1,6 +1,5 @@
 import logging
 
-import psycopg
 from livekit.agents import RunContext, function_tool
 from livekit.agents.telemetry import tracer
 
@@ -13,30 +12,11 @@ from voice_agent.conversation.confirmation import (
     propose_write,
     spell_for_read_back,
 )
+from voice_agent.conversation.knowledge_first import look_up_knowledge
 from voice_agent.crm.hubspot_client import HubSpotError, normalize_phone_number
-from voice_agent.knowledge import search
 from voice_agent.pipeline.language import LANGUAGE_NAMES, CallerLanguage, phrase_in_language
 
 logger = logging.getLogger(__name__)
-
-
-async def look_up_knowledge(question: str, resources: CallResources) -> str:
-    try:
-        async with resources.knowledge_pool.connection() as connection:
-            matches = await search.search_knowledge_base(
-                question,
-                connection=connection,
-                embed=resources.embed,
-                top_k=resources.kb_top_k,
-                min_similarity=resources.kb_min_similarity,
-                reranker=resources.reranker,
-            )
-    except psycopg.Error as error:
-        logger.error("Knowledge base search failed: %s: %s", type(error).__name__, error)
-        return say.KNOWLEDGE_BASE_UNAVAILABLE
-    if not matches:
-        return say.NO_KNOWLEDGE_BASE_MATCH
-    return "\n\n".join(f"[{match.source_id}] {match.heading}\n{match.content}" for match in matches)
 
 
 @function_tool

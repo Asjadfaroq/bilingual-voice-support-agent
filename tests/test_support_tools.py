@@ -13,7 +13,7 @@ from voice_agent.conversation.instructions import (
     KNOWLEDGE_BASE_UNAVAILABLE,
     NO_KNOWLEDGE_BASE_MATCH,
 )
-from voice_agent.conversation.tools import look_up_knowledge
+from voice_agent.conversation.knowledge_first import look_up_knowledge
 from voice_agent.crm.hubspot_client import HubSpotClient
 from voice_agent.knowledge.ingest import KnowledgeChunk, TextEmbedder, replace_knowledge_chunks
 
