@@ -20,7 +20,7 @@ It runs on LiveKit Agents with ElevenLabs for speech in both directions, Claude 
 - In the final latency bench all 40 voice turns (20 Arabic, 20 English) were answered, up from 35 of 40 before two speech-to-text fixes.
 - Arabic and English in the same call: the reply language is decided for every turn, and the voice, the numbers and the read-backs follow it.
 - Every HubSpot write waits for an explicit spoken yes, and the decision is made in code, not by the model.
-- The conversation evals went from 13 of 32 on the first run to 24 of 32 after the fixes they pointed to.
+- The conversation evals went from 13 of 32 on the first run to 23.7 of 32 on average over three runs (23 to 24) after the fixes they pointed to.
 - Every stage of a turn is measured with p50 and p90: 2.30 s (English) and 2.50 s (Arabic) at the median from the end of the caller's speech to the agent's first audio, 3.70 s and 3.53 s as the caller hears it.
 
 Design decisions and the measurements behind them are in [docs/DECISIONS.md](docs/DECISIONS.md).
@@ -81,37 +81,53 @@ The unit tests check both sides with a mocked HubSpot: `test_declined_confirmati
 
 ## Evaluation
 
-[evals/run_conversation_evals.py](evals/run_conversation_evals.py) runs 32 scripted conversations (16 Arabic, 16 English) through the real agent, Claude and knowledge base in text mode, against an in-memory HubSpot. A simulated caller answers whichever read-back is actually pending. A scenario passes only if every deterministic check passes and the Claude Sonnet judge gives at least 4 of 5 for correctness, grounding and spoken style. The rules were fixed before the first run. One run costs about $0.21.
+[evals/run_conversation_evals.py](evals/run_conversation_evals.py) runs 32 scripted conversations (16 Arabic, 16 English) through the real agent, Claude and knowledge base in text mode, against an in-memory HubSpot. A simulated caller answers whichever read-back is actually pending. A scenario passes only if every deterministic check passes and the Claude Sonnet judge gives at least 4 of 5 for correctness, grounding and spoken style. The rules were fixed before the first run. One run costs about $0.22.
 
-| Category | Scenarios | First run | Now |
+LLM runs vary by two or three scenarios on the same code, so the current numbers are the mean and range of 3 runs (`evals/results/conversation-evals-run-*.json`); the first run is a single run.
+
+| | Mean of 3 runs | Range | First run |
 |---|---|---|---|
-| New contact | 2 | 1 | 1 |
-| Caller found by phone or email | 2 | 0 | 1 |
-| Declined read-back | 2 | 0 | 0 |
-| Details asked before a ticket | 2 | 1 | 0 |
-| Product facts | 5 | 4 | 5 |
-| Callback to a person | 2 | 0 | 1 |
-| Prompt injection | 2 | 0 | 2 |
-| Switching language mid-call | 2 | 1 | 2 |
-| Not in the knowledge base | 4 | 2 | 4 |
-| Spoken numbers | 3 | 2 | 2 |
-| Ticket after a yes | 2 | 1 | 2 |
-| Someone else's ticket | 2 | 0 | 2 |
-| Own ticket status | 2 | 1 | 2 |
-| **All** | **32** | **13** | **24** |
+| All 32 scenarios | 23.7 | 23 to 24 | 13 |
+| Arabic, of 16 | 11.3 | 10 to 13 | 5 |
+| English, of 16 | 12.3 | 11 to 14 | 8 |
+| Judge: correctness, of 5 | 4.33 | 4.25 to 4.38 | 4.09 |
+| Judge: grounding, of 5 | 4.47 | 4.44 to 4.50 | 4.47 |
+| Judge: spoken style, of 5 | 4.11 | 4.06 to 4.19 | 3.75 |
 
-Arabic 11 of 16, English 13 of 16. Judge means: correctness 4.34, grounding 4.56, spoken style 4.16 (first run 4.09, 4.47, 3.75).
+| Category | Scenarios | First run | Passed, mean of 3 runs |
+|---|---|---|---|
+| New contact | 2 | 1 | 1.0 |
+| Caller found by phone or email | 2 | 0 | 0.3 (0 to 1) |
+| Declined read-back | 2 | 0 | 1.7 (1 to 2) |
+| Details asked before a ticket | 2 | 1 | 0.3 (0 to 1) |
+| Product facts | 5 | 4 | 5.0 |
+| Callback to a person | 2 | 0 | 1.3 (1 to 2) |
+| Prompt injection | 2 | 0 | 1.7 (1 to 2) |
+| Switching language mid-call | 2 | 1 | 2.0 |
+| Not in the knowledge base | 4 | 2 | 4.0 |
+| Spoken numbers | 3 | 2 | 2.0 |
+| Ticket after a yes | 2 | 1 | 1.0 |
+| Someone else's ticket | 2 | 0 | 2.0 |
+| Own ticket status | 2 | 1 | 1.3 (1 to 2) |
 
-| Check | First run | Now |
+| Check | First run | Mean of 3 runs |
 |---|---|---|
 | No write without an explicit yes | 100% | 100% |
 | Reply in the caller's language | 91% | 100% |
 | No markdown or URLs | 100% | 100% |
 | Numbers spoken as words | 94% | 100% |
-| At most one question per turn | 0% (added later) | 97% |
-| Expected tools and arguments | 81% | 91% |
-| Expected HubSpot writes | 94% | 94% |
-| Scenario-specific checks | 97% | 100% |
+| At most one question per turn | 0% (added later) | 100% |
+| Expected tools and arguments | 81% | 98% |
+| Expected HubSpot writes | 94% | 98% |
+| Scenario-specific checks | 97% | 99% |
+
+Failed in all 3 runs, so the real weaknesses rather than noise:
+
+- English, office hours and the free trial in one question: the one search per turn finds the hours but not the trial, and the agent says it cannot confirm the trial length.
+- English, caller found by phone: the agent says it has "noted" the caller's details although no tool saved anything.
+- Arabic, ticket after a yes: the judge marks grounding down because the read-back states the priority, which the agent chose itself, and once the agent mentioned that it was redoing the read-back in Arabic.
+- Arabic, new contact with a spelled email: the letter-by-letter Arabic spelling of the email is hard to follow (spoken style 2 to 3).
+- Arabic, details before a ticket: the agent asks for the email alone instead of name, email and problem together, and in two of three runs never reaches the ticket.
 
 What the evals caught, and what changed:
 
@@ -120,7 +136,7 @@ What the evals caught, and what changed:
 - After a "no", Claude skipped the confirmation step, leaving a stale pending write. The step was renamed `record_caller_answer` and is called after every answer.
 - Searching before the model first cost ticket flows: 18 to 21 of 32 against 21 for the search tool, because it also searched after tool calls and on "yes" turns and a miss carried an "offer a ticket" instruction. It now searches only new caller turns, a miss adds a neutral note, and both designs pass 21 and 23 of 32.
 
-Part of the change from 13 to 24 is in the harness rather than the agent: after the first run the simulated caller answers clarifying questions, the language check looks at prose only, and a one-question-per-turn check was added. The thresholds did not change.
+Part of the change from 13 to about 24 is in the harness rather than the agent: after the first run the simulated caller answers clarifying questions, the language check looks at prose only, and a one-question-per-turn check was added. The thresholds did not change.
 
 ## Latency
 
