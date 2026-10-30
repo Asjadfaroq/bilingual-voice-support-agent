@@ -62,6 +62,8 @@ def cardinal(value: str, language: CallerLanguage) -> str:
 def riyals(amount: str, language: CallerLanguage) -> str:
     if language == "en":
         return f"{cardinal(amount, 'en')} {'riyal' if amount == '1' else 'riyals'}"
+    # Arabic counted nouns: 1 and 2 have their own forms, 3 to 10 take the plural, 11 to 99 the
+    # accusative singular, and round hundreds the bare singular.
     count = int(float(amount.replace(",", "")))
     if count in (1, 2):
         return {1: "ريال واحد", 2: "ريالان"}[count]
