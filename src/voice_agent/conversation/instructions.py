@@ -11,8 +11,7 @@ WRONG_LANGUAGE_RETRY_NOTES: dict[CallerLanguage, str] = {
     "ar": "Your draft reply was not in Arabic. Write the whole reply in Arabic script.",
 }
 CALLER_IDENTIFIED_NOTE = (
-    "The caller is already identified from their phone line as {first_name}. Do not ask for "
-    "their name, email or phone."
+    "The caller is already identified as {first_name}. Do not ask for their name, email or phone."
 )
 CALLER_LINE_NOT_ON_FILE_NOTE = (
     "The caller's phone line is not on file. When you need to identify them, ask for their "

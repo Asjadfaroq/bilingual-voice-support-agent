@@ -9,6 +9,7 @@ from voice_agent.conversation.instructions import (
     SUPPORT_INSTRUCTIONS_TEMPLATE,
 )
 from voice_agent.conversation.reply_filter import ReplyChunk, StartReply
+from voice_agent.conversation.system_notes import with_system_notes
 from voice_agent.conversation.tools import look_up_knowledge
 
 # "tool": the model calls search_knowledge_base; "every_turn": the knowledge base is searched
@@ -54,7 +55,5 @@ async def reply_with_knowledge(
         if passages == NO_KNOWLEDGE_BASE_MATCH
         else KNOWLEDGE_FOR_THIS_TURN.format(passages=passages)
     )
-    chat_ctx = chat_ctx.copy()
-    chat_ctx.add_message(role="system", content=note)
-    async for chunk in start_reply(chat_ctx):
+    async for chunk in start_reply(with_system_notes(chat_ctx, note)):
         yield chunk

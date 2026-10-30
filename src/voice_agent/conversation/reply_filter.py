@@ -6,6 +6,7 @@ from typing import Literal
 from livekit.agents import FlushSentinel
 from livekit.agents.llm import ChatChunk, ChatContext
 
+from voice_agent.conversation.system_notes import with_system_notes
 from voice_agent.pipeline.language import CallerLanguage, language_from_script, prose_text
 from voice_agent.pipeline.spoken_text import to_spoken_text
 
@@ -128,9 +129,7 @@ async def guarded_reply(
         # A reply that opens in the wrong language is regenerated once with a firmer note.
         await stream.aclose()
         retried, splitter = True, SentenceSplitter()
-        retry_ctx = chat_ctx.copy()
-        retry_ctx.add_message(role="system", content=retry_note)
-        stream = start_reply(retry_ctx)
+        stream = start_reply(with_system_notes(chat_ctx, retry_note))
 
 
 async def spoken_sentences(

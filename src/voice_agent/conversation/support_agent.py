@@ -23,6 +23,7 @@ from voice_agent.conversation.reply_filter import (
     prose_language,
     spoken_sentences,
 )
+from voice_agent.conversation.system_notes import with_system_notes
 from voice_agent.conversation.ticket_tools import (
     create_ticket,
     get_ticket_status,
@@ -119,13 +120,12 @@ class SupportAgent(Agent):
         caller_text = (messages[-1].text_content or "") if messages else ""
         language = self._language_of(caller_text) if messages else None
         searches = knowledge_first.searches_before_reply(chat_ctx, self._call)
-        chat_ctx = chat_ctx.copy()
-        if note := caller_identity_note(self._call):
-            chat_ctx.add_message(role="system", content=note)
+        notes = [note] if (note := caller_identity_note(self._call)) else []
         if language is not None:
             trace.get_current_span().set_attribute("voice_agent.reply_language", language)
             self._switch_voice_to(language)
-            chat_ctx.add_message(role="system", content=REPLY_LANGUAGE_NOTES[language])
+            notes.append(REPLY_LANGUAGE_NOTES[language])
+        chat_ctx = with_system_notes(chat_ctx, *notes)
 
         def generate(context: ChatContext) -> AsyncGenerator[ReplyChunk, None]:
             return Agent.default.llm_node(self, context, tools, model_settings)

@@ -62,9 +62,11 @@ async def reply_to(agent: SupportAgent, history: ChatContext, caller_text: str) 
 
 def system_notes(chat_ctx: ChatContext) -> list[str]:
     return [
-        item.text_content or ""
+        part
         for item in chat_ctx.items
         if isinstance(item, ChatMessage) and item.role == "system"
+        for part in item.content
+        if isinstance(part, str)
     ]
 
 
