@@ -25,6 +25,9 @@ It runs on LiveKit Agents with ElevenLabs for speech in both directions, Claude 
 
 Design decisions and the measurements behind them are in [docs/DECISIONS.md](docs/DECISIONS.md).
 
+<!-- DEMO VIDEO: replace the next line with the link to the demo video. -->
+**Demo video:** link coming soon.
+
 ## Architecture
 
 ```mermaid
@@ -167,11 +170,15 @@ What the bench caught:
 
 At the end of a call the agent logs it to HubSpot as a call object with the masked transcript and a summary, linked to the contact and every ticket opened.
 
-![HubSpot call record](docs/hubspot-call.png)
+![HubSpot call log with the masked transcript](docs/hubspot-call.png)
+
+*HubSpot call log from the Arabic demo call (Sarah, ticket 9756), with the masked transcript.*
 
 Every call is one trace in a self-hosted Langfuse, built from LiveKit's own OpenTelemetry spans: a span per model call with tokens, cost and time to first token, and a span per tool call. Emails, phone numbers and Saudi ID numbers are masked before export, and the user is an HMAC of the caller's phone or contact id.
 
-![Langfuse trace of a call](docs/langfuse-call.png)
+![Langfuse timeline of the call](docs/langfuse-call.png)
+
+*Langfuse timeline of the same call, showing create_ticket, then record_caller_answer and confirmation_decision.*
 
 ## Try it
 
