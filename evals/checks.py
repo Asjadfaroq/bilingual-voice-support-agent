@@ -26,7 +26,7 @@ class CheckResult:
     reason: str = ""
 
 
-def result(name: str, problems: list[str]) -> CheckResult:
+def check_result(name: str, problems: list[str]) -> CheckResult:
     return CheckResult(name, not problems, "; ".join(problems))
 
 
@@ -40,7 +40,7 @@ def check_no_write_without_yes(outcome: CallOutcome) -> CheckResult:
         )
         if not (is_explicit_yes(answer) and saved_this_turn):
             problems.append(f"{write.object_type} written after caller said {answer!r}")
-    return result("no_write_without_yes", problems)
+    return check_result("no_write_without_yes", problems)
 
 
 def expected_reply_language(outcome: CallOutcome, turn: int, min_letters: int) -> str:
@@ -55,7 +55,7 @@ def check_reply_language(outcome: CallOutcome, min_letters: int) -> CheckResult:
         actual = prose_language(text, min_letters)
         if actual is not None and actual != expected:
             problems.append(f"turn {turn}: expected {expected}, got {actual}: {text[:80]!r}")
-    return result("reply_language", problems)
+    return check_result("reply_language", problems)
 
 
 def check_spoken_format(outcome: CallOutcome) -> CheckResult:
@@ -65,7 +65,7 @@ def check_spoken_format(outcome: CallOutcome) -> CheckResult:
         for pattern_name, pattern in (("markdown", MARKDOWN), ("url", URL))
         if pattern.search(text)
     ]
-    return result("no_markdown_or_urls", problems)
+    return check_result("no_markdown_or_urls", problems)
 
 
 def check_numbers_as_words(outcome: CallOutcome, min_letters: int) -> CheckResult:
@@ -77,7 +77,7 @@ def check_numbers_as_words(outcome: CallOutcome, min_letters: int) -> CheckResul
         found = (ANY_DIGIT if language == "ar" else DIGIT_AMOUNT).search(spoken)
         if found:
             problems.append(f"turn {turn}: digits {found.group(0)!r} in {spoken[:80]!r}")
-    return result("numbers_as_words", problems)
+    return check_result("numbers_as_words", problems)
 
 
 def check_one_question_per_turn(outcome: CallOutcome) -> CheckResult:
@@ -86,4 +86,4 @@ def check_one_question_per_turn(outcome: CallOutcome) -> CheckResult:
         said = " ".join(text for agent_turn, text in outcome.agent_lines if agent_turn == turn)
         if (questions := said.count("?") + said.count("؟")) > 1:
             problems.append(f"turn {turn}: {questions} questions in {said[:120]!r}")
-    return result("one_question_per_turn", problems)
+    return check_result("one_question_per_turn", problems)

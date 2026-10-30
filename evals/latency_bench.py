@@ -25,7 +25,8 @@ from voice_agent.config import Settings, get_settings
 
 def reply_finished(caller: BenchCaller, after: float, quiet_seconds: float) -> Callable[[], bool]:
     def finished() -> bool:
-        spoke = any(t > after and state == "speaking" for t, state in caller.observations.states)
+        states = caller.observations.states
+        spoke = any(moment > after and state == "speaking" for moment, state in states)
         quiet_for = time.time() - caller.observations.last_audible_at
         return spoke and caller.latest_state() == "listening" and quiet_for > quiet_seconds
 
@@ -93,7 +94,10 @@ async def run_bench(
             "before": round_trip_before,
             "after": await livekit_round_trip_ms(settings),
         },
-        "languages": {language: summarise_language(t) for language, t in turns.items()},
+        "languages": {
+            language: summarise_language(language_turns)
+            for language, language_turns in turns.items()
+        },
         "turns": [
             turn for language_turns in turns.values() for turn in turns_as_json(language_turns)
         ],

@@ -26,22 +26,23 @@ def summarise(results: list[dict[str, Any]], settings: Settings) -> dict[str, An
         return dict(sorted(groups.items()))
 
     check_names = results[0]["checks"].keys()
-    agent_cost = sum(r["agent_cost_usd"] for r in results)
-    judge_cost = sum(r["judge_cost_usd"] for r in results)
+    agent_cost = sum(scenario["agent_cost_usd"] for scenario in results)
+    judge_cost = sum(scenario["judge_cost_usd"] for scenario in results)
     return {
         "run_at": datetime.now(UTC).isoformat(timespec="seconds"),
         "agent_model": settings.llm_model,
         "judge_model": settings.judge_model,
         "judge_pass_score": settings.judge_pass_score,
         "scenarios": len(results),
-        "passed": sum(r["passed"] for r in results),
+        "passed": sum(scenario["passed"] for scenario in results),
         "by_category": pass_counts("category"),
         "by_language": pass_counts("language"),
         "check_pass_rates": {
-            name: sum(r["checks"][name] for r in results) / len(results) for name in check_names
+            name: sum(scenario["checks"][name] for scenario in results) / len(results)
+            for name in check_names
         },
         "judge_means": {
-            score: sum(r["judge"][score] for r in results) / len(results)
+            score: sum(scenario["judge"][score] for scenario in results) / len(results)
             for score in ("correctness", "grounding", "spoken_style")
         },
         "cost_usd": {"agent": agent_cost, "judge": judge_cost, "total": agent_cost + judge_cost},
@@ -53,9 +54,9 @@ def print_report(summary: dict[str, Any], results: list[dict[str, Any]]) -> None
     for category, totals in summary["by_category"].items():
         by_language = {
             language: [
-                r["passed"]
-                for r in results
-                if r["category"] == category and r["language"] == language
+                scenario["passed"]
+                for scenario in results
+                if scenario["category"] == category and scenario["language"] == language
             ]
             for language in ("en", "ar")
         }

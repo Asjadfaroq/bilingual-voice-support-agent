@@ -72,7 +72,10 @@ class FakeHubSpot:
         found = [
             {"id": contact_id, "properties": properties}
             for contact_id, properties in self.contacts.items()
-            if any(properties.get(f["propertyName"]) == f["value"] for f in wanted)
+            if any(
+                properties.get(wanted_filter["propertyName"]) == wanted_filter["value"]
+                for wanted_filter in wanted
+            )
         ]
         return httpx.Response(200, json={"results": found[:1]})
 
@@ -95,8 +98,11 @@ class FakeHubSpot:
         return httpx.Response(201, json={"id": self._record("call", body["properties"])})
 
     def _contact_tickets(self, match: re.Match[str], body: dict[str, Any]) -> httpx.Response:
-        owned = [t for t, owner in self.ticket_contact.items() if owner == match.group(1)]
-        return httpx.Response(200, json={"results": [{"toObjectId": int(t)} for t in owned]})
+        owned = [
+            ticket_id for ticket_id, owner in self.ticket_contact.items() if owner == match.group(1)
+        ]
+        linked = [{"toObjectId": int(ticket_id)} for ticket_id in owned]
+        return httpx.Response(200, json={"results": linked})
 
     def _read_tickets(self, match: re.Match[str], body: dict[str, Any]) -> httpx.Response:
         found = [

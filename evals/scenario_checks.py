@@ -2,7 +2,7 @@ import re
 from collections import Counter
 from typing import Any
 
-from checks import CheckResult, result
+from checks import CheckResult, check_result
 from simulated_call import CallOutcome
 
 from voice_agent.conversation.confirmation import spell_for_read_back
@@ -24,7 +24,7 @@ def check_tools(outcome: CallOutcome, expect: dict[str, Any]) -> CheckResult:
             problems.append(f"expected {wanted['name']} with {wanted.get('args', {})}, saw {seen}")
     called = {tool.name for tool in outcome.tool_calls}
     problems += [f"called {name}" for name in expect.get("tools_not_called", []) if name in called]
-    return result("tools_and_arguments", problems)
+    return check_result("tools_and_arguments", problems)
 
 
 def check_writes(outcome: CallOutcome, expect: dict[str, Any]) -> CheckResult:
@@ -38,7 +38,7 @@ def check_writes(outcome: CallOutcome, expect: dict[str, Any]) -> CheckResult:
     tickets = [write.properties for write in outcome.writes if write.object_type == "ticket"]
     if wanted and not any(arguments_match(ticket, wanted) for ticket in tickets):
         problems.append(f"no ticket with {wanted}, tickets were {tickets}")
-    return result("writes", problems)
+    return check_result("writes", problems)
 
 
 def spelled_pattern(email: str) -> re.Pattern[str]:
@@ -69,4 +69,4 @@ def check_scenario_specifics(outcome: CallOutcome, expect: dict[str, Any]) -> Ch
                 f"ticket proposed in turn {tickets[0]}, before the details in turn "
                 f"{outcome.details_turn}"
             )
-    return result("scenario_specifics", problems)
+    return check_result("scenario_specifics", problems)

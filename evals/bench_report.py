@@ -49,8 +49,10 @@ def describe_turn(
     thinking = [time for time, state in observations.states if state == "thinking" and time > ended]
     answer_audio = first_after(onsets, thinking[-1]) if thinking else first_audio
     in_turn = [measurement for time, measurement in observations.measurements if time > started]
-    turn = next((m for m in in_turn if m["kind"] == "turn"), {})
-    hold = next((m["seconds"] for m in in_turn if m["kind"] == "reply_filter_hold"), None)
+    turns = [measurement for measurement in in_turn if measurement["kind"] == "turn"]
+    holds = [measurement for measurement in in_turn if measurement["kind"] == "reply_filter_hold"]
+    turn = turns[0] if turns else {}
+    hold = holds[0]["seconds"] if holds else None
     node_first_token = turn.get("llm_time_to_first_token")
     stages: dict[str, float | None] = {
         "end_to_end": turn.get("end_to_end"),

@@ -107,10 +107,11 @@ async def run_text_bench(modes: list[KnowledgeSearchMode], languages: list[str])
                 language: await bench_text_turns(settings, pool, embed, mode, language)
                 for language in languages
             }
-            save_results("text_mode", mode, {
-                "languages": {lang: summarise_text_turns(t) for lang, t in by_language.items()},
-                "turns": by_language,
-            })  # fmt: skip
+            summaries = {
+                language: summarise_text_turns(language_turns)
+                for language, language_turns in by_language.items()
+            }
+            save_results("text_mode", mode, {"languages": summaries, "turns": by_language})
 
 
 if __name__ == "__main__":
