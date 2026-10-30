@@ -1,0 +1,153 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+    inputs:
+      run:
+        description: Paid run to start
+        type: choice
+        options: [conversation-evals, latency-bench]
+        default: conversation-evals
+      min_elevenlabs_characters_left:
+        description: The latency bench stops before ElevenLabs credits fall below this
+        default: "8000"
+
+permissions:
+  contents: read
+
+env:
+  UV_VERSION: "0.13.0"
+
+jobs:
+  lint-and-test:
+    if: github.event_name != 'workflow_dispatch'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    services:
+      postgres:
+        image: pgvector/pgvector:pg16
+        env:
+          POSTGRES_USER: voice_agent
+          POSTGRES_PASSWORD: voice_agent
+          POSTGRES_DB: voice_agent
+        ports: ["5434:5432"]
+        options: >-
+          --health-cmd "pg_isready -U voice_agent -d voice_agent"
+          --health-interval 5s --health-timeout 3s --health-retries 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+        with:
+          version: ${{ env.UV_VERSION }}
+          enable-cache: true
+      - run: uv sync --frozen
+      - run: uv run ruff check .
+      - run: uv run ruff format --check .
+      # The ONNX parity test downloads both models; they are cached between runs.
+      - uses: actions/cache@v4
+        with:
+          path: ~/.cache/huggingface
+          key: huggingface-${{ hashFiles('src/voice_agent/config.py') }}
+      - run: uv run pytest -rs
+
+  conversation-evals:
+    if: github.event_name == 'workflow_dispatch' && inputs.run == 'conversation-evals'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    services:
+      postgres:
+        image: pgvector/pgvector:pg16
+        env:
+          POSTGRES_USER: voice_agent
+          POSTGRES_PASSWORD: voice_agent
+          POSTGRES_DB: voice_agent
+        ports: ["5434:5432"]
+        options: >-
+          --health-cmd "pg_isready -U voice_agent -d voice_agent"
+          --health-interval 5s --health-timeout 3s --health-retries 10
+    env:
+      ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+      # The evals run in text mode against a fake HubSpot, so these only satisfy the settings.
+      LIVEKIT_URL: wss://not-used-by-evals.invalid
+      LIVEKIT_API_KEY: not-used-by-evals
+      LIVEKIT_API_SECRET: not-used-by-evals
+      ELEVEN_API_KEY: not-used-by-evals
+      HUBSPOT_ACCESS_TOKEN: not-used-by-evals
+      REQUIRED_SECRETS: ANTHROPIC_API_KEY
+    steps:
+      - name: Check secrets
+        run: |
+          missing=""
+          for name in $REQUIRED_SECRETS; do
+            [ -n "$(printenv "$name")" ] || missing="$missing $name"
+          done
+          if [ -n "$missing" ]; then
+            echo "::error title=Missing secrets::This run needs these repository secrets:$missing. Add them under Settings > Secrets and variables > Actions, then start the run again."
+            exit 1
+          fi
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+        with:
+          version: ${{ env.UV_VERSION }}
+          enable-cache: true
+      - run: uv sync --frozen
+      - run: uv run python scripts/seed.py
+      - run: uv run python evals/run_conversation_evals.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: conversation-evals
+          path: evals/results/latest.json
+
+  latency-bench:
+    if: github.event_name == 'workflow_dispatch' && inputs.run == 'latency-bench'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    services:
+      postgres:
+        image: pgvector/pgvector:pg16
+        env:
+          POSTGRES_USER: voice_agent
+          POSTGRES_PASSWORD: voice_agent
+          POSTGRES_DB: voice_agent
+        ports: ["5434:5432"]
+        options: >-
+          --health-cmd "pg_isready -U voice_agent -d voice_agent"
+          --health-interval 5s --health-timeout 3s --health-retries 10
+    env:
+      LIVEKIT_URL: ${{ secrets.LIVEKIT_URL }}
+      LIVEKIT_API_KEY: ${{ secrets.LIVEKIT_API_KEY }}
+      LIVEKIT_API_SECRET: ${{ secrets.LIVEKIT_API_SECRET }}
+      ELEVEN_API_KEY: ${{ secrets.ELEVEN_API_KEY }}
+      ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+      HUBSPOT_ACCESS_TOKEN: ${{ secrets.HUBSPOT_ACCESS_TOKEN }}
+      BENCH_MIN_ELEVENLABS_CHARACTERS_LEFT: ${{ inputs.min_elevenlabs_characters_left }}
+      REQUIRED_SECRETS: >-
+        LIVEKIT_URL LIVEKIT_API_KEY LIVEKIT_API_SECRET ELEVEN_API_KEY ANTHROPIC_API_KEY
+        HUBSPOT_ACCESS_TOKEN
+    steps:
+      - name: Check secrets
+        run: |
+          missing=""
+          for name in $REQUIRED_SECRETS; do
+            [ -n "$(printenv "$name")" ] || missing="$missing $name"
+          done
+          if [ -n "$missing" ]; then
+            echo "::error title=Missing secrets::This run needs these repository secrets:$missing. Add them under Settings > Secrets and variables > Actions, then start the run again."
+            exit 1
+          fi
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+        with:
+          version: ${{ env.UV_VERSION }}
+          enable-cache: true
+      - run: uv sync --frozen
+      - run: uv run python scripts/seed.py
+      - run: uv run python evals/latency_bench.py ci-${{ github.run_id }}
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: latency-bench
+          path: evals/results/latency.json
