@@ -118,25 +118,26 @@ def arabic_latin_words(text: str) -> str:
 
 def to_spoken_text(text: str, language: CallerLanguage) -> str:
     rules: list[tuple[re.Pattern[str], Callable[[re.Match[str]], str]]] = [
-        (AROUND_THE_CLOCK, lambda m: "around the clock" if language == "en" else "على مدار الساعة"),
-        (PRICE, lambda m: riyals(m.group(1) or m.group(2), language)),
+        (AROUND_THE_CLOCK, lambda _: "around the clock" if language == "en" else "على مدار الساعة"),
+        (PRICE, lambda match: riyals(match.group(1) or match.group(2), language)),
         (
             PERCENT,
-            lambda m: (
-                f"{cardinal(m.group(1), language)} {'percent' if language == 'en' else 'بالمئة'}"
+            lambda match: (
+                f"{cardinal(match.group(1), language)} "
+                + ("percent" if language == "en" else "بالمئة")
             ),
         ),
-        (TIME, lambda m: clock_time(int(m.group(1)), int(m.group(2)), language)),
-        (YEAR_AFTER_MONTH, lambda m: spoken_year(m.group(1), m.group(2), language)),
-        (DAY_BEFORE_MONTH, lambda m: spoken_date_day(m.group(1), m.group(2), language)),
+        (TIME, lambda match: clock_time(int(match.group(1)), int(match.group(2)), language)),
+        (YEAR_AFTER_MONTH, lambda match: spoken_year(match.group(1), match.group(2), language)),
+        (DAY_BEFORE_MONTH, lambda match: spoken_date_day(match.group(1), match.group(2), language)),
         (
             PRIORITY,
-            lambda m: (
+            lambda match: (
                 ("priority " if language == "en" else "الأولوية ")
-                + PRIORITY_WORDS[language][m.group(1)]
+                + PRIORITY_WORDS[language][match.group(1)]
             ),
         ),
-        (BARE_NUMBER, lambda m: spoken_number(m.group(0), language)),
+        (BARE_NUMBER, lambda match: spoken_number(match.group(0), language)),
     ]
     spoken = text.translate(ARABIC_INDIC_DIGITS)
     for pattern, replacement in rules:
