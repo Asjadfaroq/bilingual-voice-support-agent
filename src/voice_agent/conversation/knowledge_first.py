@@ -5,6 +5,7 @@ from livekit.agents.llm import ChatContext, ChatMessage
 
 from voice_agent.conversation.call_state import CallResources, CallState
 from voice_agent.conversation.instructions import (
+    KNOWLEDGE_BASE_UNAVAILABLE,
     NO_KNOWLEDGE_BASE_MATCH,
     SUPPORT_INSTRUCTIONS_TEMPLATE,
 )
@@ -35,6 +36,24 @@ KNOWLEDGE_FOR_THIS_TURN = "Knowledge base search result for the caller's latest 
 # Most turns that find nothing are not questions ("yes", an email address), so a miss must not
 # carry the search tool's "offer a ticket" instruction into a ticket or contact flow.
 NOTHING_FOUND_THIS_TURN = "The knowledge base search for the caller's latest turn found nothing."
+EARLIER_KNOWLEDGE = (
+    "Knowledge base results for the caller's earlier turns, which your earlier answers were "
+    "based on:\n{passages}"
+)
+
+
+def earlier_knowledge_notes(call: CallState, mode: KnowledgeSearchMode) -> list[str]:
+    # Each turn's search result reaches only that turn's generation; without the earlier ones the
+    # model judged its own correct earlier answers ungrounded and took them back. The search
+    # tool's results stay in the history, so only searching before the model needs this.
+    found = dict.fromkeys(
+        passages
+        for _, passages in call.knowledge_lookups
+        if passages not in (NO_KNOWLEDGE_BASE_MATCH, KNOWLEDGE_BASE_UNAVAILABLE)
+    )
+    if mode != "every_turn" or not found:
+        return []
+    return [EARLIER_KNOWLEDGE.format(passages="\n\n".join(found))]
 
 
 def searches_before_reply(chat_ctx: ChatContext, call: CallState) -> bool:

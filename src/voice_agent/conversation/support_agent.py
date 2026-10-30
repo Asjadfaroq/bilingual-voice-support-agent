@@ -121,6 +121,7 @@ class SupportAgent(Agent):
         language = self._language_of(caller_text) if messages else None
         searches = knowledge_first.searches_before_reply(chat_ctx, self._call)
         notes = [note] if (note := caller_identity_note(self._call)) else []
+        notes += knowledge_first.earlier_knowledge_notes(self._call, self._kb_search_mode)
         if language is not None:
             trace.get_current_span().set_attribute("voice_agent.reply_language", language)
             self._switch_voice_to(language)

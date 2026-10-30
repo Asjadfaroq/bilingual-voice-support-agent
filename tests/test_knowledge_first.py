@@ -7,7 +7,10 @@ from livekit.agents.llm import ChatContext, FunctionCallOutput
 from voice_agent.conversation import knowledge_first
 from voice_agent.conversation.call_state import CallState
 from voice_agent.conversation.confirmation import PendingWrite
-from voice_agent.conversation.instructions import NO_KNOWLEDGE_BASE_MATCH
+from voice_agent.conversation.instructions import (
+    KNOWLEDGE_BASE_UNAVAILABLE,
+    NO_KNOWLEDGE_BASE_MATCH,
+)
 from voice_agent.conversation.support_agent import SupportAgent
 from voice_agent.conversation.tools import search_knowledge_base
 from voice_agent.pipeline.language import LanguageSettings
@@ -86,3 +89,26 @@ def test_only_a_new_caller_turn_without_a_pending_read_back_is_searched() -> Non
     assert knowledge_first.searches_before_reply(caller_turn, CallState())
     assert not knowledge_first.searches_before_reply(after_tool, CallState())
     assert not knowledge_first.searches_before_reply(caller_turn, answering_read_back)
+
+
+def test_later_turns_still_see_what_earlier_answers_were_based_on() -> None:
+    office_hours = "[office-hours-and-holidays#core-hours] Core hours\nRiyadh: 08:00 to 18:00."
+    call = CallState(
+        knowledge_lookups=[
+            ("What are your office hours?", office_hours),
+            ("CSV export fails, please open a ticket.", NO_KNOWLEDGE_BASE_MATCH),
+            ("Do you have office hours on Friday?", office_hours),
+            ("yes", KNOWLEDGE_BASE_UNAVAILABLE),
+        ]
+    )
+
+    notes = knowledge_first.earlier_knowledge_notes(call, "every_turn")
+
+    assert notes == [knowledge_first.EARLIER_KNOWLEDGE.format(passages=office_hours)]
+    assert knowledge_first.earlier_knowledge_notes(call, "tool") == []
+
+
+def test_a_call_with_nothing_found_yet_adds_no_earlier_knowledge() -> None:
+    call = CallState(knowledge_lookups=[("Hello", NO_KNOWLEDGE_BASE_MATCH)])
+
+    assert knowledge_first.earlier_knowledge_notes(call, "every_turn") == []
