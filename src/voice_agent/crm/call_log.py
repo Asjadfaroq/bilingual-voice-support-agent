@@ -9,7 +9,7 @@ from livekit.agents.llm import ChatContext, ChatMessage
 
 from voice_agent.config import Settings
 from voice_agent.crm.hubspot_client import HubSpotClient
-from voice_agent.pipeline.language import CallerLanguage
+from voice_agent.pipeline.language import LANGUAGE_NAMES, CallerLanguage
 from voice_agent.privacy.pii import mask_pii
 
 logger = logging.getLogger(__name__)
@@ -17,7 +17,6 @@ logger = logging.getLogger(__name__)
 CallSummariser = Callable[[str], Awaitable[str]]
 
 SPEAKER_LABELS = {"user": "Caller", "assistant": "Agent"}
-LANGUAGE_NAMES: dict[CallerLanguage, str] = {"en": "English", "ar": "Arabic"}
 SUMMARY_UNAVAILABLE = "Summary unavailable; see the transcript."
 SUMMARY_PROMPT = (
     "Summarise this support call for the customer's CRM record in at most two short English "

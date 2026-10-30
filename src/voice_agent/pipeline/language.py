@@ -8,6 +8,8 @@ from voice_agent.privacy.pii import EMAIL_PATTERN, SPELLED_VALUE_PATTERN
 
 CallerLanguage = Literal["en", "ar"]
 SUPPORTED_LANGUAGES: dict[str, CallerLanguage] = {"en": "en", "ar": "ar"}
+LANGUAGE_NAMES: dict[CallerLanguage, str] = {"en": "English", "ar": "Arabic"}
+ARABIC_INDIC_DIGITS = str.maketrans({chr(0x0660 + digit): str(digit) for digit in range(10)})
 
 
 @dataclass(frozen=True)
@@ -84,13 +86,6 @@ def detect_caller_language(
     return language_from_script(prose, dominance_threshold) or language_from_stt(stt_language)
 
 
-def choose_reply_voice(
-    language: CallerLanguage, default_voice_id: str, voice_id_by_language: dict[str, str]
-) -> ReplyVoice:
-    return ReplyVoice(
-        language=language, voice_id=voice_id_by_language.get(language, default_voice_id)
-    )
-
-
 def reply_voice_for(language: CallerLanguage, settings: LanguageSettings) -> ReplyVoice:
-    return choose_reply_voice(language, settings.default_voice_id, settings.voice_id_by_language)
+    voice_id = settings.voice_id_by_language.get(language, settings.default_voice_id)
+    return ReplyVoice(language=language, voice_id=voice_id)

@@ -1,10 +1,11 @@
 import pytest
 
 from voice_agent.pipeline.language import (
+    LanguageSettings,
     ReplyVoice,
-    choose_reply_voice,
     detect_caller_language,
     language_from_stt,
+    reply_voice_for,
 )
 
 DOMINANCE = 0.8
@@ -38,10 +39,10 @@ def test_stt_language_codes_are_normalised_to_supported_languages(
 
 
 def test_reply_voice_uses_the_language_override_or_falls_back_to_the_default() -> None:
-    overrides = {"ar": "arabic-voice"}
+    settings = LanguageSettings("default-voice", {"ar": "arabic-voice"}, 0.8, 6)
 
-    assert choose_reply_voice("ar", "default-voice", overrides) == ReplyVoice("ar", "arabic-voice")
-    assert choose_reply_voice("en", "default-voice", overrides) == ReplyVoice("en", "default-voice")
+    assert reply_voice_for("ar", settings) == ReplyVoice("ar", "arabic-voice")
+    assert reply_voice_for("en", settings) == ReplyVoice("en", "default-voice")
 
 
 def test_an_email_in_an_arabic_line_does_not_stop_it_being_arabic() -> None:

@@ -5,13 +5,14 @@ from typing import Any
 
 import httpx
 
+from voice_agent.pipeline.language import ARABIC_INDIC_DIGITS
+
 RETRYABLE_STATUS_CODES = frozenset({429, 500, 502, 503, 504})
 TICKET_TO_CONTACT = 16
 CALL_TO_CONTACT = 194
 CALL_TO_TICKET = 220
 CONTACT_PROPERTIES = ["firstname", "lastname", "email", "phone"]
 TICKET_PROPERTIES = ["subject", "hs_pipeline_stage", "hs_lastmodifieddate"]
-ARABIC_INDIC_DIGITS = str.maketrans({chr(0x0660 + digit): str(digit) for digit in range(10)})
 
 
 class HubSpotError(Exception):

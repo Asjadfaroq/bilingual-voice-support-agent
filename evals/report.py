@@ -3,13 +3,18 @@ from datetime import UTC, datetime
 from typing import Any
 
 from voice_agent.config import Settings
-
-TOKENS_PER_PRICE_UNIT = 1_000_000
+from voice_agent.metrics.tracing import model_cost
 
 
 def cost_usd(settings: Settings, model: str, input_tokens: int, output_tokens: int) -> float:
-    input_price, output_price = settings.model_prices_usd_per_million_tokens[model]
-    return (input_tokens * input_price + output_tokens * output_price) / TOKENS_PER_PRICE_UNIT
+    cost = model_cost(
+        settings.model_prices_usd_per_million_tokens, model, input_tokens, output_tokens
+    )
+    if cost is None:
+        raise ValueError(
+            f"No price is configured for {model} in model_prices_usd_per_million_tokens"
+        )
+    return cost["total"]
 
 
 def summarise(results: list[dict[str, Any]], settings: Settings) -> dict[str, Any]:

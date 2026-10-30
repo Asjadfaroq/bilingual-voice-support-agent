@@ -15,7 +15,7 @@ from voice_agent.conversation.confirmation import (
 )
 from voice_agent.crm.hubspot_client import HubSpotError, normalize_phone_number
 from voice_agent.knowledge import search
-from voice_agent.pipeline.language import CallerLanguage, phrase_in_language
+from voice_agent.pipeline.language import LANGUAGE_NAMES, CallerLanguage, phrase_in_language
 
 logger = logging.getLogger(__name__)
 
@@ -67,7 +67,7 @@ def say_read_back(
     resources = context.userdata
     language = caller_language(resources.call)
     if not phrase_in_language(spoken_phrase, language, resources.reply_language_min_letters):
-        return say.PHRASE_IN_OTHER_LANGUAGE.format(language=say.LANGUAGE_NAMES[language])
+        return say.PHRASE_IN_OTHER_LANGUAGE.format(language=LANGUAGE_NAMES[language])
     history = context.session.history
     resources.call.pending_write = propose_write(kind, read_back, perform, history)
     context.session.say(read_back)

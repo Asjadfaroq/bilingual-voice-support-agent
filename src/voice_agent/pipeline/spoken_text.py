@@ -3,9 +3,8 @@ from collections.abc import Callable
 
 from num2words import num2words
 
-from voice_agent.pipeline.language import CallerLanguage
+from voice_agent.pipeline.language import ARABIC_INDIC_DIGITS, CallerLanguage
 
-ARABIC_INDIC_DIGITS = str.maketrans({chr(0x0660 + digit): str(digit) for digit in range(10)})
 # Four or more digits without a unit are identifiers (ticket and invoice numbers): said digit
 # by digit, which is how callers repeat them back.
 IDENTIFIER_MIN_DIGITS = 4

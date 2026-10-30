@@ -54,11 +54,6 @@ CATEGORY_WORDS: dict[CallerLanguage, dict[str, str]] = {
         "question": "استفسار",
     },
 }
-READ_BACK_SPOKEN = (
-    "The read-back has been said to the caller. Say nothing more; wait for their answer, then "
-    "call record_caller_answer."
-)
-
 NO_KNOWLEDGE_BASE_MATCH = (
     "No knowledge base passage answers this question. Tell the caller it is not in our "
     "knowledge base and offer to open a ticket. Do not guess, and do not suggest any team, "
@@ -84,7 +79,6 @@ PHRASE_IN_OTHER_LANGUAGE = (
     "caller's language. Call the tool again with it in {language}, keeping invoice numbers, "
     "product names and codes as they are."
 )
-LANGUAGE_NAMES: dict[CallerLanguage, str] = {"en": "English", "ar": "Arabic"}
 TICKET_CREATED = (
     "The ticket is saved. Tell the caller its number ends in {ending} and ask if there is "
     "anything else; say nothing about its priority or how soon it will be handled."
