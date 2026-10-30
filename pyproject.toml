@@ -4,7 +4,7 @@ version = "0.1.0"
 description = "Real-time Arabic/English voice support agent on LiveKit, ElevenLabs and Claude"
 readme = "README.md"
 authors = [
-    { name = "Aajadfaroq", email = "asjadfarooq22@gmail.com" }
+    { name = "Asjiad Farooq", email = "asjadfarooq22@gmail.com" }
 ]
 requires-python = ">=3.12"
 dependencies = [

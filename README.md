@@ -219,9 +219,9 @@ On every push and pull request, GitHub Actions runs ruff and the whole test suit
 
 ---
 
-<p align="center">Built by Asjad Farooq</p>
+<p align="center">Built by Asjiad Farooq</p>
 
 <p align="center">
 <a href="https://github.com/Asjadfaroq"><img alt="GitHub" src="https://img.shields.io/badge/GitHub-Asjadfaroq-181717?logo=github&logoColor=white"></a>
-<a href="https://www.linkedin.com/in/asjadfarooqconnect"><img alt="LinkedIn" src="https://img.shields.io/badge/LinkedIn-Asjad_Farooq-0A66C2?logo=linkedin&logoColor=white"></a>
+<a href="https://www.linkedin.com/in/asjadfarooqconnect"><img alt="LinkedIn" src="https://img.shields.io/badge/LinkedIn-Asjiad_Farooq-0A66C2?logo=linkedin&logoColor=white"></a>
 </p>
