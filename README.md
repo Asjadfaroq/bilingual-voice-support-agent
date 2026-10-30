@@ -189,6 +189,8 @@ uv run python -m livekit.agents start src/voice_agent/worker.py --dev
 
 Open the [LiveKit Agents Playground](https://agents-playground.livekit.io), connect to your LiveKit project and start talking. The worker joins every new room in the project. For tracing, fill in the `LANGFUSE_` values in `.env` and run `docker compose --profile langfuse up -d`; Langfuse is then at http://localhost:3100.
 
+To watch a scripted call without speaking, run `uv run python evals/demo_call.py en` (or `ar`). It starts its own worker, prints a server URL and a listener token, and waits. In the Agents Playground choose Manual, paste both, connect, then press Enter in the terminal: a caller plays recorded lines (macOS `say`), waits for each reply, opens a contact and a P2 ticket after a yes, and prints the HubSpot links once the call is logged.
+
 ```bash
 uv run pytest                                          # unit tests, no network or keys
 uv run python evals/run_conversation_evals.py          # 32 conversations, about $0.20

@@ -1,0 +1,104 @@
+{
+  "en": {
+    "voice": "Samantha",
+    "email": "omar.siddiqui@example.com",
+    "lines": [
+      {
+        "clip": "en-office-hours"
+      },
+      {
+        "clip": "demo-en-csv-export",
+        "parts": [
+          {
+            "text": "Thanks. One more thing. Since this morning, exporting our invoices to CSV fails with an error. PDF export still works, but please open a ticket so someone can look at it."
+          }
+        ]
+      },
+      {
+        "clip": "demo-en-details",
+        "parts": [
+          {
+            "text": "My name is Omar Siddiqui, and my email is omar dot siddiqui at example dot com."
+          }
+        ]
+      },
+      {
+        "clip": "demo-en-yes-contact",
+        "parts": [
+          {
+            "text": "Yes, that's right."
+          }
+        ]
+      },
+      {
+        "clip": "demo-en-yes-ticket",
+        "parts": [
+          {
+            "text": "Yes, please open it."
+          }
+        ]
+      },
+      {
+        "clip": "demo-en-goodbye",
+        "parts": [
+          {
+            "text": "No, that's all. Thank you, goodbye."
+          }
+        ]
+      }
+    ]
+  },
+  "ar": {
+    "voice": "Majed",
+    "email": "sarah.alharbi@example.com",
+    "lines": [
+      {
+        "clip": "ar-riyadh-hours"
+      },
+      {
+        "clip": "demo-ar-csv-export",
+        "parts": [
+          {
+            "text": "شكرًا. عندي مشكلة ثانية: من الصباح، تصدير الفواتير إلى ملف CSV يعطي خطأ. التصدير إلى ملف بي دي إف يعمل، لكن أرجو أن تفتح لي تذكرة."
+          }
+        ]
+      },
+      {
+        "clip": "demo-ar-details",
+        "parts": [
+          {
+            "text": "اسمي سارة الحربي، وبريدي الإلكتروني"
+          },
+          {
+            "text": "sarah dot alharbi at example dot com.",
+            "voice": "Samantha"
+          }
+        ]
+      },
+      {
+        "clip": "demo-ar-yes-contact",
+        "parts": [
+          {
+            "text": "نعم، صحيح."
+          }
+        ]
+      },
+      {
+        "clip": "demo-ar-yes-ticket",
+        "parts": [
+          {
+            "text": "نعم، افتحها."
+          }
+        ]
+      },
+      {
+        "clip": "demo-ar-goodbye",
+        "parts": [
+          {
+            "text": "لا، هذا كل شيء. شكرًا، مع السلامة."
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -61,13 +61,18 @@ async def wait_until(condition: Callable[[], bool], timeout_seconds: float) -> b
 
 
 async def start_worker(
-    overrides: dict[str, str], agent_name: str, log_path: Path, log_level: str
+    overrides: dict[str, str],
+    agent_name: str,
+    log_path: Path,
+    log_level: str,
+    log_calls: bool = False,
 ) -> asyncio.subprocess.Process:
     environment = {**os.environ, **overrides}
     environment |= {
         "AGENT_NAME": agent_name,
         "TURN_LATENCY_TOPIC": LATENCY_TOPIC,
-        "CALL_LOGGING_ENABLED": "false",
+        # Bench rooms are not calls anyone should find in HubSpot; demo calls are.
+        "CALL_LOGGING_ENABLED": str(log_calls).lower(),
     }
     command = [sys.executable, "-m", "livekit.agents", "start", "src/voice_agent/worker.py"]
     with log_path.open("w") as log_file:
@@ -103,16 +108,17 @@ async def livekit_round_trip_ms(settings: Settings, samples: int = 5) -> float:
     return round(statistics.median(times), 1)
 
 
-def caller_token(settings: Settings, room_name: str, identity: str, agent_name: str) -> str:
-    # The room asks for the bench's own worker by name, so no other running worker joins it.
-    dispatch = api.RoomConfiguration(agents=[api.RoomAgentDispatch(agent_name=agent_name)])
-    return (
+def caller_token(settings: Settings, room_name: str, identity: str, agent_name: str | None) -> str:
+    token = (
         api.AccessToken(
             settings.livekit_api_key.get_secret_value(),
             settings.livekit_api_secret.get_secret_value(),
         )
         .with_identity(identity)
         .with_grants(api.VideoGrants(room_join=True, room=room_name))
-        .with_room_config(dispatch)
-        .to_jwt()
     )
+    if agent_name is not None:
+        # The room asks for the bench's own worker by name, so no other running worker joins it.
+        dispatch = api.RoomAgentDispatch(agent_name=agent_name)
+        token = token.with_room_config(api.RoomConfiguration(agents=[dispatch]))
+    return token.to_jwt()
