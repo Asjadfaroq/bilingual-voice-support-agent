@@ -9,3 +9,4 @@ Thumbs.db
 *Zone.Identifier
 .pytest_cache/
 .ruff_cache/
+docs/stt-and-gap-notes.md
