@@ -9,6 +9,7 @@ from voice_agent.config import Settings, get_settings
 from voice_agent.conversation.call_state import (
     CallResources,
     CallState,
+    call_resources_for,
     caller_phone_from_metadata,
 )
 from voice_agent.conversation.support_agent import SupportAgent
@@ -26,7 +27,7 @@ from voice_agent.pipeline.components import (
     build_turn_handling,
     build_vad,
 )
-from voice_agent.pipeline.language import LanguageSettings
+from voice_agent.pipeline.language import language_settings_for
 from voice_agent.privacy.pii import PiiMaskingFilter
 
 logger = logging.getLogger(__name__)
@@ -88,12 +89,7 @@ async def run_support_call(ctx: JobContext) -> None:
 
     reply_tts = build_tts(settings)
     agent = SupportAgent(
-        LanguageSettings(
-            default_voice_id=settings.tts_voice_id,
-            voice_id_by_language=settings.tts_voice_id_by_language,
-            script_dominance_threshold=settings.script_dominance_threshold,
-            reply_language_min_letters=settings.reply_language_min_letters,
-        ),
+        language_settings_for(settings),
         reply_tts=reply_tts,
         call=call_state,
         kb_search_mode=settings.kb_search_mode,
@@ -115,19 +111,13 @@ async def run_support_call(ctx: JobContext) -> None:
         tts=reply_tts,
         vad=ctx.proc.userdata["vad"],
         turn_handling=build_turn_handling(settings),
-        userdata=CallResources(
-            knowledge_pool=knowledge_pool,
-            embed=ctx.proc.userdata["embed"],
-            reranker=ctx.proc.userdata["reranker"],
-            kb_top_k=settings.kb_top_k,
-            kb_min_similarity=settings.kb_min_similarity,
-            crm=crm,
-            ticket_pipeline_id=settings.hubspot_ticket_pipeline_id,
-            new_ticket_stage_id=settings.hubspot_new_ticket_stage_id,
-            ticket_status_limit=settings.ticket_status_limit,
-            default_country_calling_code=settings.default_country_calling_code,
-            reply_language_min_letters=settings.reply_language_min_letters,
-            call=call_state,
+        userdata=call_resources_for(
+            settings,
+            knowledge_pool,
+            ctx.proc.userdata["embed"],
+            ctx.proc.userdata["reranker"],
+            crm,
+            call_state,
         ),
     )
     log_latency_for_each_turn(session, settings.latency_budget_seconds, settings.turn_latency_topic)

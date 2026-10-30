@@ -4,6 +4,7 @@ from typing import Literal
 
 from livekit.agents.language import LanguageCode
 
+from voice_agent.config import Settings
 from voice_agent.privacy.pii import EMAIL_PATTERN, SPELLED_VALUE_PATTERN
 
 CallerLanguage = Literal["en", "ar"]
@@ -18,6 +19,15 @@ class LanguageSettings:
     voice_id_by_language: dict[str, str]
     script_dominance_threshold: float
     reply_language_min_letters: int
+
+
+def language_settings_for(settings: Settings) -> LanguageSettings:
+    return LanguageSettings(
+        default_voice_id=settings.tts_voice_id,
+        voice_id_by_language=settings.tts_voice_id_by_language,
+        script_dominance_threshold=settings.script_dominance_threshold,
+        reply_language_min_letters=settings.reply_language_min_letters,
+    )
 
 
 # Product names, emails, spelled values and numbers look the same in both languages, so they

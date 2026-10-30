@@ -10,14 +10,13 @@ from psycopg_pool import AsyncConnectionPool
 from simulated_caller import Scenario, SimulatedCaller
 
 from voice_agent.config import Settings
-from voice_agent.conversation.call_state import CallResources, CallState
+from voice_agent.conversation.call_state import CallResources, CallState, call_resources_for
 from voice_agent.conversation.instructions import GREETING
 from voice_agent.conversation.support_agent import SupportAgent
 from voice_agent.conversation.tools import identify_caller_by_line
-from voice_agent.crm.hubspot_client import HubSpotClient
 from voice_agent.knowledge.ingest import TextEmbedder
 from voice_agent.pipeline.components import build_llm
-from voice_agent.pipeline.language import LanguageSettings
+from voice_agent.pipeline.language import language_settings_for
 
 
 @dataclass(frozen=True)
@@ -66,28 +65,6 @@ def seed_fake_hubspot(setup: dict[str, Any]) -> FakeHubSpot:
     return hubspot
 
 
-def build_call_resources(
-    settings: Settings,
-    knowledge_pool: AsyncConnectionPool,
-    embed: TextEmbedder,
-    crm: HubSpotClient,
-    call: CallState,
-) -> CallResources:
-    return CallResources(
-        knowledge_pool, embed, None, settings.kb_top_k, settings.kb_min_similarity, crm,
-        settings.hubspot_ticket_pipeline_id, settings.hubspot_new_ticket_stage_id,
-        settings.ticket_status_limit, settings.default_country_calling_code,
-        settings.reply_language_min_letters, call,
-    )  # fmt: skip
-
-
-def text_mode_language_settings(settings: Settings) -> LanguageSettings:
-    return LanguageSettings(
-        settings.tts_voice_id, {}, settings.script_dominance_threshold,
-        settings.reply_language_min_letters,
-    )  # fmt: skip
-
-
 async def run_simulated_call(
     scenario: Scenario,
     settings: Settings,
@@ -97,9 +74,9 @@ async def run_simulated_call(
     hubspot = seed_fake_hubspot(scenario.setup)
     crm = hubspot.client()
     call = CallState(caller_phone=scenario.setup.get("caller_phone"))
-    resources = build_call_resources(settings, knowledge_pool, embed, crm, call)
+    resources = call_resources_for(settings, knowledge_pool, embed, None, crm, call)
     agent = SupportAgent(
-        text_mode_language_settings(settings), None, call, kb_search_mode=settings.kb_search_mode
+        language_settings_for(settings), None, call, kb_search_mode=settings.kb_search_mode
     )
     await identify_caller_by_line(resources)
     outcome = CallOutcome(scenario)

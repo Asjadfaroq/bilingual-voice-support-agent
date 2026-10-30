@@ -11,14 +11,14 @@ from fake_hubspot import FakeHubSpot
 from livekit.agents import Agent, AgentSession, MetricsCollectedEvent, ModelSettings
 from livekit.agents.metrics import LLMMetrics
 from psycopg_pool import AsyncConnectionPool
-from simulated_call import build_call_resources, text_mode_language_settings
 
 from voice_agent.config import Settings, get_settings
-from voice_agent.conversation.call_state import CallState
+from voice_agent.conversation.call_state import CallState, call_resources_for
 from voice_agent.conversation.knowledge_first import KnowledgeSearchMode
 from voice_agent.conversation.support_agent import SupportAgent
 from voice_agent.knowledge.ingest import TextEmbedder, build_sentence_embedder
 from voice_agent.pipeline.components import build_llm
+from voice_agent.pipeline.language import language_settings_for
 
 SSML_BREAK = re.compile(r"\s*<break[^>]*/>\s*")
 TEXT_STAGES = ("first_text", "answer_text", "llm_time_to_first_token", "reply_filter_hold")
@@ -54,9 +54,9 @@ async def bench_text_turns(
     language: str,
 ) -> list[dict[str, float | None]]:
     call, holds, first_tokens = CallState(), [], []
-    resources = build_call_resources(settings, pool, embed, FakeHubSpot().client(), call)
+    resources = call_resources_for(settings, pool, embed, None, FakeHubSpot().client(), call)
     agent = TimedSupportAgent(
-        text_mode_language_settings(settings), None, call,
+        language_settings_for(settings), None, call,
         kb_search_mode=mode, report_reply_filter_hold=holds.append,
     )  # fmt: skip
     session = AgentSession(llm=build_llm(settings), userdata=resources)

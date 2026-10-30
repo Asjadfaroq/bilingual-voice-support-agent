@@ -6,6 +6,7 @@ from typing import TYPE_CHECKING
 
 from psycopg_pool import AsyncConnectionPool
 
+from voice_agent.config import Settings
 from voice_agent.conversation.instructions import (
     CALLER_IDENTIFIED_NOTE,
     CALLER_LINE_NOT_ON_FILE_NOTE,
@@ -49,6 +50,30 @@ class CallResources:
     default_country_calling_code: str
     reply_language_min_letters: int
     call: CallState = field(default_factory=CallState)
+
+
+def call_resources_for(
+    settings: Settings,
+    knowledge_pool: AsyncConnectionPool,
+    embed: TextEmbedder,
+    reranker: Reranker | None,
+    crm: HubSpotClient,
+    call: CallState,
+) -> CallResources:
+    return CallResources(
+        knowledge_pool=knowledge_pool,
+        embed=embed,
+        reranker=reranker,
+        kb_top_k=settings.kb_top_k,
+        kb_min_similarity=settings.kb_min_similarity,
+        crm=crm,
+        ticket_pipeline_id=settings.hubspot_ticket_pipeline_id,
+        new_ticket_stage_id=settings.hubspot_new_ticket_stage_id,
+        ticket_status_limit=settings.ticket_status_limit,
+        default_country_calling_code=settings.default_country_calling_code,
+        reply_language_min_letters=settings.reply_language_min_letters,
+        call=call,
+    )
 
 
 def caller_identity_note(call: CallState) -> str | None:
