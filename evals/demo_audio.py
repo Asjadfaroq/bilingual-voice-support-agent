@@ -31,7 +31,6 @@ class CallerLine:
 @dataclass(frozen=True)
 class DemoScript:
     voice: str
-    email: str
     lines: tuple[CallerLine, ...]
 
 
@@ -42,7 +41,7 @@ def load_script(language: str) -> DemoScript:
         CallerLine(line["clip"], tuple(SpokenPart(**part) for part in line.get("parts", [])))
         for line in script["lines"]
     )
-    return DemoScript(script["voice"], script["email"], lines)
+    return DemoScript(script["voice"], lines)
 
 
 def read_pcm(path: Path) -> np.ndarray:

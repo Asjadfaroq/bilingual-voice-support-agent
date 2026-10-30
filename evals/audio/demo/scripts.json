@@ -1,7 +1,6 @@
 {
   "en": {
     "voice": "Samantha",
-    "email": "omar.siddiqui@example.com",
     "lines": [
       {
         "clip": "en-office-hours"
@@ -50,7 +49,6 @@
   },
   "ar": {
     "voice": "Majed",
-    "email": "sarah.alharbi@example.com",
     "lines": [
       {
         "clip": "ar-riyadh-hours"

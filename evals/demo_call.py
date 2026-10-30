@@ -65,7 +65,7 @@ async def run_demo(language: str, wait_for_listener: bool) -> None:
             print(f"  LiveKit URL: {settings.livekit_url}")
             print(f"  Token:       {listener_token(settings, room_name)}\n")
             await asyncio.to_thread(input, "Press Enter once you have joined the room… ")
-        since = datetime.now(UTC).strftime("%Y-%m-%dT%H:%M:%S")
+        since_epoch_ms = int(datetime.now(UTC).timestamp() * 1000)
         room, caller_identity = rtc.Room(), f"caller-{language}"
         transcript = LiveTranscript(room, caller_identity)
         caller = BenchCaller(room, settings.stt_sample_rate_hz, LATENCY_TOPIC)
@@ -95,7 +95,7 @@ async def run_demo(language: str, wait_for_listener: bool) -> None:
         deadline = asyncio.get_running_loop().time() + CALL_LOG_TIMEOUT_SECONDS
         while links is None and asyncio.get_running_loop().time() < deadline:
             await asyncio.sleep(POLL_SECONDS)
-            links = await logged_call_links(settings, script.email, since)
+            links = await logged_call_links(settings, since_epoch_ms)
         print("\n".join(links) if links else f"No call log yet; see {log_path}")
     finally:
         worker.terminate()
