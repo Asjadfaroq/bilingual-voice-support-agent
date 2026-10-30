@@ -1,12 +1,12 @@
 {
   "machine": {
     "model": "MacBookPro16,1",
+    "memory_gb": "32",
     "os": "Darwin 26.5.2",
     "machine": "x86_64",
     "cpu": "Intel(R) Core(TM) i9-9980HK CPU @ 2.40GHz",
     "python": "3.12.15",
-    "memory_gb": 32,
-    "measured_on": "2026-10-30"
+    "measured_on": "2026-10-29 to 2026-10-30"
   },
   "text_mode": {
     "tool": {
@@ -2840,6 +2840,1794 @@
           }
         }
       ]
+    },
+    "every-turn-silence-0.30-liveness-replay": {
+      "settings": {},
+      "elevenlabs_characters_used": 1997,
+      "languages": {
+        "en": {
+          "turns": 20,
+          "answered": 19,
+          "cut_offs": 0,
+          "stages_seconds": {
+            "end_to_end": {
+              "p50": 2.334,
+              "p90": 2.71,
+              "n": 18
+            },
+            "end_of_turn_delay": {
+              "p50": 0.805,
+              "p90": 1.09,
+              "n": 18
+            },
+            "transcription_delay": {
+              "p50": 0.801,
+              "p90": 1.066,
+              "n": 18
+            },
+            "llm_time_to_first_token": {
+              "p50": 1.013,
+              "p90": 1.217,
+              "n": 18
+            },
+            "reply_filter_hold": {
+              "p50": 0.158,
+              "p90": 0.238,
+              "n": 20
+            },
+            "tts_time_to_first_byte": {
+              "p50": 0.219,
+              "p90": 0.321,
+              "n": 18
+            },
+            "caller_heard_first_audio": {
+              "p50": 3.364,
+              "p90": 3.918,
+              "n": 19
+            },
+            "caller_heard_answer": {
+              "p50": 3.364,
+              "p90": 3.918,
+              "n": 19
+            },
+            "caller_end_seen_late": {
+              "p50": 0.497,
+              "p90": 0.679,
+              "n": 18
+            },
+            "agent_audio_reaches_caller": {
+              "p50": 0.488,
+              "p90": 0.578,
+              "n": 18
+            },
+            "agent_audio_quiet_start": {
+              "p50": 0.0,
+              "p90": 0.07,
+              "n": 19
+            }
+          }
+        },
+        "ar": {
+          "turns": 20,
+          "answered": 17,
+          "cut_offs": 1,
+          "stages_seconds": {
+            "end_to_end": {
+              "p50": 2.695,
+              "p90": 3.65,
+              "n": 17
+            },
+            "end_of_turn_delay": {
+              "p50": 0.81,
+              "p90": 1.539,
+              "n": 17
+            },
+            "transcription_delay": {
+              "p50": 0.806,
+              "p90": 1.534,
+              "n": 17
+            },
+            "llm_time_to_first_token": {
+              "p50": 0.979,
+              "p90": 1.411,
+              "n": 17
+            },
+            "reply_filter_hold": {
+              "p50": 0.211,
+              "p90": 0.482,
+              "n": 18
+            },
+            "tts_time_to_first_byte": {
+              "p50": 0.225,
+              "p90": 0.437,
+              "n": 17
+            },
+            "caller_heard_first_audio": {
+              "p50": 3.898,
+              "p90": 4.99,
+              "n": 17
+            },
+            "caller_heard_answer": {
+              "p50": 3.898,
+              "p90": 4.99,
+              "n": 17
+            },
+            "caller_end_seen_late": {
+              "p50": 0.605,
+              "p90": 0.749,
+              "n": 17
+            },
+            "agent_audio_reaches_caller": {
+              "p50": 0.565,
+              "p90": 0.704,
+              "n": 17
+            },
+            "agent_audio_quiet_start": {
+              "p50": 0.011,
+              "p90": 0.051,
+              "n": 17
+            }
+          }
+        }
+      },
+      "turns": [
+        {
+          "utterance_id": "en-growth-price",
+          "language": "en",
+          "cut_off": false,
+          "answered": true,
+          "stages": {
+            "end_to_end": 5.273317813873291,
+            "end_of_turn_delay": 1.298017978668213,
+            "transcription_delay": 1.0639009475708008,
+            "llm_time_to_first_token": 2.932320747000176,
+            "reply_filter_hold": 0.03124236599978758,
+            "tts_time_to_first_byte": 0.21627848399975846,
+            "caller_heard_first_audio": 6.147761821746826,
+            "caller_heard_answer": 6.147761821746826,
+            "caller_end_seen_late": 0.4858059883117676,
+            "agent_audio_reaches_caller": 0.3886380195617676,
+            "agent_audio_quiet_start": 0.0
+          }
+        },
+        {
+          "utterance_id": "en-apple-pay",
+          "language": "en",
+          "cut_off": false,
+          "answered": true,
+          "stages": {
+            "end_to_end": 2.212092876434326,
+            "end_of_turn_delay": 0.8402268886566162,
+            "transcription_delay": 0.8358619213104248,
+            "llm_time_to_first_token": 1.011052951000238,
+            "reply_filter_hold": 0.1087054309996347,
+            "tts_time_to_first_byte": 0.2403611249997084,
+            "caller_heard_first_audio": 3.0598621368408203,
+            "caller_heard_answer": 3.0598621368408203,
+            "caller_end_seen_late": 0.4687943458557129,
+            "agent_audio_reaches_caller": 0.37897491455078125,
+            "agent_audio_quiet_start": 0.0
+          }
+        },
+        {
+          "utterance_id": "en-trial-with-pause",
+          "language": "en",
+          "cut_off": false,
+          "answered": false,
+          "stages": {
+            "end_to_end": null,
+            "end_of_turn_delay": null,
+            "transcription_delay": null,
+            "llm_time_to_first_token": null,
+            "reply_filter_hold": 0.09130950500002655,
+            "tts_time_to_first_byte": null,
+            "caller_heard_first_audio": null,
+            "caller_heard_answer": null,
+            "caller_end_seen_late": null,
+            "agent_audio_reaches_caller": null,
+            "agent_audio_quiet_start": null
+          }
+        },
+        {
+          "utterance_id": "en-starter-price",
+          "language": "en",
+          "cut_off": false,
+          "answered": true,
+          "stages": {
+            "end_to_end": 1.9286837577819824,
+            "end_of_turn_delay": 0.8117806911468506,
+            "transcription_delay": 0.8098058700561523,
+            "llm_time_to_first_token": 0.8488677690002078,
+            "reply_filter_hold": 0.036366619000091305,
+            "tts_time_to_first_byte": 0.19969032099970718,
+            "caller_heard_first_audio": 2.5578951835632324,
+            "caller_heard_answer": 2.5578951835632324,
+            "caller_end_seen_late": 0.3264944553375244,
+            "agent_audio_reaches_caller": 0.3027169704437256,
+            "agent_audio_quiet_start": 0.0
+          }
+        },
+        {
+          "utterance_id": "en-plan-differences",
+          "language": "en",
+          "cut_off": false,
+          "answered": true,
+          "stages": {
+            "end_to_end": 2.0359950065612793,
+            "end_of_turn_delay": 0.763031005859375,
+            "transcription_delay": 0.7584028244018555,
+            "llm_time_to_first_token": 0.8603362750000088,
+            "reply_filter_hold": 0.18891690899999958,
+            "tts_time_to_first_byte": 0.218073079000078,
+            "caller_heard_first_audio": 2.7176947593688965,
+            "caller_heard_answer": 2.7176947593688965,
+            "caller_end_seen_late": 0.3661377429962158,
+            "agent_audio_reaches_caller": 0.31556200981140137,
+            "agent_audio_quiet_start": 0.010003089904785156
+          }
+        },
+        {
+          "utterance_id": "en-change-plan-pause",
+          "language": "en",
+          "cut_off": false,
+          "answered": true,
+          "stages": {
+            "end_to_end": null,
+            "end_of_turn_delay": null,
+            "transcription_delay": null,
+            "llm_time_to_first_token": null,
+            "reply_filter_hold": 0.15593471600004705,
+            "tts_time_to_first_byte": null,
+            "caller_heard_first_audio": 2.9122936725616455,
+            "caller_heard_answer": 2.9122936725616455,
+            "caller_end_seen_late": null,
+            "agent_audio_reaches_caller": null,
+            "agent_audio_quiet_start": 0.07020902633666992
+          }
+        },
+        {
+          "utterance_id": "en-enterprise",
+          "language": "en",
+          "cut_off": false,
+          "answered": true,
+          "stages": {
+            "end_to_end": 2.6704487800598145,
+            "end_of_turn_delay": 1.1221487522125244,
+            "transcription_delay": 1.1171298027038574,
+            "llm_time_to_first_token": 0.9436746999999741,
+            "reply_filter_hold": 0.14587002200005372,
+            "tts_time_to_first_byte": 0.21518634800031577,
+            "caller_heard_first_audio": 4.000829458236694,
+            "caller_heard_answer": 4.000829458236694,
+            "caller_end_seen_late": 0.8783116340637207,
+            "agent_audio_reaches_caller": 0.4520690441131592,
+            "agent_audio_quiet_start": 0.010334014892578125
+          }
+        },
+        {
+          "utterance_id": "en-mada",
+          "language": "en",
+          "cut_off": false,
+          "answered": true,
+          "stages": {
+            "end_to_end": 2.3410050868988037,
+            "end_of_turn_delay": 0.8207800388336182,
+            "transcription_delay": 0.8159239292144775,
+            "llm_time_to_first_token": 1.1348296939995635,
+            "reply_filter_hold": 0.15986116100020809,
+            "tts_time_to_first_byte": 0.21903907399973832,
+            "caller_heard_first_audio": 3.458386182785034,
+            "caller_heard_answer": 3.458386182785034,
+            "caller_end_seen_late": 0.5677812099456787,
+            "agent_audio_reaches_caller": 0.5495998859405518,
+            "agent_audio_quiet_start": 0.0
+          }
+        },
+        {
+          "utterance_id": "en-bank-transfer",
+          "language": "en",
+          "cut_off": false,
+          "answered": true,
+          "stages": {
+            "end_to_end": 2.7551658153533936,
+            "end_of_turn_delay": 0.9794039726257324,
+            "transcription_delay": 0.9756588935852051,
+            "llm_time_to_first_token": 1.1419416670000828,
+            "reply_filter_hold": 0.23645460099987758,
+            "tts_time_to_first_byte": 0.33518624700036526,
+            "caller_heard_first_audio": 3.8058969974517822,
+            "caller_heard_answer": 3.8058969974517822,
+            "caller_end_seen_late": 0.5544352531433105,
+            "agent_audio_reaches_caller": 0.4962959289550781,
+            "agent_audio_quiet_start": 0.06080889701843262
+          }
+        },
+        {
+          "utterance_id": "en-escalation-pause",
+          "language": "en",
+          "cut_off": false,
+          "answered": true,
+          "stages": {
+            "end_to_end": 2.6907169818878174,
+            "end_of_turn_delay": 1.0762577056884766,
+            "transcription_delay": 1.071781873703003,
+            "llm_time_to_first_token": 1.1368838580001466,
+            "reply_filter_hold": 0.17540830600000845,
+            "tts_time_to_first_byte": 0.2944051589997798,
+            "caller_heard_first_audio": 3.8163094520568848,
+            "caller_heard_answer": 3.8163094520568848,
+            "caller_end_seen_late": 0.6060426235198975,
+            "agent_audio_reaches_caller": 0.5195498466491699,
+            "agent_audio_quiet_start": 0.07992792129516602
+          }
+        },
+        {
+          "utterance_id": "en-zatca",
+          "language": "en",
+          "cut_off": false,
+          "answered": true,
+          "stages": {
+            "end_to_end": 2.438161849975586,
+            "end_of_turn_delay": 0.774587869644165,
+            "transcription_delay": 0.7705397605895996,
+            "llm_time_to_first_token": 1.2223202970003513,
+            "reply_filter_hold": 0.22268336299976,
+            "tts_time_to_first_byte": 0.2137082660001397,
+            "caller_heard_first_audio": 3.364093065261841,
+            "caller_heard_answer": 3.364093065261841,
+            "caller_end_seen_late": 0.4645512104034424,
+            "agent_audio_reaches_caller": 0.4613800048828125,
+            "agent_audio_quiet_start": 0.0
+          }
+        },
+        {
+          "utterance_id": "en-export",
+          "language": "en",
+          "cut_off": false,
+          "answered": true,
+          "stages": {
+            "end_to_end": 2.3685340881347656,
+            "end_of_turn_delay": 0.9311459064483643,
+            "transcription_delay": 0.9265108108520508,
+            "llm_time_to_first_token": 1.0157274500002131,
+            "reply_filter_hold": 2.6637999781087274e-05,
+            "tts_time_to_first_byte": 0.21182257899999968,
+            "caller_heard_first_audio": 3.295586585998535,
+            "caller_heard_answer": 3.295586585998535,
+            "caller_end_seen_late": 0.44644761085510254,
+            "agent_audio_reaches_caller": 0.480604887008667,
+            "agent_audio_quiet_start": 0.06972813606262207
+          }
+        },
+        {
+          "utterance_id": "en-export-format",
+          "language": "en",
+          "cut_off": false,
+          "answered": true,
+          "stages": {
+            "end_to_end": 2.184476852416992,
+            "end_of_turn_delay": 0.7095208168029785,
+            "transcription_delay": 0.7050368785858154,
+            "llm_time_to_first_token": 1.0841120770000998,
+            "reply_filter_hold": 0.1114923009999984,
+            "tts_time_to_first_byte": 0.22819255500007785,
+            "caller_heard_first_audio": 3.0284080505371094,
+            "caller_heard_answer": 3.0284080505371094,
+            "caller_end_seen_late": 0.3959920406341553,
+            "agent_audio_reaches_caller": 0.4479391574859619,
+            "agent_audio_quiet_start": 0.0
+          }
+        },
+        {
+          "utterance_id": "en-cancel-data-pause",
+          "language": "en",
+          "cut_off": false,
+          "answered": true,
+          "stages": {
+            "end_to_end": 2.0330257415771484,
+            "end_of_turn_delay": 0.6913228034973145,
+            "transcription_delay": 0.6891539096832275,
+            "llm_time_to_first_token": 0.8843013290002091,
+            "reply_filter_hold": 0.19761204099995666,
+            "tts_time_to_first_byte": 0.21729822899987994,
+            "caller_heard_first_audio": 2.85410213470459,
+            "caller_heard_answer": 2.85410213470459,
+            "caller_end_seen_late": 0.3739173412322998,
+            "agent_audio_reaches_caller": 0.4471590518951416,
+            "agent_audio_quiet_start": 0.0
+          }
+        },
+        {
+          "utterance_id": "en-trial-length",
+          "language": "en",
+          "cut_off": false,
+          "answered": true,
+          "stages": {
+            "end_to_end": 2.055454730987549,
+            "end_of_turn_delay": 0.79107666015625,
+            "transcription_delay": 0.7863359451293945,
+            "llm_time_to_first_token": 0.933494404999692,
+            "reply_filter_hold": 0.0007944470003167226,
+            "tts_time_to_first_byte": 0.3252883000000111,
+            "caller_heard_first_audio": 3.627911329269409,
+            "caller_heard_answer": 3.627911329269409,
+            "caller_end_seen_late": 0.7078554630279541,
+            "agent_audio_reaches_caller": 0.8646011352539062,
+            "agent_audio_quiet_start": 0.0
+          }
+        },
+        {
+          "utterance_id": "en-trial-card",
+          "language": "en",
+          "cut_off": false,
+          "answered": true,
+          "stages": {
+            "end_to_end": 2.6752350330352783,
+            "end_of_turn_delay": 0.9110479354858398,
+            "transcription_delay": 0.9062628746032715,
+            "llm_time_to_first_token": 1.139095080000061,
+            "reply_filter_hold": 0.2953346109998165,
+            "tts_time_to_first_byte": 0.31878098700008195,
+            "caller_heard_first_audio": 3.897197723388672,
+            "caller_heard_answer": 3.897197723388672,
+            "caller_end_seen_late": 0.667292594909668,
+            "agent_audio_reaches_caller": 0.5546700954437256,
+            "agent_audio_quiet_start": 0.0
+          }
+        },
+        {
+          "utterance_id": "en-p1-response",
+          "language": "en",
+          "cut_off": false,
+          "answered": true,
+          "stages": {
+            "end_to_end": 2.110408067703247,
+            "end_of_turn_delay": 0.7291722297668457,
+            "transcription_delay": 0.724818229675293,
+            "llm_time_to_first_token": 0.9005664040000738,
+            "reply_filter_hold": 0.24701865099996212,
+            "tts_time_to_first_byte": 0.22862653400034105,
+            "caller_heard_first_audio": 3.1649186611175537,
+            "caller_heard_answer": 3.1649186611175537,
+            "caller_end_seen_late": 0.47304368019104004,
+            "agent_audio_reaches_caller": 0.5814669132232666,
+            "agent_audio_quiet_start": 0.02969980239868164
+          }
+        },
+        {
+          "utterance_id": "en-p3-response",
+          "language": "en",
+          "cut_off": false,
+          "answered": true,
+          "stages": {
+            "end_to_end": 2.547333002090454,
+            "end_of_turn_delay": 0.7862551212310791,
+            "transcription_delay": 0.7819459438323975,
+            "llm_time_to_first_token": 1.21474569800057,
+            "reply_filter_hold": 0.16618615499965017,
+            "tts_time_to_first_byte": 0.31047199800013914,
+            "caller_heard_first_audio": 3.7160351276397705,
+            "caller_heard_answer": 3.7160351276397705,
+            "caller_end_seen_late": 0.6034719944000244,
+            "agent_audio_reaches_caller": 0.565230131149292,
+            "agent_audio_quiet_start": 0.019901275634765625
+          }
+        },
+        {
+          "utterance_id": "en-office-hours",
+          "language": "en",
+          "cut_off": false,
+          "answered": true,
+          "stages": {
+            "end_to_end": 1.9350368976593018,
+            "end_of_turn_delay": 0.6703877449035645,
+            "transcription_delay": 0.6652729511260986,
+            "llm_time_to_first_token": 0.8876697400000921,
+            "reply_filter_hold": 0.16620982599988565,
+            "tts_time_to_first_byte": 0.20665362899990214,
+            "caller_heard_first_audio": 3.1056902408599854,
+            "caller_heard_answer": 3.1056902408599854,
+            "caller_end_seen_late": 0.5934474468231201,
+            "agent_audio_reaches_caller": 0.5772058963775635,
+            "agent_audio_quiet_start": 0.0
+          }
+        },
+        {
+          "utterance_id": "en-ramadan-hours",
+          "language": "en",
+          "cut_off": false,
+          "answered": true,
+          "stages": {
+            "end_to_end": 2.3271799087524414,
+            "end_of_turn_delay": 0.7973108291625977,
+            "transcription_delay": 0.7925245761871338,
+            "llm_time_to_first_token": 1.00115514800018,
+            "reply_filter_hold": 0.15618697699983386,
+            "tts_time_to_first_byte": 0.20686908200013931,
+            "caller_heard_first_audio": 3.379373073577881,
+            "caller_heard_answer": 3.379373073577881,
+            "caller_end_seen_late": 0.5074453353881836,
+            "agent_audio_reaches_caller": 0.5447478294372559,
+            "agent_audio_quiet_start": 0.010281085968017578
+          }
+        },
+        {
+          "utterance_id": "ar-growth-price",
+          "language": "ar",
+          "cut_off": false,
+          "answered": true,
+          "stages": {
+            "end_to_end": 2.670494794845581,
+            "end_of_turn_delay": 0.7747159004211426,
+            "transcription_delay": 0.7695159912109375,
+            "llm_time_to_first_token": 1.1280966869999247,
+            "reply_filter_hold": 0.17498763399999007,
+            "tts_time_to_first_byte": 0.22608166000009078,
+            "caller_heard_first_audio": 3.224299430847168,
+            "caller_heard_answer": 3.224299430847168,
+            "caller_end_seen_late": 0.2904386520385742,
+            "agent_audio_reaches_caller": 0.2633659839630127,
+            "agent_audio_quiet_start": 0.00969696044921875
+          }
+        },
+        {
+          "utterance_id": "ar-mada",
+          "language": "ar",
+          "cut_off": false,
+          "answered": false,
+          "stages": {
+            "end_to_end": null,
+            "end_of_turn_delay": null,
+            "transcription_delay": null,
+            "llm_time_to_first_token": null,
+            "reply_filter_hold": null,
+            "tts_time_to_first_byte": null,
+            "caller_heard_first_audio": null,
+            "caller_heard_answer": null,
+            "caller_end_seen_late": null,
+            "agent_audio_reaches_caller": null,
+            "agent_audio_quiet_start": null
+          }
+        },
+        {
+          "utterance_id": "ar-riyadh-hours",
+          "language": "ar",
+          "cut_off": false,
+          "answered": false,
+          "stages": {
+            "end_to_end": null,
+            "end_of_turn_delay": null,
+            "transcription_delay": null,
+            "llm_time_to_first_token": null,
+            "reply_filter_hold": null,
+            "tts_time_to_first_byte": null,
+            "caller_heard_first_audio": null,
+            "caller_heard_answer": null,
+            "caller_end_seen_late": null,
+            "agent_audio_reaches_caller": null,
+            "agent_audio_quiet_start": null
+          }
+        },
+        {
+          "utterance_id": "ar-trial-with-pause",
+          "language": "ar",
+          "cut_off": false,
+          "answered": true,
+          "stages": {
+            "end_to_end": 3.6640050411224365,
+            "end_of_turn_delay": 1.2313587665557861,
+            "transcription_delay": 1.2266929149627686,
+            "llm_time_to_first_token": 1.6406126370002312,
+            "reply_filter_hold": 0.21612392599990926,
+            "tts_time_to_first_byte": 0.41963230300007126,
+            "caller_heard_first_audio": 4.796598434448242,
+            "caller_heard_answer": 4.796598434448242,
+            "caller_end_seen_late": 0.6326436996459961,
+            "agent_audio_reaches_caller": 0.49994969367980957,
+            "agent_audio_quiet_start": 0.050354719161987305
+          }
+        },
+        {
+          "utterance_id": "ar-starter-price",
+          "language": "ar",
+          "cut_off": false,
+          "answered": true,
+          "stages": {
+            "end_to_end": 3.4249398708343506,
+            "end_of_turn_delay": 0.7411139011383057,
+            "transcription_delay": 0.7368228435516357,
+            "llm_time_to_first_token": 2.270780661000117,
+            "reply_filter_hold": 0.18336273499971867,
+            "tts_time_to_first_byte": 0.22272665599984975,
+            "caller_heard_first_audio": 4.626696825027466,
+            "caller_heard_answer": 4.626696825027466,
+            "caller_end_seen_late": 0.622445821762085,
+            "agent_audio_reaches_caller": 0.5793111324310303,
+            "agent_audio_quiet_start": 0.019755125045776367
+          }
+        },
+        {
+          "utterance_id": "ar-plan-differences",
+          "language": "ar",
+          "cut_off": false,
+          "answered": true,
+          "stages": {
+            "end_to_end": 2.695007801055908,
+            "end_of_turn_delay": 0.7528018951416016,
+            "transcription_delay": 0.7480988502502441,
+            "llm_time_to_first_token": 0.9145286889997806,
+            "reply_filter_hold": 0.5239471059999232,
+            "tts_time_to_first_byte": 0.22415734399965004,
+            "caller_heard_first_audio": 3.813403844833374,
+            "caller_heard_answer": 3.813403844833374,
+            "caller_end_seen_late": 0.5992209911346436,
+            "agent_audio_reaches_caller": 0.5191750526428223,
+            "agent_audio_quiet_start": 0.0
+          }
+        },
+        {
+          "utterance_id": "ar-change-plan-pause",
+          "language": "ar",
+          "cut_off": false,
+          "answered": false,
+          "stages": {
+            "end_to_end": null,
+            "end_of_turn_delay": null,
+            "transcription_delay": null,
+            "llm_time_to_first_token": null,
+            "reply_filter_hold": 0.1932260519997726,
+            "tts_time_to_first_byte": null,
+            "caller_heard_first_audio": null,
+            "caller_heard_answer": null,
+            "caller_end_seen_late": null,
+            "agent_audio_reaches_caller": null,
+            "agent_audio_quiet_start": null
+          }
+        },
+        {
+          "utterance_id": "ar-enterprise",
+          "language": "ar",
+          "cut_off": true,
+          "answered": true,
+          "stages": {
+            "end_to_end": 2.3338868618011475,
+            "end_of_turn_delay": 0.6726589202880859,
+            "transcription_delay": 0.6701738834381104,
+            "llm_time_to_first_token": 0.8032841219996953,
+            "reply_filter_hold": 0.4550520860002507,
+            "tts_time_to_first_byte": 0.21727088799980265,
+            "caller_heard_first_audio": 3.379767656326294,
+            "caller_heard_answer": 3.379767656326294,
+            "caller_end_seen_late": 0.5362808704376221,
+            "agent_audio_reaches_caller": 0.5095999240875244,
+            "agent_audio_quiet_start": 0.010152101516723633
+          }
+        },
+        {
+          "utterance_id": "ar-apple-pay",
+          "language": "ar",
+          "cut_off": false,
+          "answered": true,
+          "stages": {
+            "end_to_end": 2.2963099479675293,
+            "end_of_turn_delay": 0.8269710540771484,
+            "transcription_delay": 0.8225100040435791,
+            "llm_time_to_first_token": 0.8015648660002626,
+            "reply_filter_hold": 0.3645876609998595,
+            "tts_time_to_first_byte": 0.22364114699985294,
+            "caller_heard_first_audio": 3.3473403453826904,
+            "caller_heard_answer": 3.3473403453826904,
+            "caller_end_seen_late": 0.562117338180542,
+            "agent_audio_reaches_caller": 0.48891305923461914,
+            "agent_audio_quiet_start": 0.0
+          }
+        },
+        {
+          "utterance_id": "ar-bank-transfer",
+          "language": "ar",
+          "cut_off": false,
+          "answered": true,
+          "stages": {
+            "end_to_end": 3.640515089035034,
+            "end_of_turn_delay": 2.000001907348633,
+            "transcription_delay": 1.9957518577575684,
+            "llm_time_to_first_token": 0.9072514290000981,
+            "reply_filter_hold": 0.24923209299959126,
+            "tts_time_to_first_byte": 0.4794496659997094,
+            "caller_heard_first_audio": 5.282695770263672,
+            "caller_heard_answer": 5.282695770263672,
+            "caller_end_seen_late": 0.8598089218139648,
+            "agent_audio_reaches_caller": 0.7823717594146729,
+            "agent_audio_quiet_start": 0.049017906188964844
+          }
+        },
+        {
+          "utterance_id": "ar-escalation-pause",
+          "language": "ar",
+          "cut_off": false,
+          "answered": true,
+          "stages": {
+            "end_to_end": 2.5116689205169678,
+            "end_of_turn_delay": 0.7164018154144287,
+            "transcription_delay": 0.7141628265380859,
+            "llm_time_to_first_token": 1.2574522579998302,
+            "reply_filter_hold": 0.171928337999816,
+            "tts_time_to_first_byte": 0.22328994300005434,
+            "caller_heard_first_audio": 3.8876640796661377,
+            "caller_heard_answer": 3.8876640796661377,
+            "caller_end_seen_late": 0.66227126121521,
+            "agent_audio_reaches_caller": 0.71372389793396,
+            "agent_audio_quiet_start": 0.0
+          }
+        },
+        {
+          "utterance_id": "ar-zatca",
+          "language": "ar",
+          "cut_off": false,
+          "answered": true,
+          "stages": {
+            "end_to_end": 3.044543981552124,
+            "end_of_turn_delay": 1.034195899963379,
+            "transcription_delay": 1.0300626754760742,
+            "llm_time_to_first_token": 1.0284850419993745,
+            "reply_filter_hold": 0.5124852790004297,
+            "tts_time_to_first_byte": 0.3229505529998278,
+            "caller_heard_first_audio": 4.167697191238403,
+            "caller_heard_answer": 4.167697191238403,
+            "caller_end_seen_late": 0.5834453105926514,
+            "agent_audio_reaches_caller": 0.5397078990936279,
+            "agent_audio_quiet_start": 0.049893856048583984
+          }
+        },
+        {
+          "utterance_id": "ar-export",
+          "language": "ar",
+          "cut_off": false,
+          "answered": true,
+          "stages": {
+            "end_to_end": 2.5712361335754395,
+            "end_of_turn_delay": 0.7978801727294922,
+            "transcription_delay": 0.7931110858917236,
+            "llm_time_to_first_token": 0.8536708510000608,
+            "reply_filter_hold": 0.20687147700027708,
+            "tts_time_to_first_byte": 0.21802296100031526,
+            "caller_heard_first_audio": 3.732027292251587,
+            "caller_heard_answer": 3.732027292251587,
+            "caller_end_seen_late": 0.5677943229675293,
+            "agent_audio_reaches_caller": 0.5929968357086182,
+            "agent_audio_quiet_start": 0.0
+          }
+        },
+        {
+          "utterance_id": "ar-export-format",
+          "language": "ar",
+          "cut_off": false,
+          "answered": true,
+          "stages": {
+            "end_to_end": 2.259612798690796,
+            "end_of_turn_delay": 0.7425088882446289,
+            "transcription_delay": 0.7381680011749268,
+            "llm_time_to_first_token": 0.8348338939995301,
+            "reply_filter_hold": 0.19785749000038777,
+            "tts_time_to_first_byte": 0.2183481269994445,
+            "caller_heard_first_audio": 3.4850265979766846,
+            "caller_heard_answer": 3.4850265979766846,
+            "caller_end_seen_late": 0.6503276824951172,
+            "agent_audio_reaches_caller": 0.5750861167907715,
+            "agent_audio_quiet_start": 0.010737895965576172
+          }
+        },
+        {
+          "utterance_id": "ar-cancel-data-pause",
+          "language": "ar",
+          "cut_off": false,
+          "answered": true,
+          "stages": {
+            "end_to_end": 2.745817184448242,
+            "end_of_turn_delay": 0.9162640571594238,
+            "transcription_delay": 0.9138619899749756,
+            "llm_time_to_first_token": 1.040580902000329,
+            "reply_filter_hold": 0.18315047399937612,
+            "tts_time_to_first_byte": 0.22546252099982667,
+            "caller_heard_first_audio": 3.897880792617798,
+            "caller_heard_answer": 3.897880792617798,
+            "caller_end_seen_late": 0.5930685997009277,
+            "agent_audio_reaches_caller": 0.5589950084686279,
+            "agent_audio_quiet_start": 0.03174710273742676
+          }
+        },
+        {
+          "utterance_id": "ar-trial-length",
+          "language": "ar",
+          "cut_off": false,
+          "answered": true,
+          "stages": {
+            "end_to_end": 2.196737051010132,
+            "end_of_turn_delay": 0.7597060203552246,
+            "transcription_delay": 0.7551701068878174,
+            "llm_time_to_first_token": 0.8695242860003418,
+            "reply_filter_hold": 0.2802365560000908,
+            "tts_time_to_first_byte": 0.22753777599973546,
+            "caller_heard_first_audio": 3.338871479034424,
+            "caller_heard_answer": 3.338871479034424,
+            "caller_end_seen_late": 0.6052844524383545,
+            "agent_audio_reaches_caller": 0.5368499755859375,
+            "agent_audio_quiet_start": 0.05016207695007324
+          }
+        },
+        {
+          "utterance_id": "ar-trial-card",
+          "language": "ar",
+          "cut_off": false,
+          "answered": true,
+          "stages": {
+            "end_to_end": 3.8389339447021484,
+            "end_of_turn_delay": 2.491572856903076,
+            "transcription_delay": 2.4866890907287598,
+            "llm_time_to_first_token": 0.9248152579993985,
+            "reply_filter_hold": 0.1634637630004363,
+            "tts_time_to_first_byte": 0.21701566399951844,
+            "caller_heard_first_audio": 5.280633926391602,
+            "caller_heard_answer": 5.280633926391602,
+            "caller_end_seen_late": 0.8765828609466553,
+            "agent_audio_reaches_caller": 0.5651171207427979,
+            "agent_audio_quiet_start": 0.0508570671081543
+          }
+        },
+        {
+          "utterance_id": "ar-p1-response",
+          "language": "ar",
+          "cut_off": false,
+          "answered": true,
+          "stages": {
+            "end_to_end": 2.6263129711151123,
+            "end_of_turn_delay": 0.8101630210876465,
+            "transcription_delay": 0.8055720329284668,
+            "llm_time_to_first_token": 0.9794428260011045,
+            "reply_filter_hold": 0.35970382199957385,
+            "tts_time_to_first_byte": 0.32938553299936757,
+            "caller_heard_first_audio": 3.9991860389709473,
+            "caller_heard_answer": 3.9991860389709473,
+            "caller_end_seen_late": 0.6757490634918213,
+            "agent_audio_reaches_caller": 0.6971240043640137,
+            "agent_audio_quiet_start": 0.0102081298828125
+          }
+        },
+        {
+          "utterance_id": "ar-p3-response",
+          "language": "ar",
+          "cut_off": false,
+          "answered": true,
+          "stages": {
+            "end_to_end": 3.1885197162628174,
+            "end_of_turn_delay": 0.9598488807678223,
+            "transcription_delay": 0.9550466537475586,
+            "llm_time_to_first_token": 1.1198929880010837,
+            "reply_filter_hold": 0.4692542839993621,
+            "tts_time_to_first_byte": 0.46373920000041835,
+            "caller_heard_first_audio": 4.437167167663574,
+            "caller_heard_answer": 4.437167167663574,
+            "caller_end_seen_late": 0.6537394523620605,
+            "agent_audio_reaches_caller": 0.5949079990386963,
+            "agent_audio_quiet_start": 0.0
+          }
+        },
+        {
+          "utterance_id": "ar-ramadan-hours",
+          "language": "ar",
+          "cut_off": false,
+          "answered": true,
+          "stages": {
+            "end_to_end": 2.9053642749786377,
+            "end_of_turn_delay": 0.8564200401306152,
+            "transcription_delay": 0.8519511222839355,
+            "llm_time_to_first_token": 1.256065565999961,
+            "reply_filter_hold": 0.1514142220003123,
+            "tts_time_to_first_byte": 0.3277579400000832,
+            "caller_heard_first_audio": 4.066974401473999,
+            "caller_heard_answer": 4.066974401473999,
+            "caller_end_seen_late": 0.5629372596740723,
+            "agent_audio_reaches_caller": 0.5986728668212891,
+            "agent_audio_quiet_start": 0.05937600135803223
+          }
+        }
+      ]
+    },
+    "every-turn-silence-0.30-stt-fixed": {
+      "settings": {},
+      "elevenlabs_characters_used": 2036,
+      "livekit_round_trip_ms": {
+        "before": 57.8,
+        "after": 51.7
+      },
+      "languages": {
+        "en": {
+          "turns": 20,
+          "answered": 20,
+          "cut_offs": 0,
+          "stages_seconds": {
+            "end_to_end": {
+              "p50": 2.298,
+              "p90": 4.477,
+              "n": 19
+            },
+            "end_of_turn_delay": {
+              "p50": 0.761,
+              "p90": 3.001,
+              "n": 19
+            },
+            "transcription_delay": {
+              "p50": 0.756,
+              "p90": 2.115,
+              "n": 19
+            },
+            "llm_time_to_first_token": {
+              "p50": 0.961,
+              "p90": 1.66,
+              "n": 19
+            },
+            "reply_filter_hold": {
+              "p50": 0.146,
+              "p90": 0.203,
+              "n": 20
+            },
+            "tts_time_to_first_byte": {
+              "p50": 0.262,
+              "p90": 0.47,
+              "n": 19
+            },
+            "caller_heard_first_audio": {
+              "p50": 3.7,
+              "p90": 5.971,
+              "n": 20
+            },
+            "caller_heard_answer": {
+              "p50": 3.7,
+              "p90": 5.971,
+              "n": 20
+            },
+            "caller_end_seen_late": {
+              "p50": 0.529,
+              "p90": 0.632,
+              "n": 19
+            },
+            "agent_audio_reaches_caller": {
+              "p50": 0.567,
+              "p90": 0.995,
+              "n": 19
+            },
+            "agent_audio_quiet_start": {
+              "p50": 0.025,
+              "p90": 0.071,
+              "n": 20
+            }
+          }
+        },
+        "ar": {
+          "turns": 20,
+          "answered": 20,
+          "cut_offs": 0,
+          "stages_seconds": {
+            "end_to_end": {
+              "p50": 2.496,
+              "p90": 4.085,
+              "n": 18
+            },
+            "end_of_turn_delay": {
+              "p50": 0.712,
+              "p90": 1.733,
+              "n": 18
+            },
+            "transcription_delay": {
+              "p50": 0.707,
+              "p90": 1.728,
+              "n": 18
+            },
+            "llm_time_to_first_token": {
+              "p50": 1.045,
+              "p90": 1.577,
+              "n": 18
+            },
+            "reply_filter_hold": {
+              "p50": 0.208,
+              "p90": 0.384,
+              "n": 20
+            },
+            "tts_time_to_first_byte": {
+              "p50": 0.227,
+              "p90": 0.333,
+              "n": 18
+            },
+            "caller_heard_first_audio": {
+              "p50": 3.533,
+              "p90": 5.398,
+              "n": 20
+            },
+            "caller_heard_answer": {
+              "p50": 3.533,
+              "p90": 5.398,
+              "n": 20
+            },
+            "caller_end_seen_late": {
+              "p50": 0.624,
+              "p90": 0.755,
+              "n": 18
+            },
+            "agent_audio_reaches_caller": {
+              "p50": 0.565,
+              "p90": 0.881,
+              "n": 18
+            },
+            "agent_audio_quiet_start": {
+              "p50": 0.01,
+              "p90": 0.05,
+              "n": 20
+            }
+          }
+        }
+      },
+      "turns": [
+        {
+          "utterance_id": "en-growth-price",
+          "language": "en",
+          "cut_off": false,
+          "answered": true,
+          "stages": {
+            "end_to_end": 4.463407039642334,
+            "end_of_turn_delay": 1.655184030532837,
+            "transcription_delay": 1.6499018669128418,
+            "llm_time_to_first_token": 1.2681688689990551,
+            "reply_filter_hold": 0.06206740900051955,
+            "tts_time_to_first_byte": 0.42694375599967316,
+            "caller_heard_first_audio": 5.346455812454224,
+            "caller_heard_answer": 5.346455812454224,
+            "caller_end_seen_late": 0.4204678535461426,
+            "agent_audio_reaches_caller": 0.46258091926574707,
+            "agent_audio_quiet_start": 0.07075095176696777
+          }
+        },
+        {
+          "utterance_id": "en-apple-pay",
+          "language": "en",
+          "cut_off": false,
+          "answered": true,
+          "stages": {
+            "end_to_end": 2.273413896560669,
+            "end_of_turn_delay": 0.9901959896087646,
+            "transcription_delay": 0.9858450889587402,
+            "llm_time_to_first_token": 0.9052536189992679,
+            "reply_filter_hold": 0.13119027500033553,
+            "tts_time_to_first_byte": 0.2428000809995865,
+            "caller_heard_first_audio": 3.207589626312256,
+            "caller_heard_answer": 3.207589626312256,
+            "caller_end_seen_late": 0.45212459564208984,
+            "agent_audio_reaches_caller": 0.48205113410949707,
+            "agent_audio_quiet_start": 0.009781122207641602
+          }
+        },
+        {
+          "utterance_id": "en-trial-with-pause",
+          "language": "en",
+          "cut_off": false,
+          "answered": true,
+          "stages": {
+            "end_to_end": 3.271306037902832,
+            "end_of_turn_delay": 3.0008280277252197,
+            "transcription_delay": 1.9698750972747803,
+            "llm_time_to_first_token": 0.7886554710003111,
+            "reply_filter_hold": 0.07785762499952398,
+            "tts_time_to_first_byte": 0.2619766690004326,
+            "caller_heard_first_audio": 4.861693620681763,
+            "caller_heard_answer": 4.861693620681763,
+            "caller_end_seen_late": 0.5677297115325928,
+            "agent_audio_reaches_caller": 1.022657871246338,
+            "agent_audio_quiet_start": 0.009666919708251953
+          }
+        },
+        {
+          "utterance_id": "en-starter-price",
+          "language": "en",
+          "cut_off": false,
+          "answered": true,
+          "stages": {
+            "end_to_end": 4.469871759414673,
+            "end_of_turn_delay": 2.6965878009796143,
+            "transcription_delay": 2.693549633026123,
+            "llm_time_to_first_token": 1.2439957029982907,
+            "reply_filter_hold": 0.001310047000515624,
+            "tts_time_to_first_byte": 0.5189300580004783,
+            "caller_heard_first_audio": 5.86478066444397,
+            "caller_heard_answer": 5.86478066444397,
+            "caller_end_seen_late": 0.528095006942749,
+            "agent_audio_reaches_caller": 0.8668138980865479,
+            "agent_audio_quiet_start": 0.0
+          }
+        },
+        {
+          "utterance_id": "en-plan-differences",
+          "language": "en",
+          "cut_off": false,
+          "answered": true,
+          "stages": {
+            "end_to_end": 2.1974668502807617,
+            "end_of_turn_delay": 0.7609918117523193,
+            "transcription_delay": 0.7563748359680176,
+            "llm_time_to_first_token": 0.9608956960000796,
+            "reply_filter_hold": 0.16025063599954592,
+            "tts_time_to_first_byte": 0.30895702999987407,
+            "caller_heard_first_audio": 3.455029249191284,
+            "caller_heard_answer": 3.455029249191284,
+            "caller_end_seen_late": 0.6002395153045654,
+            "agent_audio_reaches_caller": 0.657322883605957,
+            "agent_audio_quiet_start": 0.06988692283630371
+          }
+        },
+        {
+          "utterance_id": "en-change-plan-pause",
+          "language": "en",
+          "cut_off": false,
+          "answered": true,
+          "stages": {
+            "end_to_end": 4.504590749740601,
+            "end_of_turn_delay": 3.0006508827209473,
+            "transcription_delay": 1.7994890213012695,
+            "llm_time_to_first_token": 0.9493915659986669,
+            "reply_filter_hold": 0.21118044300055772,
+            "tts_time_to_first_byte": 0.23130665499957104,
+            "caller_heard_first_audio": 5.610084772109985,
+            "caller_heard_answer": 5.610084772109985,
+            "caller_end_seen_late": 0.49378085136413574,
+            "agent_audio_reaches_caller": 0.611713171005249,
+            "agent_audio_quiet_start": 0.00999903678894043
+          }
+        },
+        {
+          "utterance_id": "en-enterprise",
+          "language": "en",
+          "cut_off": false,
+          "answered": true,
+          "stages": {
+            "end_to_end": 2.3245959281921387,
+            "end_of_turn_delay": 0.6920738220214844,
+            "transcription_delay": 0.6875848770141602,
+            "llm_time_to_first_token": 1.1989307900003041,
+            "reply_filter_hold": 0.1800746059998346,
+            "tts_time_to_first_byte": 0.24864440100100182,
+            "caller_heard_first_audio": 3.3187856674194336,
+            "caller_heard_answer": 3.3187856674194336,
+            "caller_end_seen_late": 0.47354888916015625,
+            "agent_audio_reaches_caller": 0.5206408500671387,
+            "agent_audio_quiet_start": 0.04027104377746582
+          }
+        },
+        {
+          "utterance_id": "en-mada",
+          "language": "en",
+          "cut_off": false,
+          "answered": true,
+          "stages": {
+            "end_to_end": 1.8804121017456055,
+            "end_of_turn_delay": 0.6437568664550781,
+            "transcription_delay": 0.6387288570404053,
+            "llm_time_to_first_token": 0.9082354809997923,
+            "reply_filter_hold": 0.113785925999764,
+            "tts_time_to_first_byte": 0.20805751899933966,
+            "caller_heard_first_audio": 2.9473514556884766,
+            "caller_heard_answer": 2.9473514556884766,
+            "caller_end_seen_late": 0.5508506298065186,
+            "agent_audio_reaches_caller": 0.5160887241363525,
+            "agent_audio_quiet_start": 0.05032181739807129
+          }
+        },
+        {
+          "utterance_id": "en-bank-transfer",
+          "language": "en",
+          "cut_off": false,
+          "answered": true,
+          "stages": {
+            "end_to_end": 2.286388874053955,
+            "end_of_turn_delay": 0.6482648849487305,
+            "transcription_delay": 0.6435360908508301,
+            "llm_time_to_first_token": 1.2018469890008419,
+            "reply_filter_hold": 0.18114518899892573,
+            "tts_time_to_first_byte": 0.21729312199931883,
+            "caller_heard_first_audio": 3.284114360809326,
+            "caller_heard_answer": 3.284114360809326,
+            "caller_end_seen_late": 0.5178923606872559,
+            "agent_audio_reaches_caller": 0.47983312606811523,
+            "agent_audio_quiet_start": 0.05014920234680176
+          }
+        },
+        {
+          "utterance_id": "en-escalation-pause",
+          "language": "en",
+          "cut_off": false,
+          "answered": true,
+          "stages": {
+            "end_to_end": null,
+            "end_of_turn_delay": null,
+            "transcription_delay": null,
+            "llm_time_to_first_token": null,
+            "reply_filter_hold": 0.24138167899945984,
+            "tts_time_to_first_byte": null,
+            "caller_heard_first_audio": 12.894529581069946,
+            "caller_heard_answer": 12.894529581069946,
+            "caller_end_seen_late": null,
+            "agent_audio_reaches_caller": null,
+            "agent_audio_quiet_start": 0.08949589729309082
+          }
+        },
+        {
+          "utterance_id": "en-zatca",
+          "language": "en",
+          "cut_off": false,
+          "answered": true,
+          "stages": {
+            "end_to_end": 11.923434257507324,
+            "end_of_turn_delay": 7.671424150466919,
+            "transcription_delay": 7.665101051330566,
+            "llm_time_to_first_token": 3.773306519000471,
+            "reply_filter_hold": 0.15067788600026688,
+            "tts_time_to_first_byte": 0.3203891470002418,
+            "caller_heard_first_audio": 6.931779623031616,
+            "caller_heard_answer": 6.931779623031616,
+            "caller_end_seen_late": -33.85271453857422,
+            "agent_audio_reaches_caller": 28.86105990409851,
+            "agent_audio_quiet_start": 0.06039094924926758
+          }
+        },
+        {
+          "utterance_id": "en-export",
+          "language": "en",
+          "cut_off": false,
+          "answered": true,
+          "stages": {
+            "end_to_end": 3.8402507305145264,
+            "end_of_turn_delay": 3.00111985206604,
+            "transcription_delay": 1.9128000736236572,
+            "llm_time_to_first_token": 1.4052639410001575,
+            "reply_filter_hold": 0.04863964300056978,
+            "tts_time_to_first_byte": 0.462623594001343,
+            "caller_heard_first_audio": 5.055093288421631,
+            "caller_heard_answer": 5.055093288421631,
+            "caller_end_seen_late": 0.6480634212493896,
+            "agent_audio_reaches_caller": 0.5667791366577148,
+            "agent_audio_quiet_start": 0.0
+          }
+        },
+        {
+          "utterance_id": "en-export-format",
+          "language": "en",
+          "cut_off": false,
+          "answered": true,
+          "stages": {
+            "end_to_end": 2.0305230617523193,
+            "end_of_turn_delay": 0.6589400768280029,
+            "transcription_delay": 0.6537420749664307,
+            "llm_time_to_first_token": 0.8933250159989257,
+            "reply_filter_hold": 0.1419381819996488,
+            "tts_time_to_first_byte": 0.2747697099985089,
+            "caller_heard_first_audio": 3.2264750003814697,
+            "caller_heard_answer": 3.2264750003814697,
+            "caller_end_seen_late": 0.5798599720001221,
+            "agent_audio_reaches_caller": 0.6160919666290283,
+            "agent_audio_quiet_start": 0.06028294563293457
+          }
+        },
+        {
+          "utterance_id": "en-cancel-data-pause",
+          "language": "en",
+          "cut_off": false,
+          "answered": true,
+          "stages": {
+            "end_to_end": 1.942845106124878,
+            "end_of_turn_delay": 0.7028357982635498,
+            "transcription_delay": 0.7001550197601318,
+            "llm_time_to_first_token": 0.8222390909995738,
+            "reply_filter_hold": 0.1548467470001924,
+            "tts_time_to_first_byte": 0.24754353199932666,
+            "caller_heard_first_audio": 3.121394634246826,
+            "caller_heard_answer": 3.121394634246826,
+            "caller_end_seen_late": 0.6116726398468018,
+            "agent_audio_reaches_caller": 0.5668768882751465,
+            "agent_audio_quiet_start": 0.009164094924926758
+          }
+        },
+        {
+          "utterance_id": "en-trial-length",
+          "language": "en",
+          "cut_off": false,
+          "answered": true,
+          "stages": {
+            "end_to_end": 1.9213018417358398,
+            "end_of_turn_delay": 0.745856761932373,
+            "transcription_delay": 0.7411758899688721,
+            "llm_time_to_first_token": 0.8621467510001821,
+            "reply_filter_hold": 0.030299538000690518,
+            "tts_time_to_first_byte": 0.24658500900113722,
+            "caller_heard_first_audio": 2.9073188304901123,
+            "caller_heard_answer": 2.9073188304901123,
+            "caller_end_seen_late": 0.5004022121429443,
+            "agent_audio_reaches_caller": 0.4856147766113281,
+            "agent_audio_quiet_start": 0.0
+          }
+        },
+        {
+          "utterance_id": "en-trial-card",
+          "language": "en",
+          "cut_off": false,
+          "answered": true,
+          "stages": {
+            "end_to_end": 1.9487099647521973,
+            "end_of_turn_delay": 0.7059588432312012,
+            "transcription_delay": 0.7009189128875732,
+            "llm_time_to_first_token": 0.8692994600005477,
+            "reply_filter_hold": 0.1287093779992574,
+            "tts_time_to_first_byte": 0.20971337499941,
+            "caller_heard_first_audio": 2.886145830154419,
+            "caller_heard_answer": 2.886145830154419,
+            "caller_end_seen_late": 0.4698169231414795,
+            "agent_audio_reaches_caller": 0.4676189422607422,
+            "agent_audio_quiet_start": 0.05109906196594238
+          }
+        },
+        {
+          "utterance_id": "en-p1-response",
+          "language": "en",
+          "cut_off": false,
+          "answered": true,
+          "stages": {
+            "end_to_end": 2.284313917160034,
+            "end_of_turn_delay": 0.6707139015197754,
+            "transcription_delay": 0.664362907409668,
+            "llm_time_to_first_token": 1.1348082840013376,
+            "reply_filter_hold": 0.16797706799843581,
+            "tts_time_to_first_byte": 0.21860371100046905,
+            "caller_heard_first_audio": 3.192917585372925,
+            "caller_heard_answer": 3.192917585372925,
+            "caller_end_seen_late": 0.5287256240844727,
+            "agent_audio_reaches_caller": 0.37987804412841797,
+            "agent_audio_quiet_start": 0.0082550048828125
+          }
+        },
+        {
+          "utterance_id": "en-p3-response",
+          "language": "en",
+          "cut_off": false,
+          "answered": true,
+          "stages": {
+            "end_to_end": 2.298017978668213,
+            "end_of_turn_delay": 0.7652037143707275,
+            "transcription_delay": 0.7600188255310059,
+            "llm_time_to_first_token": 0.9316151909970358,
+            "reply_filter_hold": 0.13092786700144643,
+            "tts_time_to_first_byte": 0.43674111399923277,
+            "caller_heard_first_audio": 4.085652589797974,
+            "caller_heard_answer": 4.085652589797974,
+            "caller_end_seen_late": 0.7994167804718018,
+            "agent_audio_reaches_caller": 0.988217830657959,
+            "agent_audio_quiet_start": 0.009858131408691406
+          }
+        },
+        {
+          "utterance_id": "en-office-hours",
+          "language": "en",
+          "cut_off": false,
+          "answered": true,
+          "stages": {
+            "end_to_end": 2.392997980117798,
+            "end_of_turn_delay": 0.8000040054321289,
+            "transcription_delay": 0.7945339679718018,
+            "llm_time_to_first_token": 1.1057997360003355,
+            "reply_filter_hold": 0.16483037199941464,
+            "tts_time_to_first_byte": 0.3155462940012512,
+            "caller_heard_first_audio": 3.9454245567321777,
+            "caller_heard_answer": 3.9454245567321777,
+            "caller_end_seen_late": 0.6274895668029785,
+            "agent_audio_reaches_caller": 0.9249370098114014,
+            "agent_audio_quiet_start": 0.07160091400146484
+          }
+        },
+        {
+          "utterance_id": "en-ramadan-hours",
+          "language": "en",
+          "cut_off": false,
+          "answered": true,
+          "stages": {
+            "end_to_end": 4.036870002746582,
+            "end_of_turn_delay": 0.6553349494934082,
+            "transcription_delay": 0.6498768329620361,
+            "llm_time_to_first_token": 2.677452660000199,
+            "reply_filter_hold": 0.20243103000029805,
+            "tts_time_to_first_byte": 0.4972679340007744,
+            "caller_heard_first_audio": 5.247237920761108,
+            "caller_heard_answer": 5.247237920761108,
+            "caller_end_seen_late": 0.571599006652832,
+            "agent_audio_reaches_caller": 0.6387689113616943,
+            "agent_audio_quiet_start": 0.0
+          }
+        },
+        {
+          "utterance_id": "ar-growth-price",
+          "language": "ar",
+          "cut_off": false,
+          "answered": true,
+          "stages": {
+            "end_to_end": 2.8394880294799805,
+            "end_of_turn_delay": 0.9006059169769287,
+            "transcription_delay": 0.8019111156463623,
+            "llm_time_to_first_token": 1.032547340999372,
+            "reply_filter_hold": 0.19734742299988284,
+            "tts_time_to_first_byte": 0.2417328350002208,
+            "caller_heard_first_audio": 3.3908331394195557,
+            "caller_heard_answer": 3.3908331394195557,
+            "caller_end_seen_late": 0.2796142101287842,
+            "agent_audio_reaches_caller": 0.271730899810791,
+            "agent_audio_quiet_start": 0.05869793891906738
+          }
+        },
+        {
+          "utterance_id": "ar-mada",
+          "language": "ar",
+          "cut_off": false,
+          "answered": true,
+          "stages": {
+            "end_to_end": 4.7221291065216064,
+            "end_of_turn_delay": 2.688228130340576,
+            "transcription_delay": 2.68292498588562,
+            "llm_time_to_first_token": 1.2069557349987008,
+            "reply_filter_hold": 0.39345763200071815,
+            "tts_time_to_first_byte": 0.30135079600040626,
+            "caller_heard_first_audio": 5.981991529464722,
+            "caller_heard_answer": 5.981991529464722,
+            "caller_end_seen_late": 0.6800925731658936,
+            "agent_audio_reaches_caller": 0.5797698497772217,
+            "agent_audio_quiet_start": 0.0
+          }
+        },
+        {
+          "utterance_id": "ar-riyadh-hours",
+          "language": "ar",
+          "cut_off": false,
+          "answered": true,
+          "stages": {
+            "end_to_end": 3.811260938644409,
+            "end_of_turn_delay": 0.8179671764373779,
+            "transcription_delay": 0.8128738403320312,
+            "llm_time_to_first_token": 2.4205896019993816,
+            "reply_filter_hold": 0.19030365700018592,
+            "tts_time_to_first_byte": 0.224961149999217,
+            "caller_heard_first_audio": 4.847356796264648,
+            "caller_heard_answer": 4.847356796264648,
+            "caller_end_seen_late": 0.5257048606872559,
+            "agent_audio_reaches_caller": 0.5103909969329834,
+            "agent_audio_quiet_start": 0.0
+          }
+        },
+        {
+          "utterance_id": "ar-trial-with-pause",
+          "language": "ar",
+          "cut_off": false,
+          "answered": true,
+          "stages": {
+            "end_to_end": 3.6955790519714355,
+            "end_of_turn_delay": 1.9163000583648682,
+            "transcription_delay": 1.9144420623779297,
+            "llm_time_to_first_token": 1.1065477750016726,
+            "reply_filter_hold": 0.1921008699991944,
+            "tts_time_to_first_byte": 0.35385112000039953,
+            "caller_heard_first_audio": 5.333329200744629,
+            "caller_heard_answer": 5.333329200744629,
+            "caller_end_seen_late": 0.7515509128570557,
+            "agent_audio_reaches_caller": 0.8861992359161377,
+            "agent_audio_quiet_start": 0.0
+          }
+        },
+        {
+          "utterance_id": "ar-starter-price",
+          "language": "ar",
+          "cut_off": false,
+          "answered": true,
+          "stages": {
+            "end_to_end": 2.5013890266418457,
+            "end_of_turn_delay": 0.8535280227661133,
+            "transcription_delay": 0.8484311103820801,
+            "llm_time_to_first_token": 0.9521643169991876,
+            "reply_filter_hold": 0.09046467600092001,
+            "tts_time_to_first_byte": 0.3246121590000257,
+            "caller_heard_first_audio": 4.1441650390625,
+            "caller_heard_answer": 4.1441650390625,
+            "caller_end_seen_late": 0.7634029388427734,
+            "agent_audio_reaches_caller": 0.8793730735778809,
+            "agent_audio_quiet_start": 0.04964303970336914
+          }
+        },
+        {
+          "utterance_id": "ar-plan-differences",
+          "language": "ar",
+          "cut_off": false,
+          "answered": true,
+          "stages": {
+            "end_to_end": null,
+            "end_of_turn_delay": null,
+            "transcription_delay": null,
+            "llm_time_to_first_token": null,
+            "reply_filter_hold": 0.17038136500013934,
+            "tts_time_to_first_byte": null,
+            "caller_heard_first_audio": 3.7605576515197754,
+            "caller_heard_answer": 3.7605576515197754,
+            "caller_end_seen_late": null,
+            "agent_audio_reaches_caller": null,
+            "agent_audio_quiet_start": 0.0
+          }
+        },
+        {
+          "utterance_id": "ar-change-plan-pause",
+          "language": "ar",
+          "cut_off": false,
+          "answered": true,
+          "stages": {
+            "end_to_end": null,
+            "end_of_turn_delay": null,
+            "transcription_delay": null,
+            "llm_time_to_first_token": null,
+            "reply_filter_hold": 0.4749985309990734,
+            "tts_time_to_first_byte": null,
+            "caller_heard_first_audio": 3.876150369644165,
+            "caller_heard_answer": 3.876150369644165,
+            "caller_end_seen_late": null,
+            "agent_audio_reaches_caller": null,
+            "agent_audio_quiet_start": 0.050273895263671875
+          }
+        },
+        {
+          "utterance_id": "ar-enterprise",
+          "language": "ar",
+          "cut_off": false,
+          "answered": true,
+          "stages": {
+            "end_to_end": 2.088956832885742,
+            "end_of_turn_delay": 0.6261706352233887,
+            "transcription_delay": 0.6209967136383057,
+            "llm_time_to_first_token": 1.016634701998555,
+            "reply_filter_hold": 0.16171562100134906,
+            "tts_time_to_first_byte": 0.22690211500048463,
+            "caller_heard_first_audio": 3.267885684967041,
+            "caller_heard_answer": 3.267885684967041,
+            "caller_end_seen_late": 0.5953381061553955,
+            "agent_audio_reaches_caller": 0.5835907459259033,
+            "agent_audio_quiet_start": 0.0
+          }
+        },
+        {
+          "utterance_id": "ar-apple-pay",
+          "language": "ar",
+          "cut_off": false,
+          "answered": true,
+          "stages": {
+            "end_to_end": 1.9771220684051514,
+            "end_of_turn_delay": 0.615562915802002,
+            "transcription_delay": 0.6105730533599854,
+            "llm_time_to_first_token": 0.8714783730010822,
+            "reply_filter_hold": 0.23435710599915183,
+            "tts_time_to_first_byte": 0.22028883699931612,
+            "caller_heard_first_audio": 3.0332887172698975,
+            "caller_heard_answer": 3.0332887172698975,
+            "caller_end_seen_late": 0.562410831451416,
+            "agent_audio_reaches_caller": 0.4937558174133301,
+            "agent_audio_quiet_start": 0.04914999008178711
+          }
+        },
+        {
+          "utterance_id": "ar-bank-transfer",
+          "language": "ar",
+          "cut_off": false,
+          "answered": true,
+          "stages": {
+            "end_to_end": 2.323767900466919,
+            "end_of_turn_delay": 0.6437208652496338,
+            "transcription_delay": 0.6389379501342773,
+            "llm_time_to_first_token": 1.0584001280003577,
+            "reply_filter_hold": 0.3294075260000682,
+            "tts_time_to_first_byte": 0.21892686499995762,
+            "caller_heard_first_audio": 3.259901285171509,
+            "caller_heard_answer": 3.259901285171509,
+            "caller_end_seen_late": 0.48733043670654297,
+            "agent_audio_reaches_caller": 0.4488029479980469,
+            "agent_audio_quiet_start": 0.010087013244628906
+          }
+        },
+        {
+          "utterance_id": "ar-escalation-pause",
+          "language": "ar",
+          "cut_off": false,
+          "answered": true,
+          "stages": {
+            "end_to_end": 2.4908432960510254,
+            "end_of_turn_delay": 0.6573910713195801,
+            "transcription_delay": 0.6538941860198975,
+            "llm_time_to_first_token": 1.1177743849984836,
+            "reply_filter_hold": 0.19562455500090437,
+            "tts_time_to_first_byte": 0.21900885499962897,
+            "caller_heard_first_audio": 3.3525125980377197,
+            "caller_heard_answer": 3.3525125980377197,
+            "caller_end_seen_late": 0.4579274654388428,
+            "agent_audio_reaches_caller": 0.40374183654785156,
+            "agent_audio_quiet_start": 0.010106801986694336
+          }
+        },
+        {
+          "utterance_id": "ar-zatca",
+          "language": "ar",
+          "cut_off": false,
+          "answered": true,
+          "stages": {
+            "end_to_end": 2.7867918014526367,
+            "end_of_turn_delay": 0.6813056468963623,
+            "transcription_delay": 0.6699256896972656,
+            "llm_time_to_first_token": 1.2149811849994876,
+            "reply_filter_hold": 0.3579388150010345,
+            "tts_time_to_first_byte": 0.26549342600083037,
+            "caller_heard_first_audio": 4.474533796310425,
+            "caller_heard_answer": 4.474533796310425,
+            "caller_end_seen_late": 0.7725582122802734,
+            "agent_audio_reaches_caller": 0.9151837825775146,
+            "agent_audio_quiet_start": 0.0
+          }
+        },
+        {
+          "utterance_id": "ar-export",
+          "language": "ar",
+          "cut_off": false,
+          "answered": true,
+          "stages": {
+            "end_to_end": 2.2978298664093018,
+            "end_of_turn_delay": 0.6678268909454346,
+            "transcription_delay": 0.6621830463409424,
+            "llm_time_to_first_token": 0.920632598001248,
+            "reply_filter_hold": 0.18272185400019225,
+            "tts_time_to_first_byte": 0.3238279480010533,
+            "caller_heard_first_audio": 3.5498549938201904,
+            "caller_heard_answer": 3.5498549938201904,
+            "caller_end_seen_late": 0.5871269702911377,
+            "agent_audio_reaches_caller": 0.664898157119751,
+            "agent_audio_quiet_start": 0.050428152084350586
+          }
+        },
+        {
+          "utterance_id": "ar-export-format",
+          "language": "ar",
+          "cut_off": false,
+          "answered": true,
+          "stages": {
+            "end_to_end": 5.964005947113037,
+            "end_of_turn_delay": 1.6541039943695068,
+            "transcription_delay": 1.6486790180206299,
+            "llm_time_to_first_token": 3.6810515230008605,
+            "reply_filter_hold": 0.2759418519999599,
+            "tts_time_to_first_byte": 0.29995405099907657,
+            "caller_heard_first_audio": 7.281587839126587,
+            "caller_heard_answer": 7.281587839126587,
+            "caller_end_seen_late": 0.690485954284668,
+            "agent_audio_reaches_caller": 0.6270959377288818,
+            "agent_audio_quiet_start": 0.04997968673706055
+          }
+        },
+        {
+          "utterance_id": "ar-cancel-data-pause",
+          "language": "ar",
+          "cut_off": false,
+          "answered": true,
+          "stages": {
+            "end_to_end": 2.0155179500579834,
+            "end_of_turn_delay": 0.6229391098022461,
+            "transcription_delay": 0.6200590133666992,
+            "llm_time_to_first_token": 0.8506901199998538,
+            "reply_filter_hold": 0.16471063400058483,
+            "tts_time_to_first_byte": 0.2265729150003608,
+            "caller_heard_first_audio": 3.384303092956543,
+            "caller_heard_answer": 3.384303092956543,
+            "caller_end_seen_late": 0.7316601276397705,
+            "agent_audio_reaches_caller": 0.6371250152587891,
+            "agent_audio_quiet_start": 0.010262012481689453
+          }
+        },
+        {
+          "utterance_id": "ar-trial-length",
+          "language": "ar",
+          "cut_off": false,
+          "answered": true,
+          "stages": {
+            "end_to_end": 2.272768020629883,
+            "end_of_turn_delay": 0.6279296875,
+            "transcription_delay": 0.6230757236480713,
+            "llm_time_to_first_token": 1.1293051049997302,
+            "reply_filter_hold": 0.2635476990017196,
+            "tts_time_to_first_byte": 0.22702116800064687,
+            "caller_heard_first_audio": 3.5164005756378174,
+            "caller_heard_answer": 3.5164005756378174,
+            "caller_end_seen_late": 0.6961288452148438,
+            "agent_audio_reaches_caller": 0.5475037097930908,
+            "agent_audio_quiet_start": 0.0
+          }
+        },
+        {
+          "utterance_id": "ar-trial-card",
+          "language": "ar",
+          "cut_off": false,
+          "answered": true,
+          "stages": {
+            "end_to_end": 2.0518319606781006,
+            "end_of_turn_delay": 0.6821780204772949,
+            "transcription_delay": 0.6770830154418945,
+            "llm_time_to_first_token": 0.8932547109980078,
+            "reply_filter_hold": 0.21887353600141068,
+            "tts_time_to_first_byte": 0.21946936799940886,
+            "caller_heard_first_audio": 3.0967657566070557,
+            "caller_heard_answer": 3.0967657566070557,
+            "caller_end_seen_late": 0.5351717472076416,
+            "agent_audio_reaches_caller": 0.5097620487213135,
+            "agent_audio_quiet_start": 0.009270906448364258
+          }
+        },
+        {
+          "utterance_id": "ar-p1-response",
+          "language": "ar",
+          "cut_off": false,
+          "answered": true,
+          "stages": {
+            "end_to_end": 2.501821756362915,
+            "end_of_turn_delay": 0.7423837184906006,
+            "transcription_delay": 0.7367098331451416,
+            "llm_time_to_first_token": 1.0828769999989163,
+            "reply_filter_hold": 0.22923692599943024,
+            "tts_time_to_first_byte": 0.2264711259995238,
+            "caller_heard_first_audio": 3.4368884563446045,
+            "caller_heard_answer": 3.4368884563446045,
+            "caller_end_seen_late": 0.4864177703857422,
+            "agent_audio_reaches_caller": 0.44864892959594727,
+            "agent_audio_quiet_start": 0.05084991455078125
+          }
+        },
+        {
+          "utterance_id": "ar-p3-response",
+          "language": "ar",
+          "cut_off": false,
+          "answered": true,
+          "stages": {
+            "end_to_end": 2.2622601985931396,
+            "end_of_turn_delay": 0.8149211406707764,
+            "transcription_delay": 0.8097572326660156,
+            "llm_time_to_first_token": 0.8289016809994791,
+            "reply_filter_hold": 0.3829225930003304,
+            "tts_time_to_first_byte": 0.21391265300007944,
+            "caller_heard_first_audio": 3.494232654571533,
+            "caller_heard_answer": 3.494232654571533,
+            "caller_end_seen_late": 0.6825957298278809,
+            "agent_audio_reaches_caller": 0.5493767261505127,
+            "agent_audio_quiet_start": 0.0497438907623291
+          }
+        },
+        {
+          "utterance_id": "ar-ramadan-hours",
+          "language": "ar",
+          "cut_off": false,
+          "answered": true,
+          "stages": {
+            "end_to_end": 3.4795398712158203,
+            "end_of_turn_delay": 1.2818589210510254,
+            "transcription_delay": 1.2768349647521973,
+            "llm_time_to_first_token": 0.9108385179988545,
+            "reply_filter_hold": 0.1594841380010621,
+            "tts_time_to_first_byte": 0.6419235889989068,
+            "caller_heard_first_audio": 4.894400119781494,
+            "caller_heard_answer": 4.894400119781494,
+            "caller_end_seen_late": 0.6530632972717285,
+            "agent_audio_reaches_caller": 0.7617969512939453,
+            "agent_audio_quiet_start": 0.0
+          }
+        }
+      ]
     }
   },
   "default_configuration": {
@@ -2850,15 +4638,20 @@
     "stt_secondary_languages": [
       "en"
     ],
-    "voice_run": "every-turn-silence-0.30",
-    "why": "Searching before the model put the answer in the caller's ear 2-3 s sooner than the search tool at p50 (voice runs every-turn-silence-0.30 and tool-silence-0.30) and passed as many conversation evals (21 and 23 of 32 against 21 and 23); the final eval run on this configuration passed 24 of 32. A 0.3 s silence wait cut the typical end-of-turn delay by 0.1-0.3 s against 0.55/0.5 s with no early cut-off on eight utterances with 0.7-1.7 s pauses."
+    "voice_run": "every-turn-silence-0.30-stt-fixed",
+    "why": "Searching before the model put the answer in the caller's ear 2-3 s sooner than the search tool at p50 (voice runs every-turn-silence-0.30 and tool-silence-0.30) and passed as many conversation evals (21 and 23 of 32 against 21 and 23); the final eval run on this configuration passed 24 of 32. A 0.3 s silence wait cut the typical end-of-turn delay by 0.1-0.3 s against 0.55/0.5 s with no early cut-off on eight utterances with 0.7-1.7 s pauses.",
+    "stt_liveness_timeout_seconds": 30.0,
+    "stt_speech_rms_level": 150.0,
+    "stt_speech_preroll_seconds": 0.5
   },
   "notes": [
     "Each voice run asks 20 distinct questions per language, one LiveKit room per language, through LiveKit Cloud; the agent worker, VAD and ONNX embedder run on this Mac.",
     "end_to_end and its stages are measured by the agent (LiveKit metrics, from the caller's last speech to the agent's first audio leaving the worker); end_of_turn_delay includes transcription_delay. llm_time_to_first_token is LiveKit's llm_node first token minus reply_filter_hold, so in every_turn mode it includes the knowledge search.",
     "caller_heard_first_audio and caller_heard_answer are measured by the bench caller, from the end of its utterance to audible agent audio, so they add both network legs and audio buffering. In tool mode the first audio is the acknowledgement and the answer comes after the tool round trip.",
-    "Turns the agent never answered are excluded from the percentiles and counted in answered: in every run the ElevenLabs realtime STT websocket was closed by the server 8-13 times (no error message) and the turns spoken during a reconnect were not transcribed.",
+    "Turns the agent never answered are excluded from the percentiles and counted in answered. Before the STT fixes (every-turn-silence-0.30) 5 of 40 turns were lost: LiveKit's 6 s liveness timeout closed healthy Scribe sockets during silence (8-13 reconnects per run), and a Scribe session whose first ~10 s held no speech committed the next turns empty. With a 30 s liveness timeout and speech-only replay (every-turn-silence-0.30-liveness-replay) there were no reconnects but 4 turns were still lost to that start-of-session problem; with the speech gate as well (every-turn-silence-0.30-stt-fixed) all 40 were answered.",
     "A cut-off is agent audio while the caller is still speaking; the one in tool-silence-0.30 is the late reply to the previous unanswered turn. A turn committed before the STT's last words arrive is not counted, because LiveKit logs it only once per process.",
-    "text_mode runs time the same questions through the agent and Claude without voice; they were run before the every_turn fixes (neutral note on a miss, no search after tool calls or on read-back answers), which do not change the path these knowledge questions take."
+    "text_mode runs time the same questions through the agent and Claude without voice; they were run before the every_turn fixes (neutral note on a miss, no search after tool calls or on read-back answers), which do not change the path these knowledge questions take.",
+    "caller_end_seen_late (worker's end of caller speech minus the bench's) and agent_audio_reaches_caller (bench's first audible agent audio minus the worker's start of speaking) split the caller-heard time; both clocks are this Mac's. Two plain LiveKit participants on the same Mac measured 0.40 s one way at the median with continuous audio and 0.63 s when the track starts after silence, against a 40 ms TCP round trip, so the 0.5-0.6 s each way is LiveKit/WebRTC transport and jitter buffering, not the agent or the bench.",
+    "livekit_round_trip_ms is the median TCP connect time to LiveKit Cloud before and after a run; runs before 2026-10-30 did not record it. A run attempted during a slow network (130-230 ms round trip) was discarded."
   ]
 }

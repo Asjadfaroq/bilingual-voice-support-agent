@@ -19,6 +19,10 @@ class TurnLatency:
     transcription_delay: float | None
     llm_time_to_first_token: float | None
     tts_time_to_first_byte: float | None
+    # Wall-clock times on the worker, so a caller on the same clock can tell the network and
+    # playout apart from the agent's own time.
+    caller_stopped_speaking_at: float | None = None
+    agent_started_speaking_at: float | None = None
 
 
 def measure_turn_latency(
@@ -33,6 +37,8 @@ def measure_turn_latency(
         transcription_delay=user_metrics.get("transcription_delay"),
         llm_time_to_first_token=assistant_metrics.get("llm_node_ttft"),
         tts_time_to_first_byte=assistant_metrics.get("tts_node_ttfb"),
+        caller_stopped_speaking_at=user_metrics.get("stopped_speaking_at"),
+        agent_started_speaking_at=assistant_metrics.get("started_speaking_at"),
     )
 
 

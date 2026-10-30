@@ -30,6 +30,16 @@ class Settings(BaseSettings):
     # caller's language comes from the transcript's script, so English turns tagged "ar" are fine.
     stt_language: str | None = "ar"
     stt_secondary_languages: list[str] = ["en"]
+    # LiveKit's default of 6 s without a server message closed healthy Scribe sessions while the
+    # caller was silent: Scribe's pongs took up to 3.2 s on this network (median 0.27 s).
+    stt_liveness_timeout_seconds: float = 30.0
+    # Audio sent since the last commit the server confirmed is sent again after a reconnect;
+    # this caps how much is kept.
+    stt_max_replay_seconds: float = 30.0
+    # 16-bit audio quieter than this root-mean-square level is not speech: it is not replayed,
+    # and the STT hears nothing before the caller's first words but this much pre-roll.
+    stt_speech_rms_level: float = 150.0
+    stt_speech_preroll_seconds: float = 0.5
     # Share of a transcript's letters that must be in one script for the script to decide
     # the caller's language; mixed transcripts fall back to the STT's detected language.
     script_dominance_threshold: float = 0.8
@@ -82,6 +92,8 @@ class Settings(BaseSettings):
     bench_quiet_before_turn_seconds: float = 1.0
     # The bench stops before ElevenLabs credits fall below this many characters.
     bench_min_elevenlabs_characters_left: int = 3000
+    # DEBUG adds each Scribe commit and LiveKit's turn decisions to the bench worker's log.
+    bench_worker_log_level: Literal["DEBUG", "INFO", "WARNING"] = "INFO"
     worker_initialize_timeout_seconds: float = 60.0
     # One warm process means a call never waits for the embedding model to load.
     worker_idle_processes: int = 1

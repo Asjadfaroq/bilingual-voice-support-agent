@@ -10,8 +10,8 @@ from voice_agent.pipeline.components import (
     build_stt,
     build_tts,
     build_turn_handling,
-    recover_empty_commit,
 )
+from voice_agent.pipeline.stt_stream import drop_repeated_commit, recover_empty_commit
 
 
 def test_providers_use_the_models_and_voice_from_config(test_settings: Settings) -> None:
@@ -99,3 +99,23 @@ def test_partial_transcripts_are_not_rewritten() -> None:
     message = {"message_type": "partial_transcript", "text": ""}
 
     assert recover_empty_commit(message, "earlier words") == message
+
+
+def test_a_silent_commit_that_repeats_the_previous_turn_is_not_a_new_turn() -> None:
+    repeat = {
+        "message_type": "committed_transcript_with_timestamps",
+        "language_code": None,
+        "text": "هل تتغير ساعات العمل في رمضان؟",
+    }
+
+    assert drop_repeated_commit(repeat, "هل تتغير ساعات العمل في رمضان؟")["text"] == ""
+
+
+def test_the_same_words_said_again_with_a_detected_language_are_a_new_turn() -> None:
+    said_again = {
+        "message_type": "committed_transcript_with_timestamps",
+        "language_code": "ar",
+        "text": "نعم",
+    }
+
+    assert drop_repeated_commit(said_again, "نعم") == said_again

@@ -6,12 +6,14 @@ import uuid
 from collections.abc import Callable
 from pathlib import Path
 
+import httpx
 from bench_caller import BenchCaller
 from bench_report import BenchTurn, describe_turn, save_results, summarise_language, turns_as_json
 from bench_setup import (
     LATENCY_TOPIC,
     caller_token,
     elevenlabs_characters_left,
+    livekit_round_trip_ms,
     load_utterances,
     start_worker,
     wait_until,
@@ -24,7 +26,7 @@ from voice_agent.config import Settings, get_settings
 def reply_finished(caller: BenchCaller, after: float, quiet_seconds: float) -> Callable[[], bool]:
     def finished() -> bool:
         spoke = any(t > after and state == "speaking" for t, state in caller.observations.states)
-        quiet_for = time.perf_counter() - caller.observations.last_audible_at
+        quiet_for = time.time() - caller.observations.last_audible_at
         return spoke and caller.latest_state() == "listening" and quiet_for > quiet_seconds
 
     return finished
@@ -44,13 +46,18 @@ async def bench_language(
         raise RuntimeError(f"No greeting in room {room_name}")
     utterances = load_utterances(settings, language)
     turns: list[BenchTurn] = []
+    left = await elevenlabs_characters_left(settings)
     for index in range(turn_count):
-        left = await elevenlabs_characters_left(settings)
+        try:
+            left = await elevenlabs_characters_left(settings)
+        except httpx.HTTPError as error:
+            # A turn costs a few hundred characters at most, so the last balance still guards.
+            print(f"Credit check failed ({error!r}); using the last balance, {left}")
         if left < settings.bench_min_elevenlabs_characters_left:
             print(f"Stopping: {left} ElevenLabs characters left")
             break
         utterance_id, pcm = utterances[index % len(utterances)]
-        started = time.perf_counter()
+        started = time.time()
         ended = await caller.say(pcm)
         await wait_until(reply_finished(caller, ended, quiet), timeout)
         turn = describe_turn(utterance_id, language, caller.observations, started, ended)
@@ -65,9 +72,10 @@ async def run_bench(
 ) -> None:
     settings = get_settings()
     characters_before = await elevenlabs_characters_left(settings)
+    round_trip_before = await livekit_round_trip_ms(settings)
     agent_name = f"latency-bench-{uuid.uuid4().hex[:8]}"
     log_path = Path(os.environ.get("TMPDIR", "/tmp")) / f"{agent_name}.log"
-    worker = await start_worker(overrides, agent_name, log_path)
+    worker = await start_worker(overrides, agent_name, log_path, settings.bench_worker_log_level)
     turns_per_language = turn_count or settings.bench_turns_per_language
     try:
         turns = {
@@ -81,6 +89,10 @@ async def run_bench(
     run = {
         "settings": overrides,
         "elevenlabs_characters_used": characters_used,
+        "livekit_round_trip_ms": {
+            "before": round_trip_before,
+            "after": await livekit_round_trip_ms(settings),
+        },
         "languages": {language: summarise_language(t) for language, t in turns.items()},
         "turns": [
             turn for language_turns in turns.values() for turn in turns_as_json(language_turns)

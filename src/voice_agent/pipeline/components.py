@@ -1,21 +1,19 @@
 from typing import Any
 
 from livekit.agents import (
-    DEFAULT_API_CONNECT_OPTIONS,
     NOT_GIVEN,
-    APIConnectOptions,
     NotGivenOr,
     TurnHandlingOptions,
     inference,
     vad,
 )
-from livekit.agents.language import LanguageCode
 from livekit.agents.llm import LLMStream
 from livekit.agents.utils import is_given
 from livekit.plugins import anthropic, elevenlabs, silero
-from livekit.plugins.elevenlabs import stt as elevenlabs_stt
 
 from voice_agent.config import Settings
+from voice_agent.pipeline.stt_input import SpeechInputOptions
+from voice_agent.pipeline.stt_stream import BilingualElevenLabsSTT
 
 
 class ReasoningControlledLLM(anthropic.LLM):
@@ -32,46 +30,14 @@ class ReasoningControlledLLM(anthropic.LLM):
         return super().chat(extra_kwargs={**self._reasoning_options, **caller_options}, **kwargs)
 
 
-COMMITTED_TRANSCRIPT_TYPES = ("committed_transcript", "committed_transcript_with_timestamps")
-
-
-def recover_empty_commit(message: dict[str, Any], pending_partial_text: str) -> dict[str, Any]:
-    """Scribe realtime sometimes commits an empty transcript for an Arabic turn that follows
-    an English one, although its partial transcript holds the whole sentence; without this
-    the caller's turn is lost (measured, see docs/DECISIONS.md)."""
-    is_empty_commit = message.get("message_type") in COMMITTED_TRANSCRIPT_TYPES and not message.get(
-        "text"
-    )
-    if is_empty_commit and pending_partial_text:
-        return {**message, "text": pending_partial_text}
-    return message
-
-
-class EmptyCommitRecoveringStream(elevenlabs_stt.SpeechStream):
-    def _process_stream_event(self, data: dict[str, Any]) -> None:
-        super()._process_stream_event(recover_empty_commit(data, self._last_partial_text))
-
-
-class BilingualElevenLabsSTT(elevenlabs.STT):
-    def stream(
-        self,
-        *,
-        language: NotGivenOr[str] = NOT_GIVEN,
-        conn_options: APIConnectOptions = DEFAULT_API_CONNECT_OPTIONS,
-    ) -> elevenlabs_stt.SpeechStream:
-        stream = EmptyCommitRecoveringStream(
-            stt=self,
-            opts=self._opts,
-            conn_options=conn_options,
-            language=LanguageCode(language) if is_given(language) else self._opts.language_code,
-            http_session=self._ensure_session(),
-        )
-        self._streams.add(stream)
-        return stream
-
-
 def build_stt(settings: Settings) -> BilingualElevenLabsSTT:
     return BilingualElevenLabsSTT(
+        liveness_timeout_seconds=settings.stt_liveness_timeout_seconds,
+        input_options=SpeechInputOptions(
+            speech_rms_level=settings.stt_speech_rms_level,
+            preroll_seconds=settings.stt_speech_preroll_seconds,
+            max_replay_seconds=settings.stt_max_replay_seconds,
+        ),
         api_key=settings.eleven_api_key.get_secret_value(),
         model=settings.stt_model,
         language_code=settings.stt_language or NOT_GIVEN,

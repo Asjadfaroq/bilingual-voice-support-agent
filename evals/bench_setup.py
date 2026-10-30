@@ -1,12 +1,14 @@
 import asyncio
 import json
 import os
+import statistics
 import sys
 import time
 import wave
 from collections.abc import Callable
 from pathlib import Path
 from typing import Any
+from urllib.parse import urlparse
 
 import httpx
 import numpy as np
@@ -59,7 +61,7 @@ async def wait_until(condition: Callable[[], bool], timeout_seconds: float) -> b
 
 
 async def start_worker(
-    overrides: dict[str, str], agent_name: str, log_path: Path
+    overrides: dict[str, str], agent_name: str, log_path: Path, log_level: str
 ) -> asyncio.subprocess.Process:
     environment = {**os.environ, **overrides}
     environment |= {
@@ -70,7 +72,13 @@ async def start_worker(
     command = [sys.executable, "-m", "livekit.agents", "start", "src/voice_agent/worker.py"]
     with log_path.open("w") as log_file:
         worker = await asyncio.create_subprocess_exec(
-            *command, "--dev", env=environment, stdout=log_file, stderr=asyncio.subprocess.STDOUT
+            *command,
+            "--dev",
+            "--log-level",
+            log_level,
+            env=environment,
+            stdout=log_file,
+            stderr=asyncio.subprocess.STDOUT,
         )
     registered = await wait_until(
         lambda: WORKER_READY_LINE in log_path.read_text(), WORKER_REGISTER_TIMEOUT_SECONDS
@@ -80,6 +88,19 @@ async def start_worker(
             worker.kill()
         raise RuntimeError(f"The bench worker did not register; see {log_path}")
     return worker
+
+
+async def livekit_round_trip_ms(settings: Settings, samples: int = 5) -> float:
+    # The median TCP connect time to LiveKit Cloud, so each run records the network it ran on.
+    host = urlparse(settings.livekit_url).hostname or ""
+    times = []
+    for _ in range(samples):
+        started = time.perf_counter()
+        _, writer = await asyncio.open_connection(host, 443)
+        times.append((time.perf_counter() - started) * 1000)
+        writer.close()
+        await writer.wait_closed()
+    return round(statistics.median(times), 1)
 
 
 def caller_token(settings: Settings, room_name: str, identity: str, agent_name: str) -> str:

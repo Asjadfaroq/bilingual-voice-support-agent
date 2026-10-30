@@ -18,6 +18,9 @@ STAGES = (
     "tts_time_to_first_byte",
     "caller_heard_first_audio",
     "caller_heard_answer",
+    "caller_end_seen_late",
+    "agent_audio_reaches_caller",
+    "agent_audio_quiet_start",
 )
 
 
@@ -28,6 +31,10 @@ class BenchTurn:
     cut_off: bool
     answered: bool
     stages: dict[str, float | None]
+
+
+def difference(later: float | None, earlier: float | None) -> float | None:
+    return later - earlier if later is not None and earlier is not None else None
 
 
 def first_after(times: list[float], moment: float) -> float | None:
@@ -59,6 +66,15 @@ def describe_turn(
         "tts_time_to_first_byte": turn.get("tts_time_to_first_byte"),
         "caller_heard_first_audio": first_audio - ended if first_audio else None,
         "caller_heard_answer": answer_audio - ended if answer_audio else None,
+        # The worker and the bench share this Mac's clock, so the time the caller hears splits
+        # into how late the worker saw the speech end and how long its audio took to arrive.
+        "caller_end_seen_late": difference(turn.get("caller_stopped_speaking_at"), ended),
+        "agent_audio_reaches_caller": difference(
+            first_audio, turn.get("agent_started_speaking_at")
+        ),
+        "agent_audio_quiet_start": difference(
+            first_audio, first_after(observations.sound_onsets, ended)
+        ),
     }
     cut_off = any(started < onset < ended for onset in onsets)
     return BenchTurn(utterance_id, language, cut_off, first_audio is not None, stages)  # type: ignore[arg-type]
@@ -87,14 +103,15 @@ def summarise_language(turns: list[BenchTurn]) -> dict[str, object]:
 
 
 def describe_machine() -> dict[str, str]:
-    model, cpu = platform.platform(), platform.processor()
+    model, cpu, memory_bytes = platform.platform(), platform.processor(), "0"
     if platform.system() == "Darwin":
-        model, cpu = (
+        model, cpu, memory_bytes = (
             subprocess.run(["sysctl", "-n", name], capture_output=True, text=True).stdout.strip()
-            for name in ("hw.model", "machdep.cpu.brand_string")
+            for name in ("hw.model", "machdep.cpu.brand_string", "hw.memsize")
         )
     return {
         "model": model,
+        "memory_gb": str(int(memory_bytes) // 2**30),
         "os": f"{platform.system()} {platform.mac_ver()[0] or platform.release()}",
         "machine": platform.machine(),
         "cpu": cpu,
