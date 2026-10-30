@@ -108,7 +108,9 @@ def describe_machine() -> dict[str, str]:
     model, cpu, memory_bytes = platform.platform(), platform.processor(), "0"
     if platform.system() == "Darwin":
         model, cpu, memory_bytes = (
-            subprocess.run(["sysctl", "-n", name], capture_output=True, text=True).stdout.strip()
+            subprocess.run(
+                ["sysctl", "-n", name], capture_output=True, text=True, check=True
+            ).stdout.strip()
             for name in ("hw.model", "machdep.cpu.brand_string", "hw.memsize")
         )
     return {
