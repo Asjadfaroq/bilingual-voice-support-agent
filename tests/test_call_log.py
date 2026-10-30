@@ -4,9 +4,9 @@ from datetime import UTC, datetime, timedelta
 import anthropic
 import httpx
 import respx
-from livekit.agents.llm import ChatContext
+from livekit.agents.llm import ChatContext, ChatMessage
 
-from voice_agent.crm.call_log import SUMMARY_UNAVAILABLE, CallRecord, log_call
+from voice_agent.crm.call_log import SUMMARY_UNAVAILABLE, CallRecord, log_call, masked_transcript
 from voice_agent.crm.hubspot_client import CALL_TO_TICKET, HubSpotClient
 
 STARTED_AT = datetime(2026, 10, 29, 9, 0, tzinfo=UTC)
@@ -68,3 +68,18 @@ async def test_summary_failure_still_logs_the_call(
         SUMMARY_UNAVAILABLE
         in json.loads(calls.calls.last.request.content)["properties"]["hs_call_body"]
     )
+
+
+def test_the_transcript_follows_when_each_turn_was_spoken_not_when_it_was_recorded() -> None:
+    # A caller who speaks during the greeting is in the history before it, because the
+    # greeting is recorded when it finishes playing.
+    history = ChatContext.empty()
+    history.items.append(ChatMessage(role="user", content=["Hi, I need help"], created_at=11.0))
+    history.items.append(
+        ChatMessage(role="assistant", content=["Hi, Arabic or English is fine."], created_at=10.0)
+    )
+
+    assert masked_transcript(history) == [
+        "Agent: Hi, Arabic or English is fine.",
+        "Caller: Hi, I need help",
+    ]

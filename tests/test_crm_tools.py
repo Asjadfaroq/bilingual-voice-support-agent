@@ -126,3 +126,11 @@ async def test_crm_outage_keeps_the_caller_talking_and_saves_nothing(
     assert await record_caller_answer(call_context) == say.CRM_UNAVAILABLE
     assert call_context.userdata.call.ticket_ids == []
     assert call_context.userdata.call.pending_write is None
+
+
+def test_a_saved_ticket_is_confirmed_by_its_number_without_remarks_on_urgency() -> None:
+    instruction = say.TICKET_CREATED.format(ending="8010")
+
+    assert "ends in 8010" in instruction
+    assert "anything else" in instruction
+    assert "say nothing about its priority or how soon it will be handled" in instruction

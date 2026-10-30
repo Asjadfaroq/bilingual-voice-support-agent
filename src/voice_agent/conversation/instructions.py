@@ -79,7 +79,10 @@ CONTACT_FOUND = (
 )
 CONTACT_CREATED = "The contact is saved. Continue with what the caller wanted."
 CONTACT_NEEDED = "Identify the caller first with find_or_create_contact, then try again."
-TICKET_CREATED = "The ticket is saved. Tell the caller its number ends in {ending}."
+TICKET_CREATED = (
+    "The ticket is saved. Tell the caller its number ends in {ending} and ask if there is "
+    "anything else; say nothing about its priority or how soon it will be handled."
+)
 # Spoken by the tool itself, word for word, whether the ticket belongs to someone else or does
 # not exist, so the caller cannot learn that a ticket number exists.
 NO_MATCHING_TICKET: dict[CallerLanguage, str] = {

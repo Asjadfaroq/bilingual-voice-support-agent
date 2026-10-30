@@ -36,10 +36,16 @@ class CallRecord:
 
 
 def masked_transcript(history: ChatContext) -> list[str]:
+    # The session history lists a reply when it finishes playing, so a caller who speaks during
+    # the greeting comes first there; LiveKit dates the reply from when it started speaking.
+    messages = sorted(
+        (item for item in history.items if isinstance(item, ChatMessage)),
+        key=lambda message: message.created_at,
+    )
     return [
-        f"{SPEAKER_LABELS[item.role]}: {mask_pii(item.text_content)}"
-        for item in history.items
-        if isinstance(item, ChatMessage) and item.role in SPEAKER_LABELS and item.text_content
+        f"{SPEAKER_LABELS[message.role]}: {mask_pii(message.text_content)}"
+        for message in messages
+        if message.role in SPEAKER_LABELS and message.text_content
     ]
 
 
