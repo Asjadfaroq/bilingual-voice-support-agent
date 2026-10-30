@@ -20,7 +20,6 @@ from voice_agent.conversation.reply_filter import (
     ReportHold,
     guarded_reply,
     ignore_hold,
-    prose_language,
     spoken_sentences,
 )
 from voice_agent.conversation.system_notes import with_system_notes
@@ -38,6 +37,7 @@ from voice_agent.pipeline.language import (
     CallerLanguage,
     LanguageSettings,
     detect_caller_language,
+    prose_language,
     reply_voice_for,
 )
 

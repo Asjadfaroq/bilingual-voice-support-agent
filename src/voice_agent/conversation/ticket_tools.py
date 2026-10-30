@@ -58,7 +58,8 @@ async def create_ticket(
         subject: A short English subject, such as "Duplicate charge on invoice 4412".
         description: What the caller reported, in English.
         spoken_subject: A short phrase in the caller's language that completes "a ticket
-            about ...", addressed to the caller, such as "a duplicate charge on invoice 4412".
+            about ...", addressed to the caller, such as "a duplicate charge on invoice 4412";
+            in Arabic for an Arabic caller, with invoice numbers and product names unchanged.
     """
     resources = context.userdata
     contact = resources.call.contact
@@ -82,8 +83,7 @@ async def create_ticket(
         category=say.CATEGORY_WORDS[language][category],
         subject=spoken_subject.rstrip(" .،"),
     )
-    say_read_back(context, "ticket", read_back, save_ticket)
-    return None
+    return say_read_back(context, "ticket", read_back, save_ticket, spoken_subject)
 
 
 def describe_ticket(ticket: HubSpotTicket, stage_labels: dict[str, str]) -> str:
@@ -136,7 +136,8 @@ async def request_human_callback(
     Args:
         reason: Why the caller wants a colleague to call back, in English.
         spoken_reason: A short phrase in the caller's language that completes "call you back
-            about ...", addressed to the caller, such as "your invoices failing to send".
+            about ...", addressed to the caller, such as "your invoices failing to send"; in
+            Arabic for an Arabic caller.
     """
     resources = context.userdata
     contact = resources.call.contact
@@ -153,5 +154,4 @@ async def request_human_callback(
     read_back = say.READ_BACKS["callback"][caller_language(resources.call)].format(
         reason=spoken_reason.rstrip(" .،")
     )
-    say_read_back(context, "callback", read_back, save_callback)
-    return None
+    return say_read_back(context, "callback", read_back, save_callback, spoken_reason)

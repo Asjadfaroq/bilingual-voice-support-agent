@@ -4,7 +4,7 @@ from dataclasses import dataclass
 from simulated_call import CallOutcome
 
 from voice_agent.conversation.confirmation import is_explicit_yes
-from voice_agent.conversation.reply_filter import prose_language
+from voice_agent.pipeline.language import prose_language
 from voice_agent.pipeline.spoken_text import to_spoken_text
 from voice_agent.privacy.pii import DIGIT
 

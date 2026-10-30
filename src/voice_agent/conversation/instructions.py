@@ -78,6 +78,13 @@ CONTACT_FOUND = (
 )
 CONTACT_CREATED = "The contact is saved. Continue with what the caller wanted."
 CONTACT_NEEDED = "Identify the caller first with find_or_create_contact, then try again."
+# Returned instead of a read-back whose spoken phrase is not in the caller's language.
+PHRASE_IN_OTHER_LANGUAGE = (
+    "Nothing was said to the caller: the spoken phrase you gave is not in {language}, the "
+    "caller's language. Call the tool again with it in {language}, keeping invoice numbers, "
+    "product names and codes as they are."
+)
+LANGUAGE_NAMES: dict[CallerLanguage, str] = {"en": "English", "ar": "Arabic"}
 TICKET_CREATED = (
     "The ticket is saved. Tell the caller its number ends in {ending} and ask if there is "
     "anything else; say nothing about its priority or how soon it will be handled."

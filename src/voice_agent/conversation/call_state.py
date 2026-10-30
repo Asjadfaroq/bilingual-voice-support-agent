@@ -47,6 +47,7 @@ class CallResources:
     new_ticket_stage_id: str
     ticket_status_limit: int
     default_country_calling_code: str
+    reply_language_min_letters: int
     call: CallState = field(default_factory=CallState)
 
 

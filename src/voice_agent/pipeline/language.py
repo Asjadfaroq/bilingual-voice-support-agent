@@ -59,6 +59,22 @@ def language_from_script(transcript: str, dominance_threshold: float) -> CallerL
     return None
 
 
+# A reply is in the language most of its letters are written in.
+MAJORITY_SCRIPT = 0.5
+
+
+def prose_language(text: str, min_letters: int) -> CallerLanguage | None:
+    prose = prose_text(text)
+    if sum(character.isalpha() for character in prose) < min_letters:
+        return None
+    return language_from_script(prose, MAJORITY_SCRIPT)
+
+
+def phrase_in_language(phrase: str, language: CallerLanguage, min_letters: int) -> bool:
+    # Too few letters, once names, numbers and codes are removed, to be in the wrong language.
+    return prose_language(phrase, min_letters) in (None, language)
+
+
 def detect_caller_language(
     transcript: str, stt_language: str | None, dominance_threshold: float
 ) -> CallerLanguage | None:

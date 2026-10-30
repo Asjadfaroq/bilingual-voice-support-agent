@@ -76,7 +76,8 @@ def build_call_resources(
     return CallResources(
         knowledge_pool, embed, None, settings.kb_top_k, settings.kb_min_similarity, crm,
         settings.hubspot_ticket_pipeline_id, settings.hubspot_new_ticket_stage_id,
-        settings.ticket_status_limit, settings.default_country_calling_code, call,
+        settings.ticket_status_limit, settings.default_country_calling_code,
+        settings.reply_language_min_letters, call,
     )  # fmt: skip
 
 

@@ -89,6 +89,7 @@ def make_call_resources(crm: HubSpotClient, embed: TextEmbedder) -> CallResource
         new_ticket_stage_id="1",
         ticket_status_limit=3,
         default_country_calling_code="966",
+        reply_language_min_letters=6,
         call=CallState(),
     )
 

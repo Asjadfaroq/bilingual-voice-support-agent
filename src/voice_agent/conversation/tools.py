@@ -15,7 +15,7 @@ from voice_agent.conversation.confirmation import (
 )
 from voice_agent.crm.hubspot_client import HubSpotError, normalize_phone_number
 from voice_agent.knowledge import search
-from voice_agent.pipeline.language import CallerLanguage
+from voice_agent.pipeline.language import CallerLanguage, phrase_in_language
 
 logger = logging.getLogger(__name__)
 
@@ -56,12 +56,22 @@ def caller_language(call: CallState) -> CallerLanguage:
 
 
 def say_read_back(
-    context: RunContext[CallResources], kind: WriteKind, read_back: str, perform: PerformWrite
-) -> None:
-    # Spoken here rather than by the LLM, so the caller hears exactly what will be saved.
+    context: RunContext[CallResources],
+    kind: WriteKind,
+    read_back: str,
+    perform: PerformWrite,
+    spoken_phrase: str = "",
+) -> str | None:
+    # Spoken here rather than by the LLM, so the caller hears exactly what will be saved; the
+    # model's phrase inside it must already be in the caller's language.
+    resources = context.userdata
+    language = caller_language(resources.call)
+    if not phrase_in_language(spoken_phrase, language, resources.reply_language_min_letters):
+        return say.PHRASE_IN_OTHER_LANGUAGE.format(language=say.LANGUAGE_NAMES[language])
     history = context.session.history
-    context.userdata.call.pending_write = propose_write(kind, read_back, perform, history)
+    resources.call.pending_write = propose_write(kind, read_back, perform, history)
     context.session.say(read_back)
+    return None
 
 
 async def identify_caller_by_line(resources: CallResources) -> None:

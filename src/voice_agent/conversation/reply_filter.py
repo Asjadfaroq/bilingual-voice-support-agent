@@ -7,7 +7,7 @@ from livekit.agents import FlushSentinel
 from livekit.agents.llm import ChatChunk, ChatContext
 
 from voice_agent.conversation.system_notes import with_system_notes
-from voice_agent.pipeline.language import CallerLanguage, language_from_script, prose_text
+from voice_agent.pipeline.language import CallerLanguage, prose_language
 from voice_agent.pipeline.spoken_text import to_spoken_text
 
 ReplyChunk = ChatChunk | str | FlushSentinel
@@ -15,8 +15,6 @@ StartReply = Callable[[ChatContext], AsyncGenerator[ReplyChunk, None]]
 SentenceVerdict = Literal["keep", "meta", "wrong_language"]
 ReportHold = Callable[[float], None]
 
-# A reply is in the language most of its letters are written in.
-MAJORITY_SCRIPT = 0.5
 SENTENCE_END = re.compile(r"[.!?؟\n]+(?:\s+|$)")
 # Sentences about the caller in the third person, or about the reply language, are the
 # model thinking aloud, never something to say to the caller.
@@ -32,13 +30,6 @@ META_SENTENCE = re.compile(
 def ignore_hold(seconds: float) -> None:
     # Text-mode evals and unit tests have no caller waiting on audio.
     return None
-
-
-def prose_language(text: str, min_letters: int) -> CallerLanguage | None:
-    prose = prose_text(text)
-    if sum(character.isalpha() for character in prose) < min_letters:
-        return None
-    return language_from_script(prose, MAJORITY_SCRIPT)
 
 
 def judge_sentence(sentence: str, expected: CallerLanguage, min_letters: int) -> SentenceVerdict:

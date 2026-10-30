@@ -126,6 +126,7 @@ async def run_support_call(ctx: JobContext) -> None:
             new_ticket_stage_id=settings.hubspot_new_ticket_stage_id,
             ticket_status_limit=settings.ticket_status_limit,
             default_country_calling_code=settings.default_country_calling_code,
+            reply_language_min_letters=settings.reply_language_min_letters,
             call=call_state,
         ),
     )
